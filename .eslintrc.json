@@ -15,6 +15,12 @@
         "prev": "*",
         "next": "return"
       }
+    ],
+    "prettier/prettier": [
+      "error", 
+      { 
+        "endOfLine": "auto" 
+      }
     ]
   }
 }
