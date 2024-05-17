@@ -58,13 +58,13 @@ body {
   .label-medium {
     font-size: 16px;
     line-height: 22px;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .label-small {
-    font-size: 12px;
+    font-size: 14px;
     line-height: 16px;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .body-large {
@@ -80,7 +80,7 @@ body {
   }
 
   .body-small {
-    font-size: 12px;
+    font-size: 14px;
     line-height: 16px;
     font-weight: 400;
   }
