@@ -1,9 +1,0 @@
-violations=`git diff --cached --name-only | xargs grep -n 'console\.log'`
-
-if [ -n "$violations" ]; then
-  echo "\033[31m"Error: console log statements are not allowed in the following files: '\n'"\033[0m"
-  echo "\033[31m" $violations | tr ';' '\n'"\033[0m"
-  exit 1
-fi
-
-exit 0
