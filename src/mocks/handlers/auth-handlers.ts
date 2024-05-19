@@ -1,9 +1,7 @@
-import { HttpResponse, http } from 'msw';
+import { http, passthrough } from 'msw';
 
 export const authHandlers = [
-  http.post(`/signup`, () => {
-    return HttpResponse.json({
-      message: 'ok',
-    });
+  http.get(`https://dummy.restapiexample.com/api/v1/employees`, () => {
+    return passthrough();
   }),
 ];
