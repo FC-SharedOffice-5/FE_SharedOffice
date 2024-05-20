@@ -26,10 +26,10 @@ export default function RootLayout({
       className={`${pretendard.variable}`}
     >
       <body
-        className={pretendard.className}
+        className={pretendard.className} 
         style={{ width: '360px', height: '100vh', margin: '0 auto' }}
       >
-        {children}
+        <MockProvider>{children}</MockProvider>
       </body>
     </html>
   );
