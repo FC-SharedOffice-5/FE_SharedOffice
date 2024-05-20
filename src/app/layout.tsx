@@ -25,7 +25,9 @@ export default function RootLayout({
       lang="kr"
       className={`${pretendard.variable}`}
     >
-      <body className={pretendard.className}>{children}</body>
+      <body className={pretendard.className}>
+        <MockProvider>{children}</MockProvider>
+      </body>
     </html>
   );
 }
