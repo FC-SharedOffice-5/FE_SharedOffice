@@ -8,13 +8,13 @@ type TextInputProps = {
 
 const TextInput = ({ label, name, placeholder }: TextInputProps) => {
   return (
-    <Field className="w-full flex flex-col">
+    <Field className="flex w-full flex-col">
       <Label className="label-small">{label}</Label>
       <Input
         type="text"
         name={name}
         placeholder={placeholder}
-        className="w-full h-10 border-b-[0.75px] border-[#111]/[.4] body-small placeholder:body-small focus:outline-none data-[focus]:border-[#111]"
+        className="body-small placeholder:body-small h-10 w-full border-b-[0.75px] border-[#111]/[.4] focus:outline-none data-[focus]:border-[#111]"
       />
     </Field>
   );
