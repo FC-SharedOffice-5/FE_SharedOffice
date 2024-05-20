@@ -1,19 +1,33 @@
-const getEmployees = async () => {
-  const res = await fetch('https://dummy.restapiexample.com/api/v1/employees');
-  const employees = await res.json();
+import { auth } from '@/actions/auth';
 
-  return employees.data;
+const getEmployees = async () => {
+  try {
+    const res = await fetch('https://dummy.restapiexample.com/api/v1/employees');
+    const employees = await res.json();
+
+    return employees.data;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export default async function Home() {
+  const session = await auth();
   const employees = await getEmployees();
 
   return (
     <main>
-      {employees.map((employee: any) => {
+      {session && (
+        <>
+          <div className="bg-gray">session 정보: {JSON.stringify(session)}</div>
+          <div className="bg-gray">accessToken: {session.accessToken}</div>
+        </>
+      )}
+
+      {employees?.map((employee: any) => {
         return (
           <p
-            style={{ color: 'white' }}
+            style={{ color: 'gray' }}
             key={employee.id}
           >
             {employee.employee_name}

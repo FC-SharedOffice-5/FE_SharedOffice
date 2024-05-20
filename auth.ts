@@ -5,7 +5,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     credentials({
       authorize: async (credentials) => {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/login`, {
           cache: 'no-store',
           method: 'POST',
           headers: {
@@ -17,40 +17,49 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           }),
         });
 
-        const { code, accessToken, refreshToken } = await res.json();
-
+        const { code, accessToken } = await res.json();
         if (res.ok && code === 200) {
           return {
             accessToken,
-            refreshToken,
           };
         }
+
         throw new CredentialsSignin({
-          cause: code || '문제가 발생했습니다.',
+          cause: '문제가 발생했습니다.',
         });
       },
     }),
   ],
-  session: {
-    strategy: 'jwt',
-  },
   pages: {
     signIn: '/signin',
+  },
+  session: {
+    strategy: 'jwt',
+    maxAge: 60 * 60, // 1시간 동안 로그인 상태 유지
+  },
+  cookies: {
+    sessionToken: {
+      name: 'next-auth.session-token',
+      options: {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        path: '/',
+      },
+    },
   },
   secret: process.env.AUTH_SECRET,
   callbacks: {
     jwt: async ({ token, user }) => {
       if (user) {
         token.accessToken = user.accessToken;
-        token.refreshToken = user.refreshToken;
       }
 
       return token;
     },
     session: async ({ session, token }) => {
-      if (token?.accessToken && token?.refreshToken) {
+      if (token?.accessToken) {
         session.accessToken = token.accessToken;
-        session.refreshToken = token.refreshToken;
       }
 
       return session;
