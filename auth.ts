@@ -17,11 +17,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           }),
         });
 
-        const { code, accessToken } = await res.json();
-        if (res.ok && code === 200) {
-          return {
-            accessToken,
-          };
+        if (res.ok) {
+          return res.json();
         }
 
         throw new CredentialsSignin({
