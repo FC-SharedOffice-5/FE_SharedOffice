@@ -37,17 +37,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     strategy: 'jwt',
     maxAge: 24 * 60 * 60, // 24시간 동안 로그인 상태 유지
   },
-  cookies: {
-    sessionToken: {
-      name: 'next-auth.session-token',
-      options: {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'lax',
-        path: '/',
-      },
-    },
-  },
   secret: process.env.AUTH_SECRET,
   callbacks: {
     jwt: async ({ token, user }) => {
