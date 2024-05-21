@@ -35,7 +35,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   session: {
     strategy: 'jwt',
-    maxAge: 60 * 60, // 1시간 동안 로그인 상태 유지
+    maxAge: 24 * 60 * 60, // 24시간 동안 로그인 상태 유지
   },
   cookies: {
     sessionToken: {
