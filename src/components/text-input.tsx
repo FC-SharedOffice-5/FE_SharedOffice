@@ -6,7 +6,7 @@ import { UseFormSetValue, UseFormRegister, FieldValues, FieldErrors } from 'reac
 import clsx from 'clsx';
 
 type TextInputProps = {
-  type: 'text' | 'number' | 'password';
+  type?: 'text' | 'number' | 'password';
   label: string;
   name: string;
   placeholder?: string;
@@ -19,7 +19,7 @@ type TextInputProps = {
 };
 
 const TextInput = ({
-  type,
+  type = 'text',
   label,
   name,
   placeholder,
@@ -69,7 +69,10 @@ const TextInput = ({
         {setValue && inputValue && !isDisabled && (
           <button
             type="button"
-            onClick={() => setValue(name, '')}
+            onClick={() => {
+              setValue(name, '');
+              setInputValue('');
+            }}
             className="absolute bottom-[10px] right-0"
           >
             <Image
