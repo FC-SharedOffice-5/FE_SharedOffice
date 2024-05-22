@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import TextInput from '@/components/text-input';
 import PrimaryButton from '@/components/primary-button';
+import Timer from '@/components/timer';
 
 export default function SearchPassword() {
   const router = useRouter();
@@ -14,6 +15,8 @@ export default function SearchPassword() {
   const [isDisabled, setIsDisabled] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [codeError, setCodeError] = useState(false);
+  const [showTimer, setShowTimer] = useState(false);
+  const [resetTrigger, setResetTrigger] = useState(false);
 
   const {
     register,
@@ -33,6 +36,11 @@ export default function SearchPassword() {
     // setEmailError(true);
 
     // 200일 때
+    if (showTimer) {
+      setResetTrigger((prev) => !prev);
+    } else {
+      setShowTimer(true);
+    }
     setIsCodeSent(true);
     setIsDisabled(true);
   };
@@ -106,6 +114,7 @@ export default function SearchPassword() {
             }}
             error={codeError}
           />
+          {showTimer && <Timer resetTrigger={resetTrigger} />}
           {codeError && <div className="body-small text-error">인증번호가 일치하지 않습니다.</div>}
         </div>
         <PrimaryButton
