@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import TimerModal from './timer-modal';
 
 type TimerProps = {
   resetTrigger: boolean;
@@ -7,6 +8,7 @@ type TimerProps = {
 const Timer = ({ resetTrigger }: TimerProps) => {
   const MINUTES_IN_MS = 3 * 60 * 1000;
   const INTERVAL = 1000;
+
   const [timeLeft, setTimeLeft] = useState(MINUTES_IN_MS);
 
   const minutes = String(Math.floor((timeLeft / (1000 * 60)) % 60)).padStart(2, '0');
@@ -31,9 +33,12 @@ const Timer = ({ resetTrigger }: TimerProps) => {
   }, [MINUTES_IN_MS, resetTrigger]);
 
   return (
-    <div className="label-small absolute bottom-[10px] right-0 text-error">
-      {minutes}:{second}
-    </div>
+    <>
+      <div className="label-small absolute bottom-[10px] right-0 text-error">
+        {minutes}:{second}
+      </div>
+      {!timeLeft && <TimerModal />}
+    </>
   );
 };
 
