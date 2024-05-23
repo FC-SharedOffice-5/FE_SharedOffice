@@ -21,7 +21,6 @@ const TimerModal = () => {
           <PrimaryButton
             name="확인"
             size="modal"
-            isDisabled={true}
             handleClick={() => location.reload()}
           />
         </div>
