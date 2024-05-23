@@ -20,7 +20,7 @@ export default function Complete() {
       <div className="absolute bottom-4 left-4 w-full">
         <PrimaryButton
           name="로그인 하기"
-          isDisabled={true}
+          isDisabled={false}
           handleClick={goToLogin}
         />
       </div>

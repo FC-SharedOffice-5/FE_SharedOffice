@@ -52,7 +52,7 @@ export default function SearchPassword() {
     // setCodeError(true);
 
     // 200일 때
-    router.push('/');
+    router.push('/new-password');
   };
 
   const goBack = () => router.back();
@@ -120,7 +120,7 @@ export default function SearchPassword() {
         <PrimaryButton
           color={isCodeSent ? 'white' : 'green'}
           name={isCodeSent ? '인증번호 재발송' : '인증번호 발송'}
-          isDisabled={isCodeSent ? false : isEmailValid}
+          isDisabled={isCodeSent ? false : !isEmailValid}
           handleClick={sendCode}
         />
       </form>
@@ -128,7 +128,7 @@ export default function SearchPassword() {
         <div className="absolute bottom-4 left-4 w-full">
           <PrimaryButton
             name="인증하기"
-            isDisabled={isCodeValid}
+            isDisabled={!isCodeValid}
             handleClick={confirmEmail}
           />
         </div>
