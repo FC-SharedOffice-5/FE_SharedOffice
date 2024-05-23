@@ -34,7 +34,7 @@ const Timer = ({ resetTrigger }: TimerProps) => {
 
   return (
     <>
-      <div className="label-small absolute bottom-[10px] right-0 text-error">
+      <div className="label-small absolute bottom-[26px] right-0 text-error">
         {minutes}:{second}
       </div>
       {!timeLeft && <TimerModal />}
