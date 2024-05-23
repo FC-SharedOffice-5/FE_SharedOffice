@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="kr"
+      lang="ko"
       className={`${pretendard.variable}`}
     >
       <body className={pretendard.className}>
