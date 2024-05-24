@@ -5,7 +5,7 @@ import PrimaryButton from '@/components/primary-button';
 import TextInput from '@/components/text-input';
 import { emailValidation, passwordValidation } from '@/utils/validationSchemas';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 export default function LoginForm() {
@@ -19,6 +19,8 @@ export default function LoginForm() {
   const watchAllFields = watch();
   const isEmailValid = watchAllFields.email && !errors.email;
   const isPasswordValid = watchAllFields.password && !errors.password;
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
@@ -32,11 +34,24 @@ export default function LoginForm() {
       formData.append('password', watchAllFields.password);
       formData.append('persistLogin', isChecked ? 'true' : 'false');
 
-      await signInWithCredentials(formData);
+      const res = await signInWithCredentials(formData);
+      // 이메일 불일치 시, 둘 다 불일치 시
+      // setEmailErrorMessage(res.message);
+
+      // 비밀번호 불일치 시
+      // setPasswordErrorMessage(res.message);
     } catch (error) {
       console.error('로그인 실패:', error);
     }
   };
+
+  useEffect(() => {
+    setEmailErrorMessage('');
+  }, [watchAllFields.email]);
+
+  useEffect(() => {
+    setPasswordErrorMessage('');
+  }, [watchAllFields.password]);
 
   return (
     <form className="flex flex-col gap-2">
@@ -51,6 +66,7 @@ export default function LoginForm() {
           errors={errors}
           validation={emailValidation}
         />
+        <div className="caption-small text-error">{emailErrorMessage}</div>
       </div>
       <div className="h-[72px]">
         <TextInput
@@ -62,6 +78,7 @@ export default function LoginForm() {
           errors={errors}
           validation={passwordValidation}
         />
+        <div className="caption-small text-error">{passwordErrorMessage}</div>
       </div>
       <div>
         <input
