@@ -101,7 +101,7 @@ const TextInput = ({
         )}
       </div>
       {isErrorPresent && (
-        <span className="body-small text-error">{errors[name]?.message?.toString()}</span>
+        <span className="caption-small text-error">{errors[name]?.message?.toString()}</span>
       )}
     </div>
   );
