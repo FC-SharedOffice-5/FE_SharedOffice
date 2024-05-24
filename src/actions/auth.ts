@@ -9,8 +9,9 @@ export const signInWithCredentials = async (formData: FormData) => {
 
   try {
     await signIn('credentials', {
-      email: formData.get('email') || '',
-      password: formData.get('password') || '',
+      email: formData.get('email'),
+      password: formData.get('password'),
+      persistLogin: formData.get('persistLogin'),
       redirect: false,
     });
     shouldRedirect = true;
@@ -29,6 +30,8 @@ export const signInWithCredentials = async (formData: FormData) => {
   if (shouldRedirect) {
     redirect('/');
   }
+
+  return { message: null };
 };
 
 export { auth };
