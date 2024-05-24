@@ -66,7 +66,7 @@ const TextInput = ({
             (isErrorPresent || error) && 'border-error data-[focus]:border-error',
           )}
         />
-        {setValue && inputValue && !isDisabled && (
+        {type !== 'password' && setValue && inputValue && !isDisabled && (
           <button
             type="button"
             onClick={() => {
