@@ -9,12 +9,16 @@ type TProps = {
 const Accordion = ({ header: Header, panel: Panel }: TProps) => {
   return (
     <Disclosure>
-      <DisclosureButton className="w-full py-[16px]">
-        <Header />
-      </DisclosureButton>
-      <DisclosurePanel className="w-full pl-6">
-        <Panel />
-      </DisclosurePanel>
+      {({ open }) => (
+        <>
+          <DisclosureButton className="w-full py-[16px]">
+            <Header open={open} />
+          </DisclosureButton>
+          <DisclosurePanel className="w-full pl-6">
+            <Panel />
+          </DisclosurePanel>
+        </>
+      )}
     </Disclosure>
   );
 };

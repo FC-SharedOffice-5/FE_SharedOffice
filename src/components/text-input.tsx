@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { ElementType, useState } from 'react';
 import { UseFormSetValue, UseFormRegister, FieldValues, FieldErrors } from 'react-hook-form';
 import clsx from 'clsx';
 
@@ -16,6 +16,7 @@ type TextInputProps = {
   validation?: object;
   error?: boolean;
   isDisabled?: boolean;
+  suffix?: ElementType;
 };
 
 const TextInput = ({
@@ -29,6 +30,7 @@ const TextInput = ({
   validation,
   error,
   isDisabled = false,
+  suffix: SuffixComponent,
 }: TextInputProps) => {
   const [inputValue, setInputValue] = useState('');
   const [inputType, setInputType] = useState(type);
@@ -98,6 +100,14 @@ const TextInput = ({
               className="hover:cursor-pointer"
             />
           </button>
+        )}
+        {SuffixComponent && (
+          <div
+            className="absolute bottom-[10px] right-0"
+            onClick={}
+          >
+            <SuffixComponent />
+          </div>
         )}
       </div>
       {isErrorPresent && (

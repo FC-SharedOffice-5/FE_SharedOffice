@@ -1,60 +1,144 @@
 'use client';
 
+import { useEffect, useMemo } from 'react';
 import CheckBox, { TCheckBoxProps } from '@/components/CheckBox';
 import Divider from '@/components/Divider';
 import PrimaryButton from '@/components/primary-button';
 import List from '@/components/List';
 import Accordion from '@/components/Accordion';
+import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
+import { requiredItems, optionalItems, TAgreeItems, titleItems } from './constants';
+
+export type TFormValues = {
+  all: boolean;
+  mile: boolean;
+  personal: boolean;
+  thirdParty: boolean;
+  email: boolean;
+  sms: boolean;
+  appPush: boolean;
+  optional: boolean;
+};
 
 export default function SignUpPage() {
-  const items: (TCheckBoxProps & { id: number })[] = [
-    { id: 2, outline: false, subTitle: '[필수] 마일 이용약관 동의', suffix: 'contentLink' },
-    {
-      id: 3,
-      outline: false,
-      subTitle: '[필수] 개인 정보 수집 및 이용 동의',
-      suffix: 'contentLink',
+  const { control, handleSubmit, setValue, reset } = useForm({
+    defaultValues: {
+      all: false,
+      mile: false,
+      personal: false,
+      thirdParty: false,
+      email: false,
+      sms: false,
+      appPush: false,
+      optional: false,
     },
-    { id: 4, outline: false, subTitle: '[필수] 개인 정보 제 3자 제공 동의', suffix: 'contentLink' },
-  ];
+  });
 
-  const subItems: (TCheckBoxProps & { id: number })[] = [
-    { id: 5, outline: false, subTitle: '이메일', suffix: 'contentLink' },
-    { id: 6, outline: false, subTitle: '문자 메세지', suffix: 'contentLink' },
-    { id: 7, outline: false, subTitle: '앱 푸시', suffix: 'contentLink' },
-  ];
+  const values = useWatch({ control });
+
+  const checkAllValues = (allChecked: boolean) => {
+    const allValues = [...requiredItems, ...optionalItems, ...titleItems].reduce((acc, item) => {
+      acc[item.name as keyof TFormValues] = allChecked;
+
+      return acc;
+    }, {} as Partial<TFormValues>);
+
+    reset(allValues);
+  };
+
+  useEffect(() => {
+    const emailChecked = values.email;
+    const smsChecked = values.sms;
+    const appPushChecked = values.appPush;
+
+    const optionalAllChecked: boolean = (emailChecked && smsChecked && appPushChecked) ?? false;
+    setValue('optional', optionalAllChecked);
+  }, [setValue, reset, values.email, values.sms, values.appPush]);
+
+  const onSubmit: SubmitHandler<TFormValues> = (data) => {
+    //
+  };
+
+  const isValid = useMemo(
+    () => values.mile && values.personal && values.thirdParty,
+    [values.mile, values.personal, values.thirdParty],
+  );
 
   return (
     <>
       <main className="flex h-full flex-col items-center justify-between px-4">
         <div />
         <section className="w-full">
-          <CheckBox title="모두 동의" />
+          <Controller
+            name={titleItems[0].name}
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <CheckBox
+                title="모두 동의"
+                onChange={(checked: boolean) => {
+                  onChange(checked);
+                  checkAllValues(checked);
+                }}
+                selected={value}
+              />
+            )}
+          />
           <Divider className="mb-3 mt-2 h-[1px] w-full bg-black" />
           <List
-            items={items}
-            renderItem={(item: TCheckBoxProps & { id: number }) => (
-              <CheckBox
+            items={requiredItems}
+            renderItem={(item: TAgreeItems) => (
+              <Controller
                 key={item.id}
-                {...item}
+                name={item.name as keyof TFormValues}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <CheckBox
+                    subTitle={item.subTitle}
+                    suffix={item.suffix}
+                    onChange={onChange}
+                    selected={value}
+                  />
+                )}
               />
             )}
           />
           <Accordion
-            header={() => (
-              <CheckBox
-                outline={false}
-                subTitle="[선택] 광고성 정보 수신에 동의"
-                suffix="plusIcon"
+            header={({ open }) => (
+              <Controller
+                name={titleItems[1].name}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <CheckBox
+                    outline={false}
+                    subTitle="[선택] 광고성 정보 수신에 동의"
+                    suffix={open ? 'minusIcon' : 'plusIcon'}
+                    onChange={(checked: boolean) => {
+                      onChange(checked);
+                      setValue('email', checked);
+                      setValue('sms', checked);
+                      setValue('appPush', checked);
+                    }}
+                    selected={value}
+                  />
+                )}
               />
             )}
             panel={() => (
               <List
-                items={subItems}
-                renderItem={(item: TCheckBoxProps & { id: number }) => (
-                  <CheckBox
+                items={optionalItems}
+                renderItem={(item: TAgreeItems) => (
+                  <Controller
                     key={item.id}
-                    {...item}
+                    name={item.name as keyof TFormValues}
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                      <CheckBox
+                        subTitle={item.subTitle}
+                        suffix={item.suffix}
+                        onChange={onChange}
+                        selected={value}
+                      />
+                    )}
                   />
                 )}
               />
@@ -62,6 +146,8 @@ export default function SignUpPage() {
           />
         </section>
         <PrimaryButton
+          handleClick={handleSubmit(onSubmit)}
+          isDisabled={isValid}
           color="green"
           name="다음"
         />

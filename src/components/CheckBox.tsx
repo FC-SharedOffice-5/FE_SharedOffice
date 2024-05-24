@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, ReactNode, Fragment } from 'react';
+import { useMemo, ReactNode } from 'react';
 import { Checkbox, Field, Label } from '@headlessui/react';
 import MinusIcon from '@/assets/icons/MinusIcon';
 import PlusIcon from '@/assets/icons/PlusIcon';
@@ -15,6 +15,8 @@ export type TCheckBoxProps = {
   title?: string;
   subTitle?: string;
   suffix?: TSuffix;
+  onChange: (...event: any[]) => void;
+  selected: boolean;
 };
 
 const CheckBox = ({
@@ -23,6 +25,8 @@ const CheckBox = ({
   title,
   subTitle,
   suffix,
+  onChange,
+  selected,
   ...props
 }: TCheckBoxProps) => {
   const sizes = {
@@ -40,14 +44,12 @@ const CheckBox = ({
     [],
   );
 
-  const [enabled, setEnabled] = useState(false);
-
   return (
     <div className="flex justify-between">
-      <Field className="group flex items-center gap-2">
+      <Field className="group flex items-center">
         <Checkbox
-          checked={enabled}
-          onChange={setEnabled}
+          checked={selected}
+          onChange={onChange}
           className={`group flex ${sizes[size]} ${outline ? 'data-[checked]:border-primary data-[checked]:bg-primary' : ''} place-content-center rounded-sm ${outline ? 'border-2' : 'border-0'} border-black/40 bg-white focus:outline-none`}
           {...props}
         >
@@ -64,7 +66,9 @@ const CheckBox = ({
           </svg>
         </Checkbox>
         {(title || subTitle) && (
-          <Label className={`cursor-pointer ${title && 'label-small'} ${subTitle && 'body-small'}`}>
+          <Label
+            className={`cursor-pointer ${title && 'label-small'} ${subTitle && 'body-small'} pl-2`}
+          >
             {title || subTitle}
           </Label>
         )}
