@@ -52,7 +52,7 @@ export default function SearchPassword() {
     // setCodeError(true);
 
     // 200일 때
-    router.push('/');
+    router.push('/new-password');
   };
 
   const goBack = () => router.back();
@@ -78,8 +78,8 @@ export default function SearchPassword() {
         />
         비밀번호 찾기
       </header>
-      <form className="flex w-full flex-col gap-8">
-        <div>
+      <form className="flex w-full flex-col gap-4">
+        <div className="h-[72px]">
           <TextInput
             type="text"
             label="이메일 주소"
@@ -100,7 +100,7 @@ export default function SearchPassword() {
           />
           {emailError && <div className="body-small text-error">존재하지 않는 이메일입니다.</div>}
         </div>
-        <div className="relative">
+        <div className="relative h-[72px]">
           <TextInput
             type="number"
             label="인증번호"
@@ -120,15 +120,30 @@ export default function SearchPassword() {
         <PrimaryButton
           color={isCodeSent ? 'white' : 'green'}
           name={isCodeSent ? '인증번호 재발송' : '인증번호 발송'}
-          isDisabled={isCodeSent ? false : isEmailValid}
+          isDisabled={isCodeSent ? false : !isEmailValid}
           handleClick={sendCode}
         />
+        {isCodeSent && (
+          <div className="flex h-[124px] w-full flex-col justify-between rounded-lg bg-background p-4">
+            <span className="body-small text-gray">인증번호 문자를 못 받으셨나요?</span>
+            <div className="body-small flex flex-col text-gray-300">
+              <span>
+                · 입력하신 인증정보가 일치하지 않을 경우, 인증번호 <br />
+                &nbsp;&nbsp;문자는 발송되지 않습니다.
+              </span>
+              <span>
+                · 인증번호가 문자로 수신되지 않을 경우 정확한 정보로 <br />
+                &nbsp;&nbsp;재시도해 주시기 바랍니다.
+              </span>
+            </div>
+          </div>
+        )}
       </form>
       {isCodeSent && (
         <div className="absolute bottom-4 left-4 w-full">
           <PrimaryButton
             name="인증하기"
-            isDisabled={isCodeValid}
+            isDisabled={!isCodeValid}
             handleClick={confirmEmail}
           />
         </div>
