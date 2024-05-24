@@ -9,7 +9,8 @@ export const authHandlers = [
     const info = await request.json();
 
     return HttpResponse.json({
-      code: 200,
+      status: 401,
+      errorMessage: 'not_email',
       accessToken: '123',
     });
   }),
