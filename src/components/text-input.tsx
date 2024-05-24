@@ -102,10 +102,7 @@ const TextInput = ({
           </button>
         )}
         {SuffixComponent && (
-          <div
-            className="absolute bottom-[10px] right-0"
-            onClick={}
-          >
+          <div className="absolute bottom-[10px] right-0">
             <SuffixComponent />
           </div>
         )}

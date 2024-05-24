@@ -36,8 +36,8 @@ export default function NewPassword() {
   }, [watchPassword, watchVerifyPassword]);
 
   return (
-    <div className="relative flex h-full w-full flex-col justify-center gap-8 p-4">
-      <p className="headline-medium absolute left-4 top-24">
+    <div className="flex h-full w-full flex-col justify-center gap-8 p-4">
+      <p className="headline-medium left-4 top-24">
         새로운 비밀번호를
         <br />
         설정해주세요.
@@ -69,7 +69,7 @@ export default function NewPassword() {
           <div className="body-small text-error">비밀번호가 일치하지 않습니다.</div>
         )}
       </div>
-      <div className="absolute bottom-4 left-4 w-full">
+      <div className="bottom-4 left-4 w-full">
         <PrimaryButton
           name="비밀번호 재설정"
           isDisabled={!isFormValid}
