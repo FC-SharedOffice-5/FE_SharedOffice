@@ -72,7 +72,7 @@ export default function NewPassword() {
       <div className="bottom-4 left-4 w-full">
         <PrimaryButton
           name="비밀번호 재설정"
-          isDisabled={!isFormValid}
+          disabled={!isFormValid}
           handleClick={changePassword}
         />
       </div>

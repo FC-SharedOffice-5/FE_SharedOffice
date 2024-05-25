@@ -5,7 +5,7 @@ type PrimaryButtonProps = {
   color?: 'green' | 'white';
   size?: 'big' | 'small' | 'modal';
   name: string;
-  isDisabled?: boolean;
+  disabled?: boolean;
   handleClick?: () => void;
 };
 
@@ -13,20 +13,21 @@ const PrimaryButton = ({
   color = 'green',
   size = 'big',
   name,
-  isDisabled = false,
+  disabled,
   handleClick,
 }: PrimaryButtonProps) => {
   return (
     <Button
-      disabled={isDisabled}
+      disabled={disabled}
       onClick={handleClick}
-      className={clsx('label-medium h-12 w-[328px] rounded-lg', {
-        'w-40': size === 'small',
-        'w-[248px]': size === 'modal',
-        'bg-primary/[.4] text-white': color === 'green' && isDisabled,
-        'bg-primary text-white': color === 'green' && !isDisabled,
-        'border-[1px] border-primary text-primary': color === 'white',
-      })}
+      className={clsx(
+        'label-medium h-12 w-[328px] rounded-lg bg-primary text-white data-[disabled]:bg-primary/[.4]',
+        {
+          'w-40': size === 'small',
+          'w-[248px]': size === 'modal',
+          'border-[1px] border-primary text-primary': color === 'white',
+        },
+      )}
     >
       {name}
     </Button>

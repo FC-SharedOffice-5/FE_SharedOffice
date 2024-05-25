@@ -147,7 +147,7 @@ export default function SignUpPage() {
         </section>
         <PrimaryButton
           handleClick={handleSubmit(onSubmit)}
-          isDisabled={!isValid}
+          disabled={!isValid}
           color="green"
           name="다음"
         />

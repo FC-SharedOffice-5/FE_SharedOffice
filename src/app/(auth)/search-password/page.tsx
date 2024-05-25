@@ -88,7 +88,7 @@ export default function SearchPassword() {
               },
             }}
             error={emailError}
-            isDisabled={isDisabled}
+            disabled={isDisabled}
           />
           {emailError && <div className="body-small text-error">존재하지 않는 이메일입니다.</div>}
         </div>
@@ -112,7 +112,7 @@ export default function SearchPassword() {
         <PrimaryButton
           color={isCodeSent ? 'white' : 'green'}
           name={isCodeSent ? '인증번호 재발송' : '인증번호 발송'}
-          isDisabled={isCodeSent ? false : !isEmailValid}
+          disabled={isCodeSent ? false : !isEmailValid}
           handleClick={sendCode}
         />
         {isCodeSent && (
@@ -134,7 +134,7 @@ export default function SearchPassword() {
       {isCodeSent && (
         <PrimaryButton
           name="인증하기"
-          isDisabled={!isCodeValid}
+          disabled={!isCodeValid}
           handleClick={confirmEmail}
         />
       )}
