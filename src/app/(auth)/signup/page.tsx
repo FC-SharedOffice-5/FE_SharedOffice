@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import CheckBox, { TCheckBoxProps } from '@/components/CheckBox';
+import CheckBox from '@/components/CheckBox';
 import Divider from '@/components/Divider';
-import PrimaryButton from '@/components/primary-button';
+import PrimaryButton from '@/components/PrimaryButton';
 import List from '@/components/List';
 import Accordion from '@/components/Accordion';
 import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';

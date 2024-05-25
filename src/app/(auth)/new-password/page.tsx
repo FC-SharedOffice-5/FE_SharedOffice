@@ -3,8 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
-import TextInput from '@/components/text-input';
-import PrimaryButton from '@/components/primary-button';
+import Input from '@/components/Input';
+import PrimaryButton from '@/components/PrimaryButton';
 
 export default function NewPassword() {
   const router = useRouter();
@@ -43,7 +43,7 @@ export default function NewPassword() {
         설정해주세요.
       </p>
       <div className="h-[72px]">
-        <TextInput
+        <Input
           type="password"
           label="새 비밀번호"
           name="password"
@@ -58,7 +58,7 @@ export default function NewPassword() {
         />
       </div>
       <div className="h-[72px]">
-        <TextInput
+        <Input
           type="password"
           label="비밀번호 확인"
           name="verifyPassword"

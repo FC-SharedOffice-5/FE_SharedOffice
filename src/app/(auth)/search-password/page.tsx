@@ -4,9 +4,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import TextInput from '@/components/text-input';
-import PrimaryButton from '@/components/primary-button';
-import Timer from '@/components/timer';
+import Input from '@/components/Input';
+import PrimaryButton from '@/components/PrimaryButton';
+import Timer from '@/components/AuthTimer';
 
 export default function SearchPassword() {
   const router = useRouter();
@@ -72,7 +72,7 @@ export default function SearchPassword() {
       {isCodeSent && <div />}
       <form className="flex w-full flex-col gap-8">
         <div>
-          <TextInput
+          <Input
             type="text"
             label="이메일 주소"
             name="email"
@@ -93,7 +93,7 @@ export default function SearchPassword() {
           {emailError && <div className="body-small text-error">존재하지 않는 이메일입니다.</div>}
         </div>
         <div className="relative h-[72px]">
-          <TextInput
+          <Input
             type="number"
             label="인증번호"
             name="code"

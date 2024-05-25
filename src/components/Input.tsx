@@ -4,9 +4,9 @@ import Image from 'next/image';
 import { ElementType, InputHTMLAttributes, useState } from 'react';
 import { UseFormSetValue, UseFormRegister, FieldValues, FieldErrors } from 'react-hook-form';
 import clsx from 'clsx';
-import { Field, Input, Label } from '@headlessui/react';
+import { Field, Input as HeadlessInput, Label } from '@headlessui/react';
 
-type TextInputProps = InputHTMLAttributes<HTMLInputElement> & {
+type TInputProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
   name: string;
   setValue?: UseFormSetValue<FieldValues>;
@@ -17,7 +17,7 @@ type TextInputProps = InputHTMLAttributes<HTMLInputElement> & {
   suffix?: ElementType;
 };
 
-const TextInput = ({
+const Input = ({
   label,
   name,
   setValue,
@@ -27,7 +27,7 @@ const TextInput = ({
   error,
   suffix: SuffixComponent,
   ...props
-}: TextInputProps) => {
+}: TInputProps) => {
   const { type = 'text', disabled = false } = props;
   const [inputValue, setInputValue] = useState('');
   const [inputType, setInputType] = useState(type);
@@ -50,7 +50,7 @@ const TextInput = ({
       >
         {label}
       </Label>
-      <Input
+      <HeadlessInput
         {...props}
         {...register?.(name, validation)}
         onInput={(e) => {
@@ -102,11 +102,11 @@ const TextInput = ({
           <SuffixComponent />
         </div>
       )}
-      {errors?.[name]?.message && (
-        <span className="body-small text-error">{errors[name].message.toString()}</span>
+      {isErrorPresent && (
+        <span className="body-small text-error">{errors?.[name]?.message?.toString()}</span>
       )}
     </Field>
   );
 };
 
-export default TextInput;
+export default Input;
