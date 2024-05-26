@@ -6,7 +6,7 @@ import TextInput from '@/components/text-input';
 import { emailValidation, passwordValidation } from '@/utils/validationSchemas';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 
 export default function LoginForm() {
   const {
@@ -14,6 +14,7 @@ export default function LoginForm() {
     watch,
     formState: { errors },
     setValue,
+    handleSubmit,
   } = useForm({ mode: 'onChange' });
 
   const watchAllFields = watch();
@@ -27,14 +28,9 @@ export default function LoginForm() {
     setIsChecked(!isChecked);
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async (data: FieldValues) => {
     try {
-      const formData = new FormData();
-      formData.append('email', watchAllFields.email);
-      formData.append('password', watchAllFields.password);
-      formData.append('persistLogin', isChecked ? 'true' : 'false');
-
-      const res = await signInWithCredentials(formData);
+      const res = await signInWithCredentials(data, isChecked);
       // 이메일 불일치 시, 둘 다 불일치 시
       // setEmailErrorMessage(res.message);
 
@@ -106,7 +102,7 @@ export default function LoginForm() {
       <PrimaryButton
         name="로그인"
         isDisabled={!(isEmailValid && isPasswordValid)}
-        handleClick={onSubmit}
+        handleClick={handleSubmit(onSubmit)}
       />
     </form>
   );
