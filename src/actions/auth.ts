@@ -12,7 +12,7 @@ export const signInWithCredentials = async (data: FieldValues, ischecked: boolea
     const res = await signIn('credentials', {
       email: data.email,
       password: data.password,
-      persistLogin: ischecked,
+      keepLoggedIn: ischecked,
       redirect: false,
     });
     shouldRedirect = true;
