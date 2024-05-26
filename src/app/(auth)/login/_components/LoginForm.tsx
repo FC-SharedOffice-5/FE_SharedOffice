@@ -90,11 +90,10 @@ export default function LoginForm() {
           className={`mb-[14px] flex cursor-pointer items-center gap-2 ${isChecked ? 'text-black' : 'text-gray-300'}`}
         >
           <Image
-            src="/icons/round-check.svg"
+            src={`${isChecked ? 'icons/check-on.svg' : '/icons/check-off.svg'}`}
             alt="login state continue"
             width={20}
             height={20}
-            className={`${isChecked ? 'filter-grayscale' : 'filter-none'} invert`}
           />
           <div className="body-small">로그인 유지하기</div>
         </label>
