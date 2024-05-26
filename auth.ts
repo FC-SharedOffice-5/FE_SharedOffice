@@ -1,4 +1,3 @@
-import { error } from 'console';
 import NextAuth, { CredentialsSignin } from 'next-auth';
 import credentials from 'next-auth/providers/credentials';
 
