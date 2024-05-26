@@ -79,14 +79,14 @@ export default function LoginForm() {
       <div>
         <input
           type="checkbox"
-          id="persist-login"
-          name="persist-login"
+          id="keep-logged-in"
+          name="keep-logged-in"
           checked={isChecked}
           onChange={handleCheckboxChange}
           className="hidden"
         />
         <label
-          htmlFor="persist-login"
+          htmlFor="keep-logged-in"
           className={`mb-[14px] flex cursor-pointer items-center gap-2 ${isChecked ? 'text-black' : 'text-gray-300'}`}
         >
           <Image
