@@ -6,7 +6,7 @@ import PrimaryButton from '@/components/PrimaryButton';
 import { emailValidation, passwordValidation } from '@/utils/validationSchemas';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
 export default function LoginForm() {
   const {
@@ -27,15 +27,9 @@ export default function LoginForm() {
     setIsChecked(!isChecked);
   };
 
-  const onSubmit = async (data: any) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      const formData = new FormData();
-
-      formData.append('email', data.email);
-      formData.append('password', data.password);
-      formData.append('keepLoggedIn', isChecked ? 'true' : 'false');
-
-      const res = await signInWithCredentials(formData);
+      const res = await signInWithCredentials(data, isChecked);
       // 이메일 불일치 시, 둘 다 불일치 시
       // setEmailErrorMessage(res.message);
 
