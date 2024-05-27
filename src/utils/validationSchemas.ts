@@ -17,7 +17,7 @@ export const emailValidation: ValidationSchema = {
 export const passwordValidation: ValidationSchema = {
   required: '비밀번호를 입력해주세요.',
   pattern: {
-    value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*?~+-])[A-Za-z\d!@#$%^&*?~+-]{8,20}$/i,
-    message: '영문, 숫자, 특수문자를 조합해서 입력해주세요. (8-20자)',
+    value: /^.{8,}$/,
+    message: '',
   },
 };
