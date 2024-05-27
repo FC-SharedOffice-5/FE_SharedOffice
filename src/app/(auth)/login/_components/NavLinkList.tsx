@@ -3,9 +3,9 @@ import React from 'react';
 
 export default function NavLinkList() {
   const links = [
-    { href: '/', name: '이메일 가입' },
-    { href: '/', name: '이메일 찾기' },
-    { href: '/', name: '비밀번호 찾기' },
+    { href: '/signup', name: '이메일 가입' },
+    { href: '/search-email', name: '이메일 찾기' },
+    { href: '/search-password', name: '비밀번호 찾기' },
   ];
 
   return (
