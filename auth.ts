@@ -1,9 +1,9 @@
 import NextAuth, { CredentialsSignin } from 'next-auth';
-import credentials from 'next-auth/providers/credentials';
+import Credentials from 'next-auth/providers/credentials';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
-    credentials({
+    Credentials({
       authorize: async (credentials) => {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/login`, {
           cache: 'no-store',

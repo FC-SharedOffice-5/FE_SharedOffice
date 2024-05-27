@@ -7,13 +7,13 @@ export default function Complete() {
   const router = useRouter();
 
   const goToLogin = () => {
-    router.push('/login');
+    router.replace('/login');
   };
 
   return (
     <div className="flex h-full w-full flex-col justify-center gap-8 p-4">
       <p className="headline-medium left-4 top-24">
-        비밀번호 변경이
+        회원가입이
         <br />
         <span className="text-primary">완료</span>되었습니다.
       </p>

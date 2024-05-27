@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import PrimaryButton from './primary-button';
+import PrimaryButton from './PrimaryButton';
 
 const TimerModal = () => {
   return (

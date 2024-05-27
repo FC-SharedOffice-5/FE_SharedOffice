@@ -7,7 +7,7 @@ import Input from '@/components/Input';
 import PrimaryButton from '@/components/PrimaryButton';
 import Timer from '@/components/AuthTimer';
 
-export default function SearchPassword() {
+export default function EmailVerificationPage() {
   const router = useRouter();
 
   const [isCodeSent, setIsCodeSent] = useState(false);
@@ -48,7 +48,7 @@ export default function SearchPassword() {
     // setCodeError(true);
 
     // 200일 때
-    router.push('/new-password');
+    router.push('/signup/new-password-nickname');
   };
 
   const goBack = () => router.back();
