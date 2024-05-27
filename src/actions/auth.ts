@@ -1,7 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { auth, signIn } from '../../auth';
+import { auth, signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import { FieldValues } from 'react-hook-form';
 
