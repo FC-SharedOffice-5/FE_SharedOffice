@@ -67,6 +67,9 @@ export default function UserInfoPage() {
           control={control}
           validation={{
             required: true,
+            pattern: {
+              value: /^\d{4}\.\d{2}\.\d{2}$/,
+            },
           }}
           label="생년월일"
           name="birth"
