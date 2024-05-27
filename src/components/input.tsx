@@ -5,7 +5,7 @@ import { ChangeEvent, ElementType, InputHTMLAttributes, useMemo, useState } from
 import { useController, Control } from 'react-hook-form';
 import clsx from 'clsx';
 import { Field, Input as HeadlessInput, Label } from '@headlessui/react';
-import { formatBirthDate } from '@/utils/formatBirth';
+import { formatBirthDate } from '@/utils/format-birth';
 import { cn } from '@/utils/cn';
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {

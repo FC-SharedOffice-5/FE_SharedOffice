@@ -3,8 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Input from '@/components/Input';
-import PrimaryButton from '@/components/PrimaryButton';
+import Input from '@/components/input';
+import PrimaryButton from '@/components/primary-button';
 import Timer from '@/components/auth-timer';
 
 export default function EmailVerificationPage() {

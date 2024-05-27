@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import Input from '@/components/Input';
-import PrimaryButton from '@/components/PrimaryButton';
+import Input from '@/components/input';
+import PrimaryButton from '@/components/primary-button';
 
 export default function NewPassword() {
   const router = useRouter();

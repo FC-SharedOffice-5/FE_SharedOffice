@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Input from '@/components/input-1';
+import Input from '@/components/input';
 import PrimaryButton from '@/components/primary-button';
 
 export default function SearchPasswordPage() {

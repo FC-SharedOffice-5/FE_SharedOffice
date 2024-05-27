@@ -1,9 +1,9 @@
 'use client';
 
 import { signInWithCredentials } from '@/actions/auth';
-import Input from '@/components/input-1';
+import Input from '@/components/input';
 import PrimaryButton from '@/components/primary-button';
-import { emailValidation, passwordValidation } from '@/utils/validationSchemas';
+import { emailValidation, passwordValidation } from '@/utils/validation-schemas';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';

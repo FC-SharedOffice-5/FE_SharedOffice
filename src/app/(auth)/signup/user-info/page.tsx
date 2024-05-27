@@ -1,8 +1,8 @@
 'use client';
 
 import ChevronDownIcon from '@/assets/icons/chevron-down-Icon';
-import PrimaryButton from '@/components/PrimaryButton';
-import Input from '@/components/Input';
+import PrimaryButton from '@/components/primary-button';
+import Input from '@/components/input';
 import { useForm } from 'react-hook-form';
 import { useCallback, useState } from 'react';
 import GenderSelectModal from './_components/gender-select-modal';

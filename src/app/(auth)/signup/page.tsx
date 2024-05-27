@@ -4,11 +4,11 @@ import { useEffect, useMemo } from 'react';
 import CheckBox from '@/components/checkbox';
 import Divider from '@/components/divider';
 import PrimaryButton from '@/components/primary-button';
-import List from '@/components/list-box';
-import Accordion from '@/components/accordion';
+import List from '@/components/list';
 import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { requiredItems, optionalItems, TAgreeItems, titleItems } from './constants';
 import { useRouter } from 'next/navigation';
+import Accordion from '@/components/accordion';
 
 export type TFormValues = {
   all: boolean;
