@@ -3,7 +3,7 @@
 import ChevronDownIcon from '@/assets/icons/ChevronDownIcon';
 import PrimaryButton from '@/components/PrimaryButton';
 import Input from '@/components/Input';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useCallback, useState } from 'react';
 import GenderSelectModal from './_components/GenderSelectModal';
 import { useRouter } from 'next/navigation';

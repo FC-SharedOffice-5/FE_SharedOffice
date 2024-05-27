@@ -1,12 +1,10 @@
 'use client';
 
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '@/components/Input';
 import PrimaryButton from '@/components/PrimaryButton';
-import Timer from '@/components/AuthTimer';
 
 export default function SearchPassword() {
   const router = useRouter();

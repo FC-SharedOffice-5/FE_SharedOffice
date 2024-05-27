@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { useState, useEffect } from 'react';
 import Input from '@/components/Input';
 import PrimaryButton from '@/components/PrimaryButton';
 

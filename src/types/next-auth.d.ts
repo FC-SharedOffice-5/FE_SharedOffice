@@ -1,5 +1,3 @@
-import { JWT } from 'next-auth/jwt';
-
 export declare module 'next-auth/jwt' {
   interface JWT {
     accessToken: string;
