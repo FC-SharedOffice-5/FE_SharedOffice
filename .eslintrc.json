@@ -1,8 +1,6 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "plugin:prettier/recommended"
-  ],
+  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
+  "plugins": ["unused-imports"],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
@@ -17,10 +15,11 @@
       }
     ],
     "prettier/prettier": [
-      "error", 
-      { 
-        "endOfLine": "auto" 
+      "error",
+      {
+        "endOfLine": "auto"
       }
-    ]
+    ],
+    "unused-imports/no-unused-imports": "error"
   }
 }

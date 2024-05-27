@@ -66,7 +66,7 @@ const TextInput = ({
             (isErrorPresent || error) && 'border-error data-[focus]:border-error',
           )}
         />
-        {setValue && inputValue && !isDisabled && (
+        {type !== 'password' && setValue && inputValue && !isDisabled && (
           <button
             type="button"
             onClick={() => {
@@ -101,7 +101,7 @@ const TextInput = ({
         )}
       </div>
       {isErrorPresent && (
-        <span className="body-small text-error">{errors[name]?.message?.toString()}</span>
+        <span className="caption-small text-error">{errors[name]?.message?.toString()}</span>
       )}
     </div>
   );

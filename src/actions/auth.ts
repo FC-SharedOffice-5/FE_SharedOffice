@@ -3,14 +3,16 @@
 import { redirect } from 'next/navigation';
 import { auth, signIn } from '../../auth';
 import { AuthError } from 'next-auth';
+import { FieldValues } from 'react-hook-form';
 
-export const signInWithCredentials = async (formData: FormData) => {
+export const signInWithCredentials = async (data: FieldValues, ischecked: boolean) => {
   let shouldRedirect = false;
 
   try {
-    await signIn('credentials', {
-      email: formData.get('email') || '',
-      password: formData.get('password') || '',
+    const res = await signIn('credentials', {
+      email: data.email,
+      password: data.password,
+      keepLoggedIn: ischecked,
       redirect: false,
     });
     shouldRedirect = true;
@@ -29,6 +31,8 @@ export const signInWithCredentials = async (formData: FormData) => {
   if (shouldRedirect) {
     redirect('/');
   }
+
+  return { message: '' };
 };
 
 export { auth };
