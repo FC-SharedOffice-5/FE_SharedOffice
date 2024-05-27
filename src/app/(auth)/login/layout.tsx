@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Header from '../header';
+import Header from '@/components/header';
 
 const TITLE = '로그인';
 

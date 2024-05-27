@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import Header from '../header';
+import Header from '@/components/header';
 
-const TITLE = '이메일 찾기';
+const TITLE = '이메일 주소 찾기';
 
 export const metadata: Metadata = {
   title: `거점 오피스 서비스 마일 - ${TITLE}`,

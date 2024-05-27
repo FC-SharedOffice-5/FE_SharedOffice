@@ -11,15 +11,15 @@ export default function SignUpComplete() {
   };
 
   return (
-    <div className="flex h-full w-full flex-col justify-center gap-8 p-4">
-      <p className="headline-medium left-4 top-24">
+    <div className="flex h-full w-full flex-col justify-around gap-8 p-4">
+      <p className="headline-medium">
         회원가입이
         <br />
         <span className="text-primary">완료</span>되었습니다.
       </p>
       <div className="bottom-4 left-4 w-full">
         <PrimaryButton
-          name="로그인 하기"
+          name="로그인 하러가기"
           handleClick={goToLogin}
         />
       </div>

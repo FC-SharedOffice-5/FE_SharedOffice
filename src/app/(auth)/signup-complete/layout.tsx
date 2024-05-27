@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 const TITLE = '회원가입 완료';
 
 export const metadata: Metadata = {
-  title: `거점 오피스 서비스 마일 - ${TITLE}`,
+  title: `마일 - ${TITLE}`,
   description: '마일은 거점 오피스 좌석 예약 서비스입니다.',
 };
 
