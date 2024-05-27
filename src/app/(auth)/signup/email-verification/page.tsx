@@ -48,7 +48,7 @@ export default function EmailVerificationPage() {
     // setCodeError(true);
 
     // 200일 때
-    router.push('/signup/new-password-nickname');
+    router.push('/signup/password-nickname');
   };
 
   const goBack = () => router.back();
