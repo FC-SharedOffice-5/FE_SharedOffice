@@ -7,7 +7,7 @@ export default async function SignInPage() {
     <main className="mx-4 flex h-full flex-col justify-center gap-8">
       <div className="mb-[30px] flex justify-center">
         <Image
-          src="icons/logo.svg"
+          src="/icons/logo.svg"
           alt="로고"
           width={72}
           height={41}

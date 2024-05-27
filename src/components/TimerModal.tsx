@@ -10,7 +10,7 @@ const TimerModal = () => {
         <div className="flex h-full w-full flex-col justify-between">
           <div className="flex flex-grow flex-col items-center justify-center gap-2">
             <Image
-              src="/warning.svg"
+              src="/icons/warning.svg"
               alt="경고"
               width={36}
               height={36}

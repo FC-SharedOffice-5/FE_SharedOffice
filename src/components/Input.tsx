@@ -80,7 +80,7 @@ const Input = ({
             className="absolute bottom-[10px] right-0"
           >
             <Image
-              src="/delete.svg"
+              src="/icons/delete.svg"
               alt="전체 삭제"
               width={20}
               height={20}
@@ -95,7 +95,7 @@ const Input = ({
             className="absolute bottom-[10px] right-0"
           >
             <Image
-              src={inputType === 'password' ? '/hide.svg' : '/hide-off.svg'}
+              src={inputType === 'password' ? '/icons/hide.svg' : '/icons/hide-off.svg'}
               alt="비밀번호 보이기/숨기기"
               width={20}
               height={20}
