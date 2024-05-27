@@ -9,31 +9,27 @@ import PrimaryButton from '@/components/PrimaryButton';
 export default function NewPassword() {
   const router = useRouter();
 
-  const [passwordError, setPasswordError] = useState(false);
-
   const {
-    register,
     watch,
-    formState: { errors },
+    control,
+    setError,
+    clearErrors,
+    formState: { errors, isValid },
   } = useForm({ mode: 'onChange' });
 
-  const watchPassword = watch('password');
-  const watchVerifyPassword = watch('verifyPassword');
-  const isFormValid = watchPassword && !errors.password && watchVerifyPassword && !passwordError;
+  const password = watch('password');
 
   const changePassword = () => {
-    // PUT /searchpw/newpassword/{id}
-
-    router.push('/new-password/complete');
+    router.replace('/new-password/complete');
   };
 
-  useEffect(() => {
-    if (watchVerifyPassword && watchPassword !== watchVerifyPassword) {
-      setPasswordError(true);
+  const validatePasswordConfirm = (value: string) => {
+    if (value !== password) {
+      setError('passwordConfirm', { type: 'manual', message: '비밀번호가 일치하지 않습니다.' });
     } else {
-      setPasswordError(false);
+      clearErrors('passwordConfirm');
     }
-  }, [watchPassword, watchVerifyPassword]);
+  };
 
   return (
     <div className="flex h-full w-full flex-col justify-center gap-8 p-4">
@@ -47,8 +43,7 @@ export default function NewPassword() {
           type="password"
           label="새 비밀번호"
           name="password"
-          register={register}
-          errors={errors}
+          control={control}
           validation={{
             pattern: {
               value: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':",.<>/?-]).{8,20}$/,
@@ -61,18 +56,18 @@ export default function NewPassword() {
         <Input
           type="password"
           label="비밀번호 확인"
-          name="verifyPassword"
-          register={register}
-          error={passwordError}
+          name="passwordConfirm"
+          control={control}
+          validation={{
+            required: true,
+            validate: validatePasswordConfirm,
+          }}
         />
-        {passwordError && (
-          <div className="body-small text-error">비밀번호가 일치하지 않습니다.</div>
-        )}
       </div>
       <div className="bottom-4 left-4 w-full">
         <PrimaryButton
           name="비밀번호 재설정"
-          disabled={!isFormValid}
+          disabled={!(isValid && !errors.passwordConfirm)}
           handleClick={changePassword}
         />
       </div>

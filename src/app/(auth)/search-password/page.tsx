@@ -14,17 +14,14 @@ export default function SearchPassword() {
   const [isCodeSent, setIsCodeSent] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [emailError, setEmailError] = useState(false);
-  const [codeError, setCodeError] = useState(false);
   const [showTimer, setShowTimer] = useState(false);
   const [resetTrigger, setResetTrigger] = useState(false);
 
   const {
-    register,
     watch,
-    formState: { errors },
-    setValue,
+    formState: { errors, isValid },
+    control,
   } = useForm({ mode: 'onChange' });
-
   const watchAllFields = watch();
   const isEmailValid = watchAllFields.email && !errors.email;
   const isCodeValid = watchAllFields.code && !errors.code;
@@ -57,14 +54,6 @@ export default function SearchPassword() {
 
   const goBack = () => router.back();
 
-  useEffect(() => {
-    setEmailError(false);
-  }, [watchAllFields.email]);
-
-  useEffect(() => {
-    setCodeError(false);
-  }, [watchAllFields.code]);
-
   return (
     <main
       className={`flex h-full flex-col items-center ${isCodeSent ? 'justify-between' : 'justify-around'} px-4`}
@@ -73,13 +62,11 @@ export default function SearchPassword() {
       <form className="flex w-full flex-col gap-8">
         <div>
           <Input
-            type="text"
+            type="email"
+            control={control}
             label="이메일 주소"
             name="email"
             placeholder="예) mile@mile.co.kr"
-            setValue={setValue}
-            register={register}
-            errors={errors}
             validation={{
               required: '유효하지 않은 이메일 형식입니다.',
               pattern: {
@@ -87,7 +74,6 @@ export default function SearchPassword() {
                 message: '유효하지 않은 이메일 형식입니다.',
               },
             }}
-            error={emailError}
             disabled={isDisabled}
           />
           {emailError && <div className="body-small text-error">존재하지 않는 이메일입니다.</div>}
@@ -95,19 +81,19 @@ export default function SearchPassword() {
         <div className="relative h-[72px]">
           <Input
             type="number"
+            control={control}
+            maxLength={6}
             label="인증번호"
             name="code"
             placeholder="인증번호 6자리 숫자"
-            register={register}
             validation={{
               pattern: {
                 value: /^[0-9]{6}$/,
+                message: '인증번호가 일치하지 않습니다.',
               },
             }}
-            error={codeError}
           />
           {showTimer && <Timer resetTrigger={resetTrigger} />}
-          {codeError && <div className="body-small text-error">인증번호가 일치하지 않습니다.</div>}
         </div>
         <PrimaryButton
           color={isCodeSent ? 'white' : 'green'}
