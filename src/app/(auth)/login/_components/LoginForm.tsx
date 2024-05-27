@@ -1,8 +1,8 @@
 'use client';
 
 import { signInWithCredentials } from '@/actions/auth';
-import PrimaryButton from '@/components/primary-button';
-import TextInput from '@/components/text-input';
+import Input from '@/components/Input';
+import PrimaryButton from '@/components/PrimaryButton';
 import { emailValidation, passwordValidation } from '@/utils/validationSchemas';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -10,10 +10,9 @@ import { FieldValues, useForm } from 'react-hook-form';
 
 export default function LoginForm() {
   const {
-    register,
     watch,
+    control,
     formState: { errors },
-    setValue,
     handleSubmit,
   } = useForm({ mode: 'onChange' });
 
@@ -52,26 +51,21 @@ export default function LoginForm() {
   return (
     <form className="flex flex-col gap-2">
       <div className="h-[72px]">
-        <TextInput
-          type="text"
+        <Input
           label="이메일 주소"
           name="email"
           placeholder="예) mile@mile.co.kr"
-          setValue={setValue}
-          register={register}
-          errors={errors}
+          control={control}
           validation={emailValidation}
         />
         <div className="caption-small text-error">{emailErrorMessage}</div>
       </div>
       <div className="h-[72px]">
-        <TextInput
+        <Input
           type="password"
           label="비밀번호"
           name="password"
-          setValue={setValue}
-          register={register}
-          errors={errors}
+          control={control}
           validation={passwordValidation}
         />
         <div className="caption-small text-error">{passwordErrorMessage}</div>
@@ -100,7 +94,7 @@ export default function LoginForm() {
       </div>
       <PrimaryButton
         name="로그인"
-        isDisabled={!(isEmailValid && isPasswordValid)}
+        disabled={!(isEmailValid && isPasswordValid)}
         handleClick={handleSubmit(onSubmit)}
       />
     </form>
