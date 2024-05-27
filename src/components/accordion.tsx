@@ -1,12 +1,12 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { ElementType } from 'react';
 
-type TProps = {
+type AccordionProps = {
   header: ElementType;
   panel: ElementType;
 };
 
-const Accordion = ({ header: Header, panel: Panel }: TProps) => {
+const Accordion = ({ header: Header, panel: Panel }: AccordionProps) => {
   return (
     <Disclosure>
       {({ open }) => (

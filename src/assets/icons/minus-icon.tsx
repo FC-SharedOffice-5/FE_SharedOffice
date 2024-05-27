@@ -12,4 +12,5 @@ const MinusIcon = () => (
     />
   </svg>
 );
+
 export default MinusIcon;

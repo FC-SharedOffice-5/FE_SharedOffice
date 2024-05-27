@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import TimerModal from './TimerModal';
+import TimerModal from './timer-modal';
 
-type TAuthTimerProps = {
+type AuthTimerProps = {
   resetTrigger: boolean;
 };
 
-const AuthTimer = ({ resetTrigger }: TAuthTimerProps) => {
+const AuthTimer = ({ resetTrigger }: AuthTimerProps) => {
   const MINUTES_IN_MS = 3 * 60 * 1000;
   const INTERVAL = 1000;
 

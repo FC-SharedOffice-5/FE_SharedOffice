@@ -1,13 +1,13 @@
 'use client';
 
-import BackIcon from '@/assets/icons/BackIcon';
+import BackIcon from '@/assets/icons/back-icon';
 import { useRouter } from 'next/navigation';
 
-type TProps = {
+type HeaderProps = {
   title: string;
 };
 
-export default function Header({ title }: TProps) {
+const Header = ({ title }: HeaderProps) => {
   const router = useRouter();
 
   return (
@@ -22,4 +22,6 @@ export default function Header({ title }: TProps) {
       <div />
     </nav>
   );
-}
+};
+
+export default Header;

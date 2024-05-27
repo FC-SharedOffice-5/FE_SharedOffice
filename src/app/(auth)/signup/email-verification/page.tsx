@@ -3,9 +3,9 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Input from '@/components/Input';
-import PrimaryButton from '@/components/PrimaryButton';
-import Timer from '@/components/AuthTimer';
+import Input from '@/components/input';
+import PrimaryButton from '@/components/primary-button';
+import Timer from '@/components/auth-timer';
 
 export default function EmailVerificationPage() {
   const router = useRouter();
@@ -48,7 +48,7 @@ export default function EmailVerificationPage() {
     // setCodeError(true);
 
     // 200일 때
-    router.push('/signup/new-password-nickname');
+    router.push('/signup/password-nickname');
   };
 
   const goBack = () => router.back();

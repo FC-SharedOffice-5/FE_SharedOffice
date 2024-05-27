@@ -1,14 +1,14 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import CheckBox from '@/components/CheckBox';
-import Divider from '@/components/Divider';
-import PrimaryButton from '@/components/PrimaryButton';
-import List from '@/components/List';
-import Accordion from '@/components/Accordion';
+import CheckBox from '@/components/checkbox';
+import Divider from '@/components/divider';
+import PrimaryButton from '@/components/primary-button';
+import List from '@/components/list';
 import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { requiredItems, optionalItems, TAgreeItems, titleItems } from './constants';
 import { useRouter } from 'next/navigation';
+import Accordion from '@/components/accordion';
 
 export type TFormValues = {
   all: boolean;
@@ -85,7 +85,7 @@ export default function SignUpPage() {
               />
             )}
           />
-          <Divider className="mb-3 mt-2 h-[1px] w-full bg-black" />
+          <Divider />
           <List
             items={requiredItems}
             renderItem={(item: TAgreeItems) => (

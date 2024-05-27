@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 
-type TModalProps = {
+type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   onSelect: (gender: string) => void;
 };
 
-const GenderSelectModal: React.FC<TModalProps> = ({ isOpen, onClose, onSelect }) => {
+const GenderSelectModal = ({ isOpen, onClose, onSelect }: ModalProps) => {
   const [touchStartY, setTouchStartY] = useState<number | null>(null);
   const [selectedGender, setSelectedGender] = useState<string | null>(null);
   const [isClosing, setIsClosing] = useState(false);

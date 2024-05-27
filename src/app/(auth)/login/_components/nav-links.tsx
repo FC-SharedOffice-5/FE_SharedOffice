@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 
-export default function NavLinkList() {
+const NavLinks = () => {
   const links = [
     { href: '/signup', name: '이메일 가입' },
     { href: '/search-email', name: '이메일 찾기' },
@@ -24,4 +24,6 @@ export default function NavLinkList() {
       </ul>
     </nav>
   );
-}
+};
+
+export default NavLinks;

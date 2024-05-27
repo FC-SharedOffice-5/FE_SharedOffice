@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import LoginForm from './_components/LoginForm';
-import NavLinkList from './_components/NavLinkList';
+import LoginForm from './_components/login-form';
+import NavLinks from './_components/nav-links';
 
 export default async function SignInPage() {
   return (
@@ -14,7 +14,7 @@ export default async function SignInPage() {
         />
       </div>
       <LoginForm />
-      <NavLinkList />
+      <NavLinks />
     </main>
   );
 }
