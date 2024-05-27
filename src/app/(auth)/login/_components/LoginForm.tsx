@@ -84,7 +84,7 @@ export default function LoginForm() {
           className={`mb-[14px] flex cursor-pointer items-center gap-2 ${isChecked ? 'text-black' : 'text-gray-300'}`}
         >
           <Image
-            src={`${isChecked ? 'icons/check-on.svg' : '/icons/check-off.svg'}`}
+            src={`${isChecked ? '/icons/check-on.svg' : '/icons/check-off.svg'}`}
             alt="login state continue"
             width={20}
             height={20}
