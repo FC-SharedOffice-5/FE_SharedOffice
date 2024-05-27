@@ -1,6 +1,6 @@
 'use client';
 
-import BackIcon from '@/assets/icons/BackIcon';
+import BackIcon from '@/assets/icons/back-icon';
 import { useRouter } from 'next/navigation';
 
 type TProps = {

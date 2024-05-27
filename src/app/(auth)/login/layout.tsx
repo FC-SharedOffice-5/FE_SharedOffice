@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: '마일은 거점 오피스 좌석 예약 서비스입니다.',
 };
 
-export default function RootLayout({
+export default function LoginLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

@@ -1,9 +1,9 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import PrimaryButton from '@/components/PrimaryButton';
+import PrimaryButton from '@/components/primary-button';
 
-export default function Complete() {
+export default function SearchEmailCompletePage() {
   const router = useRouter();
   // TODO: API RESPONSE 찾은 이메일 보여주기
   const email = 'test@example.com';

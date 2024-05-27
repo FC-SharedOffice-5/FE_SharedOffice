@@ -1,11 +1,11 @@
 'use client';
 
-import ChevronDownIcon from '@/assets/icons/ChevronDownIcon';
+import ChevronDownIcon from '@/assets/icons/chevron-down-Icon';
 import PrimaryButton from '@/components/PrimaryButton';
 import Input from '@/components/Input';
 import { useForm } from 'react-hook-form';
 import { useCallback, useState } from 'react';
-import GenderSelectModal from './_components/GenderSelectModal';
+import GenderSelectModal from './_components/gender-select-modal';
 import { useRouter } from 'next/navigation';
 
 export type TFormValues = {

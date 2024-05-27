@@ -6,8 +6,9 @@ import { useController, Control } from 'react-hook-form';
 import clsx from 'clsx';
 import { Field, Input as HeadlessInput, Label } from '@headlessui/react';
 import { formatBirthDate } from '@/utils/formatBirth';
+import { cn } from '@/utils/cn';
 
-type TInputProps = InputHTMLAttributes<HTMLInputElement> & {
+type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
   name: string;
   control: Control;
@@ -22,7 +23,7 @@ const Input = ({
   validation,
   suffix: SuffixComponent,
   ...props
-}: TInputProps) => {
+}: InputProps) => {
   const { field, fieldState } = useController({ control, name, rules: validation });
   const { type = 'text', disabled = false } = props;
   const [inputType, setInputType] = useState(type);
@@ -66,7 +67,7 @@ const Input = ({
               e.currentTarget.value = formatBirthDate(e.currentTarget.value);
             }
           }}
-          className={clsx(
+          className={cn(
             'body-small placeholder:body-small h-10 w-full border-b-[0.75px] border-[#111]/[.4] focus:bg-white focus:outline-none data-[focus]:border-[#111] data-[disabled]:bg-white data-[disabled]:text-[#111]/[.4]',
             isErrorPresent && 'border-error data-[focus]:border-error',
           )}

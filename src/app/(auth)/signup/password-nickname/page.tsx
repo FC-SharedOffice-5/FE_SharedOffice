@@ -19,7 +19,7 @@ export default function NewPassword() {
   const password = watch('password');
 
   const changePassword = () => {
-    router.replace('/signup/new-password-nickname/complete');
+    router.replace('/signup/complete');
   };
 
   const validatePasswordConfirm = (value: string) => {

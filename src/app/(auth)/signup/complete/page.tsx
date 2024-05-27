@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import PrimaryButton from '@/components/PrimaryButton';
 
-export default function Complete() {
+export default function SignUpComplete() {
   const router = useRouter();
 
   const goToLogin = () => {

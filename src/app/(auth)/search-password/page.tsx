@@ -3,11 +3,11 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Input from '@/components/Input';
-import PrimaryButton from '@/components/PrimaryButton';
-import Timer from '@/components/AuthTimer';
+import Input from '@/components/input-1';
+import PrimaryButton from '@/components/primary-button';
+import Timer from '@/components/auth-timer';
 
-export default function SearchPassword() {
+export default function SearchPasswordPage() {
   const router = useRouter();
 
   const [isCodeSent, setIsCodeSent] = useState(false);

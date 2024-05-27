@@ -1,8 +1,8 @@
-import { TCheckBoxProps } from '@/components/CheckBox';
+import { CheckBoxProps } from '@/components/checkbox';
 import { Prettify } from '@/types/utils';
 
 export type TAgreeItems = Prettify<
-  Omit<TCheckBoxProps, 'onChange' | 'selected'> & {
+  Omit<CheckBoxProps, 'onChange' | 'selected'> & {
     id: number;
     name: string;
   }

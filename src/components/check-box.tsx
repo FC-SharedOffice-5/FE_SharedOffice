@@ -2,14 +2,14 @@
 
 import { useMemo, ReactNode } from 'react';
 import { Checkbox, Field, Label } from '@headlessui/react';
-import MinusIcon from '@/assets/icons/MinusIcon';
-import PlusIcon from '@/assets/icons/PlusIcon';
+import MinusIcon from '@/assets/icons/minus-icon';
+import PlusIcon from '@/assets/icons/plus-icon';
 
 export type TSuffix = 'contentLink' | 'minusIcon' | 'plusIcon';
 
 type TSuffixComponents = { [key in TSuffix]: ReactNode };
 
-export type TCheckBoxProps = {
+export type CheckBoxProps = {
   size?: 'default' | 5 | 6;
   outline?: boolean;
   title?: string;
@@ -28,7 +28,7 @@ const CheckBox = ({
   onChange,
   selected,
   ...props
-}: TCheckBoxProps) => {
+}: CheckBoxProps) => {
   const sizes = {
     default: 'size-[18px]',
     5: 'size-5',

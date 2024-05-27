@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '@/components/Input';
 import PrimaryButton from '@/components/PrimaryButton';
-import Timer from '@/components/AuthTimer';
+import Timer from '@/components/auth-timer';
 
 export default function EmailVerificationPage() {
   const router = useRouter();

@@ -1,14 +1,14 @@
 'use client';
 
 import { signInWithCredentials } from '@/actions/auth';
-import Input from '@/components/Input';
-import PrimaryButton from '@/components/PrimaryButton';
+import Input from '@/components/input-1';
+import PrimaryButton from '@/components/primary-button';
 import { emailValidation, passwordValidation } from '@/utils/validationSchemas';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
-export default function LoginForm() {
+const LoginForm = () => {
   const {
     watch,
     control,
@@ -99,4 +99,6 @@ export default function LoginForm() {
       />
     </form>
   );
-}
+};
+
+export default LoginForm;
