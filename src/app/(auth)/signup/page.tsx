@@ -8,6 +8,7 @@ import List from '@/components/List';
 import Accordion from '@/components/Accordion';
 import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { requiredItems, optionalItems, TAgreeItems, titleItems } from './constants';
+import { useRouter } from 'next/navigation';
 
 export type TFormValues = {
   all: boolean;
@@ -21,6 +22,7 @@ export type TFormValues = {
 };
 
 export default function SignUpPage() {
+  const router = useRouter();
   const { control, handleSubmit, setValue, reset } = useForm({
     defaultValues: {
       all: false,
@@ -56,7 +58,7 @@ export default function SignUpPage() {
   }, [setValue, reset, values.email, values.sms, values.appPush]);
 
   const onSubmit: SubmitHandler<TFormValues> = (data) => {
-    //
+    router.push('/signup/user-info');
   };
 
   const isValid = useMemo(
@@ -148,8 +150,7 @@ export default function SignUpPage() {
         <PrimaryButton
           handleClick={handleSubmit(onSubmit)}
           disabled={!isValid}
-          color="green"
-          name="다음"
+          name="다음으로"
         />
       </main>
     </>
