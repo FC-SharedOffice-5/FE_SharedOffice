@@ -21,7 +21,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const data = await res.json();
 
           // 이메일 및 비밀번호 불일치 처리
-          // if (data.status === 401) {
+          // if (data.status === 400) {
           //   throw new CredentialsSignin({
           //     cause: `${data.errorMessage}`,
           //   });

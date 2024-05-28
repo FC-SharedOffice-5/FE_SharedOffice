@@ -5,22 +5,17 @@ import Input from '@/components/input';
 import PrimaryButton from '@/components/primary-button';
 import { emailValidation, passwordValidation } from '@/utils/validation-schemas';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
 const LoginForm = () => {
   const {
-    watch,
     control,
-    formState: { errors },
+    setError,
+    formState: { isValid },
     handleSubmit,
   } = useForm({ mode: 'onChange' });
 
-  const watchAllFields = watch();
-  const isEmailValid = watchAllFields.email && !errors.email;
-  const isPasswordValid = watchAllFields.password && !errors.password;
-  const [emailErrorMessage, setEmailErrorMessage] = useState('');
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
@@ -30,23 +25,14 @@ const LoginForm = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await signInWithCredentials(data, isChecked);
-      // 이메일 불일치 시, 둘 다 불일치 시
-      // setEmailErrorMessage(res.message);
 
-      // 비밀번호 불일치 시
-      // setPasswordErrorMessage(res.message);
+      if (res.errorType) {
+        setError(res.errorType, { message: res.errorMessage });
+      }
     } catch (error) {
       console.error('로그인 실패:', error);
     }
   };
-
-  useEffect(() => {
-    setEmailErrorMessage('');
-  }, [watchAllFields.email]);
-
-  useEffect(() => {
-    setPasswordErrorMessage('');
-  }, [watchAllFields.password]);
 
   return (
     <form className="flex flex-col gap-2">
@@ -58,7 +44,6 @@ const LoginForm = () => {
           control={control}
           validation={emailValidation}
         />
-        <div className="caption-small text-error">{emailErrorMessage}</div>
       </div>
       <div className="h-[72px]">
         <Input
@@ -68,7 +53,6 @@ const LoginForm = () => {
           control={control}
           validation={passwordValidation}
         />
-        <div className="caption-small text-error">{passwordErrorMessage}</div>
       </div>
       <div>
         <input
@@ -94,7 +78,7 @@ const LoginForm = () => {
       </div>
       <PrimaryButton
         name="로그인"
-        disabled={!(isEmailValid && isPasswordValid)}
+        disabled={!isValid}
         handleClick={handleSubmit(onSubmit)}
       />
     </form>
