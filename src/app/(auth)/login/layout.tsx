@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Header from '@/components/header';
 
 const TITLE = '로그인';
 
@@ -13,10 +12,5 @@ export default function LoginLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <div className="wrapper pb-4">
-      <Header title={TITLE} />
-      {children}
-    </div>
-  );
+  return <div className="wrapper pb-4">{children}</div>;
 }
