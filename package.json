@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.0.3",
+    "@tanstack/react-query": "^5.40.0",
     "next": "14.2.3",
     "next-auth": "^5.0.0-beta.18",
     "path-to-regexp": "^6.2.2",
@@ -23,6 +24,8 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
+    "@tanstack/eslint-plugin-query": "^5.35.6",
+    "@tanstack/react-query-devtools": "^5.40.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
