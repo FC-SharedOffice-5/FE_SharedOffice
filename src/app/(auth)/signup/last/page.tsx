@@ -7,14 +7,12 @@ import PrimaryButton from '@/components/primary-button';
 import { useSignupStore } from '@/app/(provider)/signup-provider';
 import { useShallow } from 'zustand/react/shallow';
 import { useMutation } from '@tanstack/react-query';
-import { SignupRequest } from '@/types/interface';
 import { SignupData } from '@/types/data';
 
 type TPasswordNickname = Pick<SignupData, 'password' | 'memberNickname'> & {
   passwordConfirm: string;
 };
-
-const postSignup = async (signupInfo: SignupRequest) => {
+const postSignup = async (signupInfo: SignupData) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signup`, {
     cache: 'no-store',
     method: 'POST',
@@ -27,11 +25,12 @@ const postSignup = async (signupInfo: SignupRequest) => {
 };
 
 export default function SignupLastPage() {
-  const mutation = useMutation<SignupRequest, Error, SignupRequest>({
+  const router = useRouter();
+
+  const mutation = useMutation<SignupData, Error, SignupData>({
     mutationFn: postSignup,
   });
 
-  const router = useRouter();
   const signupInfo = useSignupStore(
     useShallow((state) => ({
       email: state.email,

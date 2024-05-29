@@ -1,4 +1,4 @@
-import { SignupRequest } from '@/types/interface';
+import { SignupData } from '@/types/data';
 import { HttpResponse, StrictRequest, http, passthrough } from 'msw';
 
 export const authHandlers = [
@@ -6,7 +6,7 @@ export const authHandlers = [
     return passthrough();
   }),
   // signup
-  http.post('/signup', async ({ request }: { request: StrictRequest<SignupRequest> }) => {
+  http.post('/signup', async ({ request }: { request: StrictRequest<SignupData> }) => {
     const {
       email,
       password,

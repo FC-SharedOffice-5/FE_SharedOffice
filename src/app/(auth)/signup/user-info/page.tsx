@@ -8,9 +8,13 @@ import { useCallback, useState } from 'react';
 import GenderSelectModal from './_components/gender-select-modal';
 import { useRouter } from 'next/navigation';
 import { useSignupStore } from '@/app/(provider)/signup-provider';
-import { SignupData } from '@/types/data';
+import { SignupSchema } from '@/types/schema';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-export type TFormValues = Pick<SignupData, 'memberName' | 'memberBirth'>;
+const formValuesSchema = SignupSchema.pick({ memberName: true, memberBirth: true });
+
+export type TFormValues = z.infer<typeof formValuesSchema>;
 
 export type GenderType = '남성' | '여성' | '';
 
@@ -25,7 +29,9 @@ export default function UserInfoPage() {
     formState: { errors, isValid },
     control,
     handleSubmit,
-  } = useForm<TFormValues>();
+  } = useForm<TFormValues>({
+    resolver: zodResolver(formValuesSchema),
+  });
 
   const onSubmit: SubmitHandler<TFormValues> = (data) => {
     const { memberName, memberBirth } = data;
