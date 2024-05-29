@@ -33,9 +33,9 @@ export const requiredItems: TAgreeItems[] = [
 ];
 
 export const optionalItems: TAgreeItems[] = [
-  { id: 5, name: 'email', outline: false, subTitle: '이메일', suffix: 'contentLink' },
-  { id: 6, name: 'sms', outline: false, subTitle: '문자 메세지', suffix: 'contentLink' },
-  { id: 7, name: 'appPush', outline: false, subTitle: '앱 푸시', suffix: 'contentLink' },
+  { id: 5, name: 'emailAgree', outline: false, subTitle: '이메일', suffix: 'contentLink' },
+  { id: 6, name: 'messageAgree', outline: false, subTitle: '문자 메세지', suffix: 'contentLink' },
+  { id: 7, name: 'pushAgree', outline: false, subTitle: '앱 푸시', suffix: 'contentLink' },
 ];
 
 export const titleItems: { name: 'all' | 'optional' }[] = [

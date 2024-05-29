@@ -3,29 +3,45 @@
 import ChevronDownIcon from '@/assets/icons/chevron-down-Icon';
 import PrimaryButton from '@/components/primary-button';
 import Input from '@/components/input';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { useCallback, useState } from 'react';
 import GenderSelectModal from './_components/gender-select-modal';
 import { useRouter } from 'next/navigation';
+import { useSignupStore } from '@/app/(provider)/signup-provider';
+import { SignupSchema } from '@/types/schema';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-export type TFormValues = {
-  name: string;
-  gender: string;
-  birth: string;
-};
+const formValuesSchema = SignupSchema.pick({ memberName: true, memberBirth: true });
+
+export type TFormValues = z.infer<typeof formValuesSchema>;
+
+export type GenderType = '남성' | '여성' | '';
 
 export default function UserInfoPage() {
   const router = useRouter();
+  const updateUserInfo = useSignupStore((state) => state.updateUserInfo);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedGender, setSelectedGender] = useState('');
+  const [selectedGender, setSelectedGender] = useState<GenderType>('');
 
   const {
     formState: { errors, isValid },
     control,
     handleSubmit,
-  } = useForm();
+  } = useForm<TFormValues>({
+    resolver: zodResolver(formValuesSchema),
+  });
 
-  const onSubmit = () => {
+  const onSubmit: SubmitHandler<TFormValues> = (data) => {
+    const { memberName, memberBirth } = data;
+
+    updateUserInfo({
+      memberName,
+      memberGender: selectedGender === '남성' ? true : false,
+      memberBirth,
+    });
+
     router.push('/signup/email-verification');
   };
 
@@ -33,7 +49,7 @@ export default function UserInfoPage() {
     setIsModalOpen(true);
   }, []);
 
-  const handleSelectGender = useCallback((gender: string) => {
+  const handleSelectGender = useCallback((gender: GenderType) => {
     setSelectedGender(gender);
     setIsModalOpen(false);
   }, []);
@@ -49,7 +65,7 @@ export default function UserInfoPage() {
               required: true,
             }}
             label="이름"
-            name="name"
+            name="memberName"
             placeholder="홍길동"
           />
           <div className="flex w-full flex-col">
@@ -64,6 +80,7 @@ export default function UserInfoPage() {
           </div>
         </div>
         <Input
+          type="birth"
           control={control}
           validation={{
             required: true,
@@ -72,7 +89,7 @@ export default function UserInfoPage() {
             },
           }}
           label="생년월일"
-          name="birth"
+          name="memberBirth"
           maxLength={8}
           placeholder="1970.01.01"
         />

@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
-import MockProvider from './(provider)/mock-provider';
+import MockProvider from '@/app/(provider)/mock-provider';
+import RQProvider from '@/app/(provider)/react-query-provider';
 
 const pretendard = localFont({
   src: '../../public/fonts/PretendardVariable.woff2',
@@ -26,7 +27,9 @@ export default function RootLayout({
       className={`${pretendard.variable}`}
     >
       <body className={pretendard.className}>
-        <MockProvider>{children}</MockProvider>
+        <RQProvider>
+          <MockProvider>{children}</MockProvider>
+        </RQProvider>
       </body>
     </html>
   );

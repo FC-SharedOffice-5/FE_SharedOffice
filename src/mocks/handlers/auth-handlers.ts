@@ -1,11 +1,60 @@
-import { HttpResponse, http, passthrough } from 'msw';
+import { SignupData } from '@/types/data';
+import { HttpResponse, StrictRequest, http, passthrough } from 'msw';
 
 export const authHandlers = [
   http.get(`https://dummy.restapiexample.com/api/v1/employees`, () => {
     return passthrough();
   }),
+  // signup
+  http.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/signup`,
+    async ({ request }: { request: StrictRequest<SignupData> }) => {
+      const {
+        email,
+        password,
+        role,
+        useYn,
+        memberName,
+        memberNickname,
+        memberGender,
+        memberBirth,
+        emailAgree,
+        messageAgree,
+        pushAgree,
+      } = await request.json();
 
-  http.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/login`, async ({ request }) => {
+      if (!email || !password) {
+        return HttpResponse.json(
+          {
+            code: 400,
+            message: 'Email and password are required',
+          },
+          { status: 400 },
+        );
+      }
+
+      return HttpResponse.json(
+        {
+          code: 200,
+          data: {
+            email,
+            role,
+            memberName,
+            memberNickname,
+            memberGender,
+            memberBirth,
+            emailAgree,
+            messageAgree,
+            pushAgree,
+          },
+          message: 'Signup successful',
+        },
+        { status: 200 },
+      );
+    },
+  ),
+  // login
+  http.post(`${process.env.NEXT_PUBLIC_API_URL}/login`, async ({ request }) => {
     const info = await request.json();
 
     return HttpResponse.json({

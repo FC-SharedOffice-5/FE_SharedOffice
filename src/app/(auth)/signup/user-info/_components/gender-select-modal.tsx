@@ -1,11 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import type { GenderType } from '../page';
 
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  onSelect: (gender: string) => void;
+  onSelect: (gender: GenderType) => void;
 };
 
 const GenderSelectModal = ({ isOpen, onClose, onSelect }: ModalProps) => {
@@ -28,7 +29,7 @@ const GenderSelectModal = ({ isOpen, onClose, onSelect }: ModalProps) => {
     }
   };
 
-  const handleSelect = (gender: string) => {
+  const handleSelect = (gender: GenderType) => {
     setSelectedGender(gender);
     onSelect(gender);
   };

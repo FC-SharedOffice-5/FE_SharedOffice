@@ -2,28 +2,28 @@
 
 import Image from 'next/image';
 import { ChangeEvent, ElementType, InputHTMLAttributes, useMemo, useState } from 'react';
-import { useController, Control } from 'react-hook-form';
+import { useController, Control, FieldValues, Path } from 'react-hook-form';
 import clsx from 'clsx';
 import { Field, Input as HeadlessInput, Label } from '@headlessui/react';
 import { formatBirthDate } from '@/utils/format-birth';
 import { cn } from '@/utils/cn';
 
-type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+type InputProps<T extends FieldValues> = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
-  name: string;
-  control: Control;
+  name: Path<T>;
+  control: Control<T>;
   validation?: object;
   suffix?: ElementType;
 };
 
-const Input = ({
+const Input = <T extends FieldValues>({
   label,
   name,
   control,
   validation,
   suffix: SuffixComponent,
   ...props
-}: InputProps) => {
+}: InputProps<T>) => {
   const { field, fieldState } = useController({ control, name, rules: validation });
   const { type = 'text', disabled = false } = props;
   const [inputType, setInputType] = useState(type);
@@ -34,8 +34,8 @@ const Input = ({
   };
 
   const isVisibleDeleteValueButton = useMemo(
-    () => !disabled && field.value && field.name !== 'code' && !field.name.includes('password'),
-    [disabled, field.name, field.value],
+    () => !disabled && field.value && field.name !== 'code' && type !== 'password',
+    [disabled, field.name, field.value, type],
   );
 
   return (
@@ -56,14 +56,15 @@ const Input = ({
           {...props}
           onChange={field.onChange}
           onBlur={field.onBlur}
-          name={field.name}
+          ref={field.ref}
           value={field.value ?? ''}
+          disabled={field.disabled}
           onInput={(e: ChangeEvent<HTMLInputElement>) => {
             if (type === 'number') {
               if (e.currentTarget.value.length > e.currentTarget.maxLength)
                 e.currentTarget.value = e.currentTarget.value.slice(0, e.currentTarget.maxLength);
             }
-            if (name === 'birth') {
+            if (type === 'birth') {
               e.currentTarget.value = formatBirthDate(e.currentTarget.value);
             }
           }}
