@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "change:svg": "npx @svgr/cli --no-prettier --",
+    "change:svg": "npx @svgr/cli --no-prettier --out-dir ./src/assets/icons --filename-case kebab --ext tsx -- ",
+    "change:all-svg": "npx @svgr/cli --no-prettier --out-dir ./src/assets/icons --filename-case kebab --ext tsx -- ./public/icons",
     "prepare": "husky"
   },
   "dependencies": {
