@@ -14,7 +14,7 @@ type TPasswordNickname = Pick<SignupData, 'password' | 'memberNickname'> & {
   passwordConfirm: string;
 };
 
-export const postSignup = async (signupInfo: SignupRequest) => {
+const postSignup = async (signupInfo: SignupRequest) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signup`, {
     cache: 'no-store',
     method: 'POST',

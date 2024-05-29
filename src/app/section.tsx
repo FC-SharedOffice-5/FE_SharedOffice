@@ -1,7 +1,7 @@
 'use client';
 
+import { employeesOptions } from '@/actions/query-options';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { employeesOptions } from './page';
 
 const Section = () => {
   const { data } = useSuspenseQuery(employeesOptions);

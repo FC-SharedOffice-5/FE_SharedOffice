@@ -1,15 +1,7 @@
 import { getQueryClient } from '@/app/(provider)/get-query-client';
-import { dehydrate, HydrationBoundary, queryOptions } from '@tanstack/react-query';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import Section from './section';
-
-export const employeesOptions = queryOptions({
-  queryKey: ['getEmployees'],
-  queryFn: async () => {
-    const response = await fetch('https://dummy.restapiexample.com/api/v1/employees');
-
-    return response.json();
-  },
-});
+import { employeesOptions } from '@/actions/query-options';
 
 export default function Home() {
   const queryClient = getQueryClient();
