@@ -6,50 +6,53 @@ export const authHandlers = [
     return passthrough();
   }),
   // signup
-  http.post('/signup', async ({ request }: { request: StrictRequest<SignupData> }) => {
-    const {
-      email,
-      password,
-      role,
-      useYn,
-      memberName,
-      memberNickname,
-      memberGender,
-      memberBirth,
-      emailAgree,
-      messageAgree,
-      pushAgree,
-    } = await request.json();
+  http.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/signup`,
+    async ({ request }: { request: StrictRequest<SignupData> }) => {
+      const {
+        email,
+        password,
+        role,
+        useYn,
+        memberName,
+        memberNickname,
+        memberGender,
+        memberBirth,
+        emailAgree,
+        messageAgree,
+        pushAgree,
+      } = await request.json();
 
-    if (!email || !password) {
+      if (!email || !password) {
+        return HttpResponse.json(
+          {
+            code: 400,
+            message: 'Email and password are required',
+          },
+          { status: 400 },
+        );
+      }
+
       return HttpResponse.json(
         {
-          code: 400,
-          message: 'Email and password are required',
+          code: 200,
+          data: {
+            email,
+            role,
+            memberName,
+            memberNickname,
+            memberGender,
+            memberBirth,
+            emailAgree,
+            messageAgree,
+            pushAgree,
+          },
+          message: 'Signup successful',
         },
-        { status: 400 },
+        { status: 200 },
       );
-    }
-
-    return HttpResponse.json(
-      {
-        code: 200,
-        data: {
-          email,
-          role,
-          memberName,
-          memberNickname,
-          memberGender,
-          memberBirth,
-          emailAgree,
-          messageAgree,
-          pushAgree,
-        },
-        message: 'Signup successful',
-      },
-      { status: 200 },
-    );
-  }),
+    },
+  ),
   // login
   http.post(`${process.env.NEXT_PUBLIC_API_URL}/login`, async ({ request }) => {
     const info = await request.json();

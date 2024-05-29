@@ -3,7 +3,11 @@ import { z } from 'zod';
 // 회원가입 (Signup) 타입
 export const SignupSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(8),
+  password: z
+    .string()
+    .regex(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':",.<>/?-]).{8,20}$/, {
+      message: '영문, 숫자, 특수문자를 조합해서 입력해주세요. (8-20자)',
+    }),
   role: z.string(),
   useYn: z.boolean(),
   memberName: z.string(),

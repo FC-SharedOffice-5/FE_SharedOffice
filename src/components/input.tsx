@@ -34,8 +34,8 @@ const Input = <T extends FieldValues>({
   };
 
   const isVisibleDeleteValueButton = useMemo(
-    () => !disabled && field.value && field.name !== 'code' && !field.name.includes('password'),
-    [disabled, field.name, field.value],
+    () => !disabled && field.value && field.name !== 'code' && type !== 'password',
+    [disabled, field.name, field.value, type],
   );
 
   return (
@@ -56,14 +56,15 @@ const Input = <T extends FieldValues>({
           {...props}
           onChange={field.onChange}
           onBlur={field.onBlur}
-          name={field.name}
+          ref={field.ref}
           value={field.value ?? ''}
+          disabled={field.disabled}
           onInput={(e: ChangeEvent<HTMLInputElement>) => {
             if (type === 'number') {
               if (e.currentTarget.value.length > e.currentTarget.maxLength)
                 e.currentTarget.value = e.currentTarget.value.slice(0, e.currentTarget.maxLength);
             }
-            if (name === 'birth') {
+            if (type === 'birth') {
               e.currentTarget.value = formatBirthDate(e.currentTarget.value);
             }
           }}

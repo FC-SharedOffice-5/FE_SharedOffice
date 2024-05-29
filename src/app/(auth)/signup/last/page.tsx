@@ -8,10 +8,28 @@ import { useSignupStore } from '@/app/(provider)/signup-provider';
 import { useShallow } from 'zustand/react/shallow';
 import { useMutation } from '@tanstack/react-query';
 import { SignupData } from '@/types/data';
+import { SignupSchema } from '@/types/schema';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-type TPasswordNickname = Pick<SignupData, 'password' | 'memberNickname'> & {
-  passwordConfirm: string;
-};
+const SignupLastSchema = SignupSchema.pick({
+  password: true,
+  memberNickname: true,
+})
+  .extend({
+    confirmPassword: z
+      .string()
+      .regex(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':",.<>/?-]).{8,20}$/, {
+        message: '영문, 숫자, 특수문자를 조합해서 입력해주세요. (8-20자)',
+      }),
+  })
+  .refine((value) => value.password === value.confirmPassword, {
+    message: '비밀번호가 일치하지 않습니다.',
+    path: ['confirmPassword'],
+  });
+
+type TSignupLastFormValues = z.infer<typeof SignupLastSchema>;
+
 const postSignup = async (signupInfo: SignupData) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signup`, {
     cache: 'no-store',
@@ -26,7 +44,6 @@ const postSignup = async (signupInfo: SignupData) => {
 
 export default function SignupLastPage() {
   const router = useRouter();
-
   const mutation = useMutation<SignupData, Error, SignupData>({
     mutationFn: postSignup,
   });
@@ -46,71 +63,71 @@ export default function SignupLastPage() {
   );
 
   const {
-    watch,
     control,
-    setError,
-    clearErrors,
+    trigger,
     handleSubmit,
+    watch,
     formState: { errors, isValid },
-  } = useForm<TPasswordNickname>({ mode: 'onChange' });
+  } = useForm<TSignupLastFormValues>({
+    resolver: zodResolver(SignupLastSchema),
+    mode: 'onChange',
+  });
 
-  const onSubmit: SubmitHandler<TPasswordNickname> = (data) => {
+  const onSubmit: SubmitHandler<TSignupLastFormValues> = (data) => {
+    if (!isValid) {
+      trigger(['confirmPassword', 'memberNickname', 'password']);
+    }
     mutation.mutate({
       role: 'MEMBER',
       useYn: false,
       ...signupInfo,
+      password: data.confirmPassword,
+      memberNickname: data.memberNickname,
     });
 
     router.replace('/signup-complete');
   };
 
-  const validatePasswordConfirm = (value: string) => {
-    const password = watch('password');
-
-    if (value !== password) {
-      setError('passwordConfirm', { type: 'manual', message: '비밀번호가 일치하지 않습니다.' });
-    } else {
-      clearErrors('passwordConfirm');
-    }
-  };
+  const isFormFilled = watch('confirmPassword') && watch('memberNickname') && watch('password');
 
   return (
-    <div className="flex h-full w-full flex-col justify-center gap-8 p-4">
-      <Input
-        type="password"
-        label="새 비밀번호"
-        name="password"
-        control={control}
-        validation={{
-          required: true,
-          pattern: {
-            value: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':",.<>/?-]).{8,20}$/,
-            message: '영문, 숫자, 특수문자를 조합해서 입력해주세요. (8-20자)',
-          },
-        }}
-      />
-      <Input
-        type="password"
-        label="비밀번호 확인"
-        name="passwordConfirm"
-        control={control}
-        validation={{
-          required: true,
-          validate: validatePasswordConfirm,
-        }}
-      />
-      <Input
-        label="닉네임"
-        name="memberNickname"
-        control={control}
-        validation={{
-          required: true,
-        }}
-      />
+    <div className="flex h-full w-full flex-col place-content-center gap-8 p-4">
+      <div>
+        <Input
+          type="password"
+          label="새 비밀번호"
+          name="password"
+          control={control}
+          validation={{
+            required: true,
+          }}
+        />
+      </div>
+      <div>
+        <Input
+          type="password"
+          label="비밀번호 확인"
+          name="confirmPassword"
+          control={control}
+          validation={{
+            required: true,
+          }}
+        />
+      </div>
+      <div>
+        <Input
+          label="닉네임"
+          name="memberNickname"
+          control={control}
+          validation={{
+            required: true,
+          }}
+        />
+      </div>
       <div className="bottom-4 left-4 w-full">
         <PrimaryButton
           name="가입하기"
-          disabled={!(isValid && !errors.passwordConfirm)}
+          disabled={!isFormFilled}
           handleClick={handleSubmit(onSubmit)}
         />
       </div>

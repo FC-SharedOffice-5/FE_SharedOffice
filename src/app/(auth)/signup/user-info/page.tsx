@@ -80,6 +80,7 @@ export default function UserInfoPage() {
           </div>
         </div>
         <Input
+          type="birth"
           control={control}
           validation={{
             required: true,
