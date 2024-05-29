@@ -2,28 +2,28 @@
 
 import Image from 'next/image';
 import { ChangeEvent, ElementType, InputHTMLAttributes, useMemo, useState } from 'react';
-import { useController, Control } from 'react-hook-form';
+import { useController, Control, FieldValues, Path } from 'react-hook-form';
 import clsx from 'clsx';
 import { Field, Input as HeadlessInput, Label } from '@headlessui/react';
 import { formatBirthDate } from '@/utils/format-birth';
 import { cn } from '@/utils/cn';
 
-type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+type InputProps<T extends FieldValues> = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
-  name: string;
-  control: Control;
+  name: Path<T>;
+  control: Control<T>;
   validation?: object;
   suffix?: ElementType;
 };
 
-const Input = ({
+const Input = <T extends FieldValues>({
   label,
   name,
   control,
   validation,
   suffix: SuffixComponent,
   ...props
-}: InputProps) => {
+}: InputProps<T>) => {
   const { field, fieldState } = useController({ control, name, rules: validation });
   const { type = 'text', disabled = false } = props;
   const [inputType, setInputType] = useState(type);

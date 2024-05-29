@@ -6,9 +6,11 @@ import { useForm } from 'react-hook-form';
 import Input from '@/components/input';
 import PrimaryButton from '@/components/primary-button';
 import Timer from '@/components/auth-timer';
+import { useSignupStore } from '@/app/(provider)/signup-provider';
 
 export default function EmailVerificationPage() {
   const router = useRouter();
+  const updateEmail = useSignupStore((state) => state.updateEmail);
 
   const [isCodeSent, setIsCodeSent] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -42,16 +44,15 @@ export default function EmailVerificationPage() {
   };
 
   const confirmEmail = () => {
+    updateEmail(watchAllFields.email);
     // GET /searchpw/confirm/{code}
 
     // 404일 때
     // setCodeError(true);
 
     // 200일 때
-    router.push('/signup/password-nickname');
+    router.push('/signup/last');
   };
-
-  const goBack = () => router.back();
 
   return (
     <main

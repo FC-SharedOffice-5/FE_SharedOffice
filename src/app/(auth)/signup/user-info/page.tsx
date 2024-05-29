@@ -3,29 +3,39 @@
 import ChevronDownIcon from '@/assets/icons/chevron-down-Icon';
 import PrimaryButton from '@/components/primary-button';
 import Input from '@/components/input';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { useCallback, useState } from 'react';
 import GenderSelectModal from './_components/gender-select-modal';
 import { useRouter } from 'next/navigation';
+import { useSignupStore } from '@/app/(provider)/signup-provider';
+import { SignupData } from '@/types/data';
 
-export type TFormValues = {
-  name: string;
-  gender: string;
-  birth: string;
-};
+export type TFormValues = Pick<SignupData, 'memberName' | 'memberBirth'>;
+
+export type GenderType = '남성' | '여성' | '';
 
 export default function UserInfoPage() {
   const router = useRouter();
+  const updateUserInfo = useSignupStore((state) => state.updateUserInfo);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedGender, setSelectedGender] = useState('');
+  const [selectedGender, setSelectedGender] = useState<GenderType>('');
 
   const {
     formState: { errors, isValid },
     control,
     handleSubmit,
-  } = useForm();
+  } = useForm<TFormValues>();
 
-  const onSubmit = () => {
+  const onSubmit: SubmitHandler<TFormValues> = (data) => {
+    const { memberName, memberBirth } = data;
+
+    updateUserInfo({
+      memberName,
+      memberGender: selectedGender === '남성' ? true : false,
+      memberBirth,
+    });
+
     router.push('/signup/email-verification');
   };
 
@@ -33,7 +43,7 @@ export default function UserInfoPage() {
     setIsModalOpen(true);
   }, []);
 
-  const handleSelectGender = useCallback((gender: string) => {
+  const handleSelectGender = useCallback((gender: GenderType) => {
     setSelectedGender(gender);
     setIsModalOpen(false);
   }, []);
@@ -49,7 +59,7 @@ export default function UserInfoPage() {
               required: true,
             }}
             label="이름"
-            name="name"
+            name="memberName"
             placeholder="홍길동"
           />
           <div className="flex w-full flex-col">
@@ -72,7 +82,7 @@ export default function UserInfoPage() {
             },
           }}
           label="생년월일"
-          name="birth"
+          name="memberBirth"
           maxLength={8}
           placeholder="1970.01.01"
         />

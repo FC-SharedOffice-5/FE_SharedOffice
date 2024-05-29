@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Header from '@/components/header';
+import { SignupStoreProvider } from '@/app/(provider)/signup-provider';
 
 const TITLE = '회원가입';
 
@@ -16,7 +17,7 @@ export default function SignUpLayout({
   return (
     <div className="wrapper pb-4">
       <Header title={TITLE} />
-      {children}
+      <SignupStoreProvider>{children}</SignupStoreProvider>
     </div>
   );
 }

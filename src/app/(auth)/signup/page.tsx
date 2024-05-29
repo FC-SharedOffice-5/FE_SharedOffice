@@ -9,29 +9,31 @@ import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { requiredItems, optionalItems, TAgreeItems, titleItems } from './constants';
 import { useRouter } from 'next/navigation';
 import Accordion from '@/components/accordion';
+import { useSignupStore } from '@/app/(provider)/signup-provider';
 
 export type TFormValues = {
   all: boolean;
   mile: boolean;
   personal: boolean;
   thirdParty: boolean;
-  email: boolean;
-  sms: boolean;
-  appPush: boolean;
+  emailAgree: boolean;
+  messageAgree: boolean;
+  pushAgree: boolean;
   optional: boolean;
 };
 
-export default function SignUpPage() {
+export default function SignupPage() {
   const router = useRouter();
+  const updateAgreeOptionalOptions = useSignupStore((state) => state.updateAgreeOptionalOptions);
   const { control, handleSubmit, setValue, reset } = useForm({
     defaultValues: {
       all: false,
       mile: false,
       personal: false,
       thirdParty: false,
-      email: false,
-      sms: false,
-      appPush: false,
+      emailAgree: false,
+      messageAgree: false,
+      pushAgree: false,
       optional: false,
     },
   });
@@ -49,15 +51,23 @@ export default function SignUpPage() {
   };
 
   useEffect(() => {
-    const emailChecked = values.email;
-    const smsChecked = values.sms;
-    const appPushChecked = values.appPush;
+    const emailChecked = values.emailAgree;
+    const smsChecked = values.messageAgree;
+    const appPushChecked = values.pushAgree;
 
     const optionalAllChecked: boolean = (emailChecked && smsChecked && appPushChecked) ?? false;
     setValue('optional', optionalAllChecked);
-  }, [setValue, reset, values.email, values.sms, values.appPush]);
+  }, [setValue, reset, values.emailAgree, values.messageAgree, values.pushAgree]);
 
   const onSubmit: SubmitHandler<TFormValues> = (data) => {
+    const { emailAgree, messageAgree, pushAgree } = data;
+
+    updateAgreeOptionalOptions({
+      emailAgree,
+      messageAgree,
+      pushAgree,
+    });
+
     router.push('/signup/user-info');
   };
 
@@ -116,9 +126,9 @@ export default function SignUpPage() {
                     suffix={open ? 'minusIcon' : 'plusIcon'}
                     onChange={(checked: boolean) => {
                       onChange(checked);
-                      setValue('email', checked);
-                      setValue('sms', checked);
-                      setValue('appPush', checked);
+                      setValue('emailAgree', checked);
+                      setValue('messageAgree', checked);
+                      setValue('pushAgree', checked);
                     }}
                     selected={value}
                   />
