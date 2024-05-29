@@ -6,7 +6,7 @@ import { employeesOptions } from '@/actions/query-options';
 export default function Home() {
   const queryClient = getQueryClient();
 
-  void queryClient.prefetchQuery(employeesOptions);
+  queryClient.prefetchQuery(employeesOptions);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
