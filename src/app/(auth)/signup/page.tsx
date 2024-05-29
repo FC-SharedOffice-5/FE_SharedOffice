@@ -54,10 +54,32 @@ export default function SignupPage() {
     const emailChecked = values.emailAgree;
     const smsChecked = values.messageAgree;
     const appPushChecked = values.pushAgree;
+    const mileChecked = values.mile;
+    const personalChecked = values.personal;
+    const thirdParty = values.thirdParty;
 
-    const optionalAllChecked: boolean = (emailChecked && smsChecked && appPushChecked) ?? false;
-    setValue('optional', optionalAllChecked);
-  }, [setValue, reset, values.emailAgree, values.messageAgree, values.pushAgree]);
+    setValue('optional', (emailChecked && smsChecked && appPushChecked) ?? false);
+    setValue(
+      'all',
+      (emailChecked &&
+        smsChecked &&
+        appPushChecked &&
+        mileChecked &&
+        personalChecked &&
+        // eslint-disable-next-line prettier/prettier
+        thirdParty) ??
+        false,
+    );
+  }, [
+    setValue,
+    reset,
+    values.emailAgree,
+    values.messageAgree,
+    values.pushAgree,
+    values.mile,
+    values.personal,
+    values.thirdParty,
+  ]);
 
   const onSubmit: SubmitHandler<TFormValues> = (data) => {
     const { emailAgree, messageAgree, pushAgree } = data;
