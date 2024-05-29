@@ -1,39 +1,26 @@
-import { auth } from '@/actions/auth';
+import { getQueryClient } from '@/app/(provider)/get-query-client';
+import { dehydrate, HydrationBoundary, queryOptions } from '@tanstack/react-query';
+import Section from './section';
 
-const getEmployees = async () => {
-  try {
-    const res = await fetch('https://dummy.restapiexample.com/api/v1/employees');
-    const employees = await res.json();
+export const employeesOptions = queryOptions({
+  queryKey: ['getEmployees'],
+  queryFn: async () => {
+    const response = await fetch('https://dummy.restapiexample.com/api/v1/employees');
 
-    return employees.data;
-  } catch (error) {
-    console.error(error);
-  }
-};
+    return response.json();
+  },
+});
 
-export default async function Home() {
-  const session = await auth();
-  const employees = await getEmployees();
+export default function Home() {
+  const queryClient = getQueryClient();
+
+  void queryClient.prefetchQuery(employeesOptions);
 
   return (
-    <main>
-      {session && (
-        <>
-          <div className="bg-gray">session 정보: {JSON.stringify(session)}</div>
-          <div className="bg-gray">accessToken: {session.accessToken}</div>
-        </>
-      )}
-
-      {employees?.map((employee: any) => {
-        return (
-          <p
-            style={{ color: 'gray' }}
-            key={employee.id}
-          >
-            {employee.employee_name}
-          </p>
-        );
-      })}
-    </main>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <main>
+        <Section />
+      </main>
+    </HydrationBoundary>
   );
 }
