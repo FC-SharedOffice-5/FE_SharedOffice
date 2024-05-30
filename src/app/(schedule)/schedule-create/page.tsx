@@ -2,8 +2,8 @@ import PrimaryButton from '@/components/primary-button';
 
 export default function ScheduleCreatePage() {
   return (
-    <main className="flex w-full flex-1 flex-col items-center justify-between gap-6 p-4">
-      <form className="flex w-full flex-1 flex-col gap-4">
+    <main className="flex w-full flex-1 flex-col items-center justify-between gap-8 px-4">
+      <form className="flex w-full flex-1 flex-col gap-4 pt-4">
         {/* 제목 및 색상 */}
         <div className="flex h-[128px] flex-col">
           <div className="flex-1 bg-background">제목</div>
