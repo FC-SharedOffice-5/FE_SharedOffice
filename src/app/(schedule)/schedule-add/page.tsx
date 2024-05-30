@@ -1,6 +1,6 @@
 import PrimaryButton from '@/components/primary-button';
 
-export default function ScheduleCreatePage() {
+export default function ScheduleAddPage() {
   return (
     <main className="flex w-full flex-1 flex-col items-center justify-between gap-8 px-4">
       <form className="flex w-full flex-1 flex-col gap-4 pt-4">

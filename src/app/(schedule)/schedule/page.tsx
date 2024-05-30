@@ -1,10 +1,12 @@
 import ScheduleAddIcon from '@/assets/icons/schedule-add-icon';
 import Calendar from '@/components/calendar';
 import ScheduleList from './_components/schedule-list';
+import Header from '@/components/header';
 
 export default function SchedulePage() {
   return (
     <main className="flex h-full flex-col">
+      <Header title="일정" />
       <section className="flex-1">
         <Calendar />
         <ScheduleList />
