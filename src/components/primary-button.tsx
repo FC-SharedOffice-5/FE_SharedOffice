@@ -21,7 +21,7 @@ const PrimaryButton = ({
       disabled={disabled}
       onClick={handleClick}
       className={cn(
-        'label-medium h-12 w-[328px] rounded-lg bg-primary text-white data-[disabled]:bg-primary/[.4]',
+        'label-medium h-12 w-full rounded-lg bg-primary text-white data-[disabled]:bg-primary/[.4]',
         {
           'w-40': size === 'small',
           'w-[248px]': size === 'modal',
