@@ -1,6 +1,6 @@
 import PrimaryButton from '@/components/primary-button';
 
-export default function ScheduleCreatePage() {
+export default function ScheduleEditPage() {
   return (
     <main className="flex w-full flex-1 flex-col">
       {/* 사진 및 색상 */}
