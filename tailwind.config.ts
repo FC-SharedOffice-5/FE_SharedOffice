@@ -1,4 +1,16 @@
 import type { Config } from 'tailwindcss';
+import { PluginCreator } from 'tailwindcss/types/config';
+
+const utilsPlugin: PluginCreator = ({ addUtilities }) =>
+  addUtilities({
+    '.scrollbar-hide': {
+      '-ms-overflow-style': 'none' /* IE and Edge */,
+      'scrollbar-width': 'none' /* Firefox */,
+      '&::-webkit-scrollbar': {
+        display: 'none' /* Safari and Chrome */,
+      },
+    },
+  });
 
 const config: Config = {
   content: [
@@ -9,7 +21,10 @@ const config: Config = {
   theme: {
     colors: {
       white: '#ffffff',
-      black: '#111111',
+      black: {
+        DEFAULT: '#111111',
+        secondary: '#1A1F27',
+      },
       tertiary: '#ffffff',
       error: '#ff5449',
       background: '#f3f4f5',
@@ -54,7 +69,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [utilsPlugin],
 };
 
 export default config;
