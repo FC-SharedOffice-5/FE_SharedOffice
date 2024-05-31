@@ -1,0 +1,27 @@
+name: Link Issue from Branch Name
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  link-issue:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract Issue Number from Branch Name
+        id: extract_issue
+        run: |
+          echo "Branch name: ${{ github.head_ref }}"
+          ISSUE_NUMBER=$(echo "${{ github.head_ref }}" | grep -oP '(?<=feat/)\d+')
+          echo "Extracted issue number: $ISSUE_NUMBER"
+          echo "::set-output name=issue::$ISSUE_NUMBER"
+
+      - name: Link PR to Issue
+        if: steps.extract_issue.outputs.issue != ''
+        run: |
+          ISSUE_NUMBER=${{ steps.extract_issue.outputs.issue }}
+          echo "Linking PR to issue #$ISSUE_NUMBER"
+          gh pr comment ${{ github.event.pull_request.number }} --body "This PR is linked to issue #$ISSUE_NUMBER"
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
