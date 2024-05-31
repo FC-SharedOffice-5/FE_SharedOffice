@@ -10,7 +10,7 @@ export const content = [
     list: [
       { name: '오피스 이용 조회', href: '/mypage/office' },
       { name: '물품 대여 조회', href: '/mypage/supplies' },
-      { name: '사물함 이용 조회', href: '/' },
+      { name: '사물함 이용 조회', href: '/mypage/locker' },
     ],
   },
   {
