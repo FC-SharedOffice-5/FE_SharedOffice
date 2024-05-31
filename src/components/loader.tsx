@@ -1,9 +1,11 @@
-const Loader = () => (
+const Loader = ({ size = 24 }: { size: number }) => (
   <svg
-    className="ml-1 mr-3 h-5 w-5 animate-spin text-white"
+    className="animate-spin text-white"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
+    width={size}
+    height={size}
   >
     <circle
       className="opacity-25"
@@ -11,7 +13,7 @@ const Loader = () => (
       cy="12"
       r="10"
       stroke="#1DCC9A"
-      stroke-width="4"
+      strokeWidth="4"
     ></circle>
     <path
       className="opacity-75"

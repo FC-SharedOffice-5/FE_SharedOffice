@@ -10,10 +10,8 @@ export default function Home() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="wrapper pb-4">
-        <main>
-          <Section />
-        </main>
+      <div className="wrapper">
+        <Section />
       </div>
     </HydrationBoundary>
   );

@@ -46,20 +46,20 @@ const GenderSelectModal = ({ isOpen, onClose, onSelect }: ModalProps) => {
       }}
     >
       <div
-        className={`w-full max-w-[360px] rounded-t-lg bg-white p-4 ${isClosing ? 'animate-slide-down' : 'animate-slide-up'}`}
+        className={`w-full max-w-[500px] rounded-t-lg bg-white p-4 ${isClosing ? 'animate-slide-down' : 'animate-slide-up'}`}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
       >
-        <h2 className="mb-4 text-lg">성별 선택</h2>
-        <ul>
+        <h2 className="label-large mb-4">성별 선택</h2>
+        <ul className="pl-2">
           <li
-            className={`cursor-pointer py-2 ${selectedGender === '남성' ? 'text-primary' : ''}`}
+            className={`cursor-pointer py-2  ${selectedGender === '남성' ? 'text-primary' : ''}`}
             onClick={() => handleSelect('남성')}
           >
             남성
           </li>
           <li
-            className={`cursor-pointer py-2 ${selectedGender === '여성' ? 'text-primary' : ''}`}
+            className={`cursor-pointer py-2  ${selectedGender === '여성' ? 'text-primary' : ''}`}
             onClick={() => handleSelect('여성')}
           >
             여성

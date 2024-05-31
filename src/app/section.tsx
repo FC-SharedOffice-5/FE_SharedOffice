@@ -49,7 +49,7 @@ const Section = () => {
   const [isClosed, setIsClosed] = useState(false);
 
   return (
-    <div className="h-80 w-full bg-black-secondary">
+    <main className="h-80 w-full  bg-black-secondary">
       <div className="flex items-center justify-between p-4">
         <h1 className="headline-large flex font-bold text-white">
           {data.userName}
@@ -58,11 +58,13 @@ const Section = () => {
         <AlarmActiveIcon />
       </div>
       <div className="flex w-full place-content-center pb-4">
-        <div className="flex min-h-[120px] min-w-[120px] flex-col place-content-center justify-between gap-4 rounded-md bg-white px-3 pb-1 pt-3">
+        <div
+          className={`flex min-h-[150px] min-w-[120px] flex-col items-center pt-3 ${isClosed ? 'justify-center' : 'justify-between'} gap-4 rounded-md bg-white`}
+        >
           {isClosed ? (
-            <Loader />
+            <Loader size={30} />
           ) : (
-            <>
+            <div className="px-3 pb-1">
               <QRCodeSVG
                 value={'https://picturesofpeoplescanningqrcodes.tumblr.com/'}
                 size={120}
@@ -77,8 +79,8 @@ const Section = () => {
                   excavate: false,
                 }}
               />
-              <p className="w-full text-center text-xs text-black">{data.qrCode}</p>
-            </>
+              <p className="label-small w-full pt-3 text-center text-black">{data.qrCode}</p>
+            </div>
           )}
         </div>
       </div>
@@ -175,7 +177,7 @@ const Section = () => {
           </div>
         </div>
       </BottomDrawer>
-    </div>
+    </main>
   );
 };
 

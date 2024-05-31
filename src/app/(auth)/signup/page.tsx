@@ -66,7 +66,6 @@ export default function SignupPage() {
         appPushChecked &&
         mileChecked &&
         personalChecked &&
-        // eslint-disable-next-line prettier/prettier
         thirdParty) ??
         false,
     );
@@ -99,92 +98,90 @@ export default function SignupPage() {
   );
 
   return (
-    <>
-      <main className="flex h-full flex-col items-center justify-between px-4">
-        <div />
-        <section className="w-full">
-          <Controller
-            name={titleItems[0].name}
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <CheckBox
-                title="모두 동의"
-                onChange={(checked: boolean) => {
-                  onChange(checked);
-                  checkAllValues(checked);
-                }}
-                selected={value}
-              />
-            )}
-          />
-          <Divider />
-          <List
-            items={requiredItems}
-            renderItem={(item: TAgreeItems) => (
-              <Controller
-                key={item.id}
-                name={item.name as keyof TFormValues}
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <CheckBox
-                    subTitle={item.subTitle}
-                    suffix={item.suffix}
-                    onChange={onChange}
-                    selected={value}
-                  />
-                )}
-              />
-            )}
-          />
-          <Accordion
-            header={({ open }) => (
-              <Controller
-                name={titleItems[1].name}
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <CheckBox
-                    outline={false}
-                    subTitle="[선택] 광고성 정보 수신에 동의"
-                    suffix={open ? 'minusIcon' : 'plusIcon'}
-                    onChange={(checked: boolean) => {
-                      onChange(checked);
-                      setValue('emailAgree', checked);
-                      setValue('messageAgree', checked);
-                      setValue('pushAgree', checked);
-                    }}
-                    selected={value}
-                  />
-                )}
-              />
-            )}
-            panel={() => (
-              <List
-                items={optionalItems}
-                renderItem={(item: TAgreeItems) => (
-                  <Controller
-                    key={item.id}
-                    name={item.name as keyof TFormValues}
-                    control={control}
-                    render={({ field: { onChange, value } }) => (
-                      <CheckBox
-                        subTitle={item.subTitle}
-                        suffix={item.suffix}
-                        onChange={onChange}
-                        selected={value}
-                      />
-                    )}
-                  />
-                )}
-              />
-            )}
-          />
-        </section>
-        <PrimaryButton
-          handleClick={handleSubmit(onSubmit)}
-          disabled={!isValid}
-          name="다음으로"
+    <main className="flex h-full flex-col items-center justify-between px-4">
+      <div />
+      <section className="w-full">
+        <Controller
+          name={titleItems[0].name}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <CheckBox
+              title="모두 동의"
+              onChange={(checked: boolean) => {
+                onChange(checked);
+                checkAllValues(checked);
+              }}
+              selected={value}
+            />
+          )}
         />
-      </main>
-    </>
+        <Divider />
+        <List
+          items={requiredItems}
+          renderItem={(item: TAgreeItems) => (
+            <Controller
+              key={item.id}
+              name={item.name as keyof TFormValues}
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <CheckBox
+                  subTitle={item.subTitle}
+                  suffix={item.suffix}
+                  onChange={onChange}
+                  selected={value}
+                />
+              )}
+            />
+          )}
+        />
+        <Accordion
+          header={({ open }) => (
+            <Controller
+              name={titleItems[1].name}
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <CheckBox
+                  outline={false}
+                  subTitle="[선택] 광고성 정보 수신에 동의"
+                  suffix={open ? 'minusIcon' : 'plusIcon'}
+                  onChange={(checked: boolean) => {
+                    onChange(checked);
+                    setValue('emailAgree', checked);
+                    setValue('messageAgree', checked);
+                    setValue('pushAgree', checked);
+                  }}
+                  selected={value}
+                />
+              )}
+            />
+          )}
+          panel={() => (
+            <List
+              items={optionalItems}
+              renderItem={(item: TAgreeItems) => (
+                <Controller
+                  key={item.id}
+                  name={item.name as keyof TFormValues}
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <CheckBox
+                      subTitle={item.subTitle}
+                      suffix={item.suffix}
+                      onChange={onChange}
+                      selected={value}
+                    />
+                  )}
+                />
+              )}
+            />
+          )}
+        />
+      </section>
+      <PrimaryButton
+        handleClick={handleSubmit(onSubmit)}
+        disabled={!isValid}
+        name="다음으로"
+      />
+    </main>
   );
 }
