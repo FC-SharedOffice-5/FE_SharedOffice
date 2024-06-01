@@ -6,25 +6,34 @@ import Title from '../_components/title';
 import { buttons, content } from './constants';
 
 export default function Mypage() {
+  const info = {
+    name: '오주하',
+    nickname: '765 주하',
+    email: 'abc@gmail.com',
+  };
+
   return (
     <main className="pt-4">
       <header className="flex flex-col justify-between gap-4 p-4">
         <div className="border-1 mb-4 flex justify-between border-primary-200">
           <span className="headline-medium">
-            <span className="headline-large">오주하</span>님
+            <span className="headline-large">{info.name}</span>님
           </span>
           {/* 알람 아이콘 */}
         </div>
-        <div className="flex items-center justify-between gap-4">
+        <Link
+          href="/mypage/edit"
+          className="flex items-center justify-between gap-4"
+        >
           <DefaultImage />
           <div className="flex grow items-center justify-between">
             <div className="flex flex-col">
-              <span className="title-small">765주하</span>
-              <span className="body-medium">abc@gmail.com</span>
+              <span className="title-small">{info.nickname}</span>
+              <span className="body-medium">{info.email}</span>
             </div>
             <GoIcon />
           </div>
-        </div>
+        </Link>
         <div className="flex gap-2 border-t-[0.75px] border-black py-2">
           {buttons.map((button) => {
             return (
