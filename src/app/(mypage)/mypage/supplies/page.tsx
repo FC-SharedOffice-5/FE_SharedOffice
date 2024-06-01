@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import Header from '@/components/header';
 import Title from '../../_components/title';
 import Status from '../../_components/status';
 
@@ -46,7 +45,6 @@ export default function Supplies() {
 
   return (
     <main>
-      <Header title="물품 대여 조회" />
       <div className="flex flex-col gap-6 p-4">
         {suppliesArray.map((item) => {
           return (

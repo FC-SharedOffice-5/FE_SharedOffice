@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import Header from '@/components/header';
 import Title from '../../_components/title';
 import Status from '../../_components/status';
 
@@ -37,7 +36,6 @@ export default function Locker() {
 
   return (
     <main>
-      <Header title="사물함 대여 조회" />
       <div className="flex flex-col gap-6 p-4">
         {lockersArray.map((item) => {
           return (

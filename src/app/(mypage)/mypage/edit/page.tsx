@@ -1,6 +1,5 @@
 'use client';
 
-import Header from '@/components/header';
 import CheckBox from '@/components/checkbox';
 import PrimaryButton from '@/components/primary-button';
 import Input from '../../_components/input';
@@ -19,7 +18,6 @@ export default function Edit() {
 
   return (
     <main>
-      <Header title="회원정보 수정" />
       <div className="flex flex-col gap-4 p-4">
         <div className="flex justify-center pb-2 pt-10">
           <div className="relative">

@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import clsx from 'clsx';
-import Header from '@/components/header';
 import List from '../../_components/list';
 
 export default function Office() {
@@ -113,7 +112,6 @@ export default function Office() {
 
   return (
     <main>
-      <Header title="오피스 이용 조회" />
       <div className="flex h-12 border-b-[1px] border-primary-100">
         {menu.map((tab, index) => {
           return (
