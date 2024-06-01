@@ -54,7 +54,10 @@ export default function Supplies() {
               key={item.date}
               className="flex flex-col gap-4"
             >
-              <Title name={item.office} />
+              <Title
+                name={item.office}
+                date={item.date}
+              />
               <table className="table border-separate border-spacing-y-2 text-black">
                 <tbody>
                   {item.supplies.map((item) => (
