@@ -79,7 +79,7 @@ const BottomDrawer = ({ children, setIsClosed }: ModalProps) => {
         onTouchEnd={handleTouchEnd}
         onMouseDown={handleMouseDown}
       >
-        <div className="h-[4px] w-[48px] rounded-[3px] bg-gray-300" />
+        <div className="absolute h-[4px] w-[48px] rounded-[3px] bg-gray-300" />
         {children}
       </div>
     </div>
