@@ -1,6 +1,7 @@
 'use client';
 
 import PrimaryButton from '@/components/primary-button';
+import ScheduleTime from '@/components/schedule-time';
 import { cn } from '@/utils/cn';
 import { Checkbox, Input as HeadlessInput } from '@headlessui/react';
 import Image from 'next/image';
@@ -33,14 +34,23 @@ const ScheduleForm = () => {
 
   useEffect(() => {
     const today = new Date();
-    const formattedDate = today.toISOString().split('T')[0].replace(/-/g, '.');
+
+    const formatLocalDate = (date: Date) => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더해줍니다.
+      const day = String(date.getDate()).padStart(2, '0');
+
+      return `${year}.${month}.${day}`;
+    };
+
+    const formattedDate = formatLocalDate(today);
     const fullTime = today.toTimeString().split(' ')[0];
     const displayTime = fullTime.slice(0, 5);
     setCurrentDate(formattedDate);
     setCurrentTime(displayTime);
 
     const endDate = new Date(today.getTime() + 60 * 60 * 1000);
-    const endFormattedDate = endDate.toISOString().split('T')[0].replace(/-/g, '.');
+    const endFormattedDate = formatLocalDate(endDate);
     const endFullTime = endDate.toTimeString().split(' ')[0];
     const endDisplayTime = endFullTime.slice(0, 5);
     setEndDate(endFormattedDate);
@@ -79,7 +89,7 @@ const ScheduleForm = () => {
         </div>
 
         {/* 날짜 및 시간 */}
-        <div className="flex flex-col gap-4 bg-background">
+        <div className="flex flex-col gap-4 border-b-[0.75px] border-black">
           <div className="flex gap-4">
             <div className="flex flex-1 flex-col border-b-[0.75px] border-black">
               <div className="label-small pb-2">시작일 *</div>
@@ -145,7 +155,12 @@ const ScheduleForm = () => {
             </div>
           </div>
           {openCalendar && <div>캘린더</div>}
-          {openTime && <div>시간</div>}
+          {openTime && (
+            <div>
+              <div className="label-small text-[#A0A0A0]">시작 시간</div>
+              <ScheduleTime currentTime={currentTime} />
+            </div>
+          )}
           <div className="flex justify-end gap-2">
             <div>매주 반복하기</div>
             <div>토글</div>
