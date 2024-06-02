@@ -3,6 +3,7 @@
 import PrimaryButton from '@/components/primary-button';
 import { cn } from '@/utils/cn';
 import { Checkbox, Input as HeadlessInput } from '@headlessui/react';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 const ColorCircle = ({ color }: { color: string }) => {
@@ -152,7 +153,43 @@ const ScheduleForm = () => {
         </div>
 
         {/* 참석 인원 */}
-        <div className="h-[112px] bg-gray">참석 인원</div>
+        <div className="flex flex-col border-b-[0.75px] border-black">
+          <div className="label-small text-[#A0A0A0]">참석 인원</div>
+          <div className="flex gap-4">
+            <div className="flex w-[52px] flex-col items-center justify-center gap-2 py-3">
+              <button type="button">
+                <Image
+                  src="/icons/add-member.svg"
+                  alt="멤버 추가"
+                  width={48}
+                  height={48}
+                ></Image>
+              </button>
+              <div className="body-small text-center">추가하기</div>
+            </div>
+            <div className="flex w-[52px] flex-col items-center justify-center gap-2 py-3">
+              <button
+                type="button"
+                className="relative"
+              >
+                <Image
+                  src="/icons/default-member.svg"
+                  alt="멤버 추가"
+                  width={48}
+                  height={48}
+                ></Image>
+                <Image
+                  src="/icons/delete-bg-gray.svg"
+                  alt="멤버 삭제"
+                  width={20}
+                  height={20}
+                  className="absolute right-0 top-0"
+                />
+              </button>
+              <div className="body-small text-center">김사원</div>
+            </div>
+          </div>
+        </div>
 
         {/* 위치 */}
         <div className="h-[96px] bg-background">위치</div>
