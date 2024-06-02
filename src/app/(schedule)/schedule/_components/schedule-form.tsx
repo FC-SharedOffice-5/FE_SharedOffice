@@ -212,7 +212,15 @@ const ScheduleForm = () => {
         </div>
 
         {/* 메모 */}
-        <div className="h-[56px] bg-gray">메모</div>
+        <div className="flex flex-col border-b-[0.75px] border-black">
+          <div className="">메모</div>
+          <HeadlessInput
+            type="text"
+            name="memo"
+            placeholder="일정 내용을 입력하세요"
+            className="body-medium w-full py-3 focus:bg-white focus:outline-none"
+          />
+        </div>
       </form>
       <PrimaryButton name="저장" />
     </main>
