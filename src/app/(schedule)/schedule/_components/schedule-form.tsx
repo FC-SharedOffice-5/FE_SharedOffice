@@ -192,7 +192,24 @@ const ScheduleForm = () => {
         </div>
 
         {/* 위치 */}
-        <div className="h-[96px] bg-background">위치</div>
+        <div className="flex flex-col border-black">
+          <div className="">위치</div>
+          <HeadlessInput
+            type="text"
+            name="location"
+            placeholder="위치를 입력해 주세요"
+            className="body-medium w-full py-3 focus:bg-white focus:outline-none"
+          />
+          <div className="flex justify-end gap-1 border-y-[0.75px] border-black py-3 text-[#A0A0A0]">
+            <Image
+              src="/icons/plus_icon.svg"
+              alt="plus"
+              width={16}
+              height={16}
+            ></Image>
+            <div className="body-small">미팅/스튜디오 예약하기</div>
+          </div>
+        </div>
 
         {/* 메모 */}
         <div className="h-[56px] bg-gray">메모</div>
