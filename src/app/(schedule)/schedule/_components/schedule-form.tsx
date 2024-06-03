@@ -3,6 +3,7 @@
 import PrimaryButton from '@/components/primary-button';
 import ScheduleTime from '@/components/schedule-time';
 import { cn } from '@/utils/cn';
+import { getInitialDates } from '@/utils/format-date';
 import { Checkbox, Input as HeadlessInput } from '@headlessui/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -33,28 +34,11 @@ const ScheduleForm = () => {
   const [openTime, setOpenTime] = useState(false);
 
   useEffect(() => {
-    const today = new Date();
-
-    const formatLocalDate = (date: Date) => {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더해줍니다.
-      const day = String(date.getDate()).padStart(2, '0');
-
-      return `${year}.${month}.${day}`;
-    };
-
-    const formattedDate = formatLocalDate(today);
-    const fullTime = today.toTimeString().split(' ')[0];
-    const displayTime = fullTime.slice(0, 5);
-    setCurrentDate(formattedDate);
-    setCurrentTime(displayTime);
-
-    const endDate = new Date(today.getTime() + 60 * 60 * 1000);
-    const endFormattedDate = formatLocalDate(endDate);
-    const endFullTime = endDate.toTimeString().split(' ')[0];
-    const endDisplayTime = endFullTime.slice(0, 5);
+    const { currentDate, currentTime, endFormattedDate, endTime } = getInitialDates();
+    setCurrentDate(currentDate);
+    setCurrentTime(currentTime);
     setEndDate(endFormattedDate);
-    setEndTime(endDisplayTime);
+    setEndTime(endTime);
   }, []);
 
   return (
