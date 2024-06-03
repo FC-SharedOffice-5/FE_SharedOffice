@@ -4,28 +4,13 @@ import PrimaryButton from '@/components/primary-button';
 import ScheduleTime from '@/components/schedule-time';
 import { cn } from '@/utils/cn';
 import { getInitialDates } from '@/utils/format-date';
-import { Checkbox, Input as HeadlessInput } from '@headlessui/react';
+import { Field, Input as HeadlessInput, Radio, RadioGroup } from '@headlessui/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-
-const ColorCircle = ({ color }: { color: string }) => {
-  return (
-    <div
-      className={`h-[32px] w-[32px] rounded-full`}
-      style={{ backgroundColor: color }}
-    ></div>
-  );
-};
+import { colorItems } from '../constants';
 
 const ScheduleForm = () => {
-  const colors = ['#FFD2D5', '#FFE1C6', '#F9F0C2', '#C4F4D1', '#A5EAD7', '#B4D8F2', '#CBC7F7'];
-  const [select, setSelect] = useState(false);
-
-  const selectChange = () => {
-    setSelect(!select);
-  };
-
   const [currentDate, setCurrentDate] = useState('');
   const [currentTime, setCurrentTime] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -42,12 +27,10 @@ const ScheduleForm = () => {
     setEndTime(endTime);
   }, []);
 
-  const {
-    control,
-    setError,
-    formState: { isValid },
-    handleSubmit,
-  } = useForm({ mode: 'onChange' });
+  const { control, watch } = useForm();
+
+  const selectedColorId = watch('color');
+  const selectedColor = colorItems.find((color) => color.id === selectedColorId);
 
   return (
     <main className="flex w-full flex-1 flex-col items-center justify-between gap-10 px-4">
@@ -55,7 +38,10 @@ const ScheduleForm = () => {
         {/* 제목 및 색상 */}
         <div className="flex h-[129px] flex-col border-b-[0.75px] border-black">
           <div className="flex flex-1 flex-wrap items-center">
-            <div className="h-[32px] w-[32px] rounded-full bg-[#FFD2D5]"></div>
+            <div
+              className={`h-[32px] w-[32px] rounded-full`}
+              style={{ backgroundColor: selectedColor?.code }}
+            ></div>
             <Controller
               name="schedule_title"
               control={control}
@@ -89,21 +75,45 @@ const ScheduleForm = () => {
               )}
             />
           </div>
-          <div className="flex flex-1 flex-wrap items-center justify-around">
-            {colors.map((color, i) => (
-              <div
-                key={i}
-                className="cursor-pointer"
+          <Controller
+            name={'color'}
+            control={control}
+            defaultValue={colorItems[0].id}
+            render={({ field: { onChange, value } }) => (
+              <RadioGroup
+                className="flex flex-1 flex-wrap items-center justify-around"
+                value={value}
+                onChange={onChange}
               >
-                <Checkbox
-                  checked={select}
-                  onChange={selectChange}
-                >
-                  <ColorCircle color={color} />
-                </Checkbox>
-              </div>
-            ))}
-          </div>
+                {colorItems.map((color) => (
+                  <Field
+                    key={color.id}
+                    className="cursor-pointer"
+                  >
+                    <Radio value={color.id}>
+                      {({ checked }) => (
+                        <div
+                          className="relative h-[32px] w-[32px] rounded-full"
+                          style={{ backgroundColor: color.code }}
+                        >
+                          {checked && (
+                            <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black bg-opacity-50">
+                              <Image
+                                src="/icons/check-mark-white.svg"
+                                alt="체크"
+                                width={16}
+                                height={11}
+                              />
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </Radio>
+                  </Field>
+                ))}
+              </RadioGroup>
+            )}
+          />
         </div>
 
         {/* 날짜 및 시간 */}
