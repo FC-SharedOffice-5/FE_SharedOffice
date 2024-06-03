@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { cn } from '@/utils/cn';
 import { Field, Input, Radio, RadioGroup } from '@headlessui/react';
-import { FormatTimeInputBlur, FormatTimeInputChange } from '@/utils/format-time-input';
+import { formatTimeInputBlur, formatTimeInputChange } from '@/utils/format-time-input';
 
 const ScheduleTime = ({ currentTime }: { currentTime: string }) => {
   const TimeOfDay = useMemo(() => ['오전', '오후'], []);
@@ -44,8 +44,8 @@ const ScheduleTime = ({ currentTime }: { currentTime: string }) => {
           <Input
             className="h-[88px] w-[104px] rounded-lg bg-background text-center"
             value={hour}
-            onChange={(e) => FormatTimeInputChange(e, setHour, 2, 24)}
-            onBlur={() => FormatTimeInputBlur(hour, setHour)}
+            onChange={(e) => formatTimeInputChange(e, setHour, 2, 24)}
+            onBlur={() => formatTimeInputBlur(hour, setHour)}
           />
           <div className="label-small text-[#A0A0A0]">시</div>
         </div>
@@ -54,8 +54,8 @@ const ScheduleTime = ({ currentTime }: { currentTime: string }) => {
           <Input
             className="h-[88px] w-[104px] rounded-lg bg-background text-center"
             value={minute}
-            onChange={(e) => FormatTimeInputChange(e, setMinute, 2, 60)}
-            onBlur={() => FormatTimeInputBlur(minute, setMinute)}
+            onChange={(e) => formatTimeInputChange(e, setMinute, 2, 60)}
+            onBlur={() => formatTimeInputBlur(minute, setMinute)}
           />
           <div className="label-small text-[#A0A0A0]">분</div>
         </div>

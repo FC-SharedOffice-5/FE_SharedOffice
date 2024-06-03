@@ -1,4 +1,4 @@
-export const FormatTimeInputChange = (
+export const formatTimeInputChange = (
   e: React.ChangeEvent<HTMLInputElement>,
   setValue: (val: string) => void,
   maxLength: number,
@@ -24,7 +24,7 @@ export const FormatTimeInputChange = (
   }
 };
 
-export const FormatTimeInputBlur = (value: string, setValue: (val: string) => void) => {
+export const formatTimeInputBlur = (value: string, setValue: (val: string) => void) => {
   if (value.length === 1 && value >= '0' && value <= '9') {
     setValue('0' + value);
   }
