@@ -69,6 +69,19 @@ body {
     -webkit-text-fill-color: #11111166;
   }
 
+  /* IE의 경우 */
+  input::-ms-clear,
+  input::-ms-reveal {
+    display: none;
+  }
+  /* 크롬의 경우 */
+  input::-webkit-search-decoration,
+  input::-webkit-search-cancel-button,
+  input::-webkit-search-results-button,
+  input::-webkit-search-results-decoration {
+    display: none;
+  }
+
   .text-balance {
     text-wrap: balance;
   }
