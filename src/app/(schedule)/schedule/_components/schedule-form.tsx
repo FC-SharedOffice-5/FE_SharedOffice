@@ -7,6 +7,7 @@ import { getInitialDates } from '@/utils/format-date';
 import { Checkbox, Input as HeadlessInput } from '@headlessui/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
 const ColorCircle = ({ color }: { color: string }) => {
   return (
@@ -41,6 +42,13 @@ const ScheduleForm = () => {
     setEndTime(endTime);
   }, []);
 
+  const {
+    control,
+    setError,
+    formState: { isValid },
+    handleSubmit,
+  } = useForm({ mode: 'onChange' });
+
   return (
     <main className="flex w-full flex-1 flex-col items-center justify-between gap-10 px-4">
       <form className="flex w-full flex-1 flex-col gap-4 pt-4">
@@ -48,11 +56,37 @@ const ScheduleForm = () => {
         <div className="flex h-[129px] flex-col border-b-[0.75px] border-black">
           <div className="flex flex-1 flex-wrap items-center">
             <div className="h-[32px] w-[32px] rounded-full bg-[#FFD2D5]"></div>
-            <HeadlessInput
-              type="text"
+            <Controller
               name="schedule_title"
-              placeholder="제목을 입력하세요"
-              className="body-medium flex-1 px-6 focus:bg-white focus:outline-none"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <div className="relative flex flex-1">
+                  <HeadlessInput
+                    {...field}
+                    type="text"
+                    placeholder="제목을 입력하세요"
+                    className="body-medium flex-1 px-6 focus:bg-white focus:outline-none"
+                  />
+                  {field.value && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        field.onChange('');
+                      }}
+                      className="absolute right-0 top-1/2 -translate-y-1/2 transform"
+                    >
+                      <Image
+                        src="/icons/delete.svg"
+                        alt="전체 삭제"
+                        width={20}
+                        height={20}
+                        className="hover:cursor-pointer"
+                      />
+                    </button>
+                  )}
+                </div>
+              )}
             />
           </div>
           <div className="flex flex-1 flex-wrap items-center justify-around">
