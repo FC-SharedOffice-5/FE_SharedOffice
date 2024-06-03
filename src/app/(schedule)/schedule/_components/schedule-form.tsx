@@ -241,7 +241,7 @@ const ScheduleForm = () => {
             type="text"
             name="location"
             placeholder="위치를 입력해 주세요"
-            className="body-medium w-full py-3 focus:bg-white focus:outline-none"
+            className="body-small w-full py-3 focus:bg-white focus:outline-none"
           />
           <div className="flex justify-end gap-1 border-y-[0.75px] border-black py-3 text-[#A0A0A0]">
             <Image
@@ -261,7 +261,7 @@ const ScheduleForm = () => {
             type="text"
             name="memo"
             placeholder="일정 내용을 입력하세요"
-            className="body-medium w-full py-3 focus:bg-white focus:outline-none"
+            className="caption-small w-full py-3 focus:bg-white focus:outline-none"
           />
         </div>
       </form>
