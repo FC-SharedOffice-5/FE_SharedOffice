@@ -2,13 +2,13 @@
 
 import PrimaryButton from '@/components/primary-button';
 import ScheduleTime from '@/components/schedule-time';
-import { cn } from '@/utils/cn';
 import { getInitialDates } from '@/utils/format-date';
 import { Field, Input as HeadlessInput, Radio, RadioGroup } from '@headlessui/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { colorItems } from '../constants';
+import DateTimeSelector from './date-time-selector';
 
 const ScheduleForm = () => {
   const [currentDate, setCurrentDate] = useState('');
@@ -17,7 +17,7 @@ const ScheduleForm = () => {
   const [endTime, setEndTime] = useState('');
 
   const [openCalendar, setOpenCalendar] = useState(false);
-  const [openTime, setOpenTime] = useState(false);
+  const [openTimeSelect, setOpenTimeSelect] = useState(false);
 
   useEffect(() => {
     const { currentDate, currentTime, endFormattedDate, endTime } = getInitialDates();
@@ -31,6 +31,16 @@ const ScheduleForm = () => {
 
   const selectedColorId = watch('color');
   const selectedColor = colorItems.find((color) => color.id === selectedColorId);
+
+  const handleCalendarClick = () => {
+    setOpenCalendar(!openCalendar);
+    setOpenTimeSelect(false);
+  };
+
+  const handleTimeSelectClick = () => {
+    setOpenTimeSelect(!openTimeSelect);
+    setOpenCalendar(false);
+  };
 
   return (
     <main className="flex w-full flex-1 flex-col items-center justify-between gap-10 px-4">
@@ -119,71 +129,27 @@ const ScheduleForm = () => {
         {/* 날짜 및 시간 */}
         <div className="flex flex-col gap-4 border-b-[0.75px] border-black">
           <div className="flex gap-4">
-            <div className="flex flex-1 flex-col border-b-[0.75px] border-black">
-              <div className="label-small pb-2">시작일 *</div>
-              <div className="body-medium flex py-2">
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setOpenCalendar(!openCalendar);
-                    setOpenTime(false);
-                  }}
-                >
-                  <div
-                    className={cn(
-                      'data-[disabled]:text-[#111]/[.4]',
-                      openCalendar && 'text-primary',
-                    )}
-                  >
-                    {currentDate}
-                  </div>
-                </button>
-                <button
-                  className="flex-1"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setOpenTime(!openTime);
-                    setOpenCalendar(false);
-                  }}
-                >
-                  <div className="text-center">{currentTime}</div>
-                </button>
-              </div>
-            </div>
-            <div className="flex flex-1 flex-col border-b-[0.75px] border-black">
-              <div className="label-small pb-2">종료일 *</div>
-              <div className="body-medium flex py-2">
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setOpenCalendar(!openCalendar);
-                    setOpenTime(false);
-                  }}
-                >
-                  <div
-                    className={cn(
-                      'data-[disabled]:text-[#111]/[.4]',
-                      openCalendar && 'text-primary',
-                    )}
-                  >
-                    {endDate}
-                  </div>
-                </button>
-                <button
-                  className="flex-1"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setOpenTime(!openTime);
-                    setOpenCalendar(false);
-                  }}
-                >
-                  <div className="text-center">{endTime}</div>
-                </button>
-              </div>
-            </div>
+            <DateTimeSelector
+              label="시작일 *"
+              date={currentDate}
+              time={currentTime}
+              openCalendar={openCalendar}
+              openTimeSelect={openTimeSelect}
+              onCalendarClick={handleCalendarClick}
+              onTimeSelectClick={handleTimeSelectClick}
+            />
+            <DateTimeSelector
+              label="종료일 *"
+              date={endDate}
+              time={endTime}
+              openCalendar={openCalendar}
+              openTimeSelect={openTimeSelect}
+              onCalendarClick={handleCalendarClick}
+              onTimeSelectClick={handleTimeSelectClick}
+            />
           </div>
           {openCalendar && <div>캘린더</div>}
-          {openTime && (
+          {openTimeSelect && (
             <div>
               <div className="label-small text-[#A0A0A0]">시작 시간</div>
               <ScheduleTime currentTime={currentTime} />
