@@ -10,6 +10,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { colorItems } from '../constants';
 import DateTimeSelector from './date-time-selector';
 import Calendar from '@/components/calendar';
+import DecisionButton from './decision-button';
 
 const ScheduleForm = () => {
   const [currentDate, setCurrentDate] = useState('');
@@ -164,24 +165,28 @@ const ScheduleForm = () => {
               <>
                 <div className="label-small mb-4 text-[#A0A0A0]">시작 일</div>
                 <Calendar />
+                <DecisionButton />
               </>
             )}
             {openCalendar === 'end' && (
               <>
                 <div className="label-small mb-4 text-[#A0A0A0]">종료 일</div>
                 <Calendar />
+                <DecisionButton />
               </>
             )}
             {openTimeSelect === 'start' && (
               <>
                 <div className="label-small mb-4 text-[#A0A0A0]">시작 시간</div>
                 <ScheduleTime time={currentTime} />
+                <DecisionButton />
               </>
             )}
             {openTimeSelect === 'end' && (
               <>
                 <div className="label-small mb-4 text-[#A0A0A0]">종료 시간</div>
                 <ScheduleTime time={endTime} />
+                <DecisionButton />
               </>
             )}
           </div>
@@ -237,7 +242,7 @@ const ScheduleForm = () => {
             type="text"
             name="location"
             placeholder="위치를 입력해 주세요"
-            className="body-small w-full py-3 focus:bg-white focus:outline-none"
+            className="body-small w-full border-b-[0.75px] border-black py-3 focus:bg-white focus:outline-none"
           />
           <button
             type="button"
