@@ -2,16 +2,18 @@ import { cn } from '@/utils/cn';
 
 export type DateTimeSelectorProps = {
   label: string;
+  name: string;
   date: string;
   time: string;
-  openCalendar: boolean;
-  openTimeSelect: boolean;
+  openCalendar: string;
+  openTimeSelect: string;
   onCalendarClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   onTimeSelectClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 const DateTimeSelector = ({
   label,
+  name,
   date,
   time,
   openCalendar,
@@ -26,7 +28,12 @@ const DateTimeSelector = ({
         type="button"
         onClick={onCalendarClick}
       >
-        <div className={cn('data-[disabled]:text-[#111]/[.4]', openCalendar && 'text-primary')}>
+        <div
+          className={cn(
+            'data-[disabled]:text-[#111]/[.4]',
+            openCalendar === name && 'text-primary',
+          )}
+        >
           {date}
         </div>
       </button>
@@ -35,7 +42,16 @@ const DateTimeSelector = ({
         type="button"
         onClick={onTimeSelectClick}
       >
-        <div className="text-center">{time}</div>
+        <div className="text-center">
+          <div
+            className={cn(
+              'data-[disabled]:text-[#111]/[.4]',
+              openTimeSelect === name && 'text-primary',
+            )}
+          >
+            {time}
+          </div>
+        </div>
       </button>
     </div>
   </div>

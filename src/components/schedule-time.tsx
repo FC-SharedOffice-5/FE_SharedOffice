@@ -3,13 +3,13 @@ import { cn } from '@/utils/cn';
 import { Field, Input, Radio, RadioGroup } from '@headlessui/react';
 import { formatTimeInputBlur, formatTimeInputChange } from '@/utils/format-time-input';
 
-const ScheduleTime = ({ currentTime }: { currentTime: string }) => {
+const ScheduleTime = ({ time }: { time: string }) => {
   const TimeOfDay = useMemo(() => ['오전', '오후'], []);
-  const currentHour = currentTime.split(':')[0];
-  const currentMinute = currentTime.split(':')[1];
+  const Hour = time.split(':')[0];
+  const Minute = time.split(':')[1];
 
-  const [hour, setHour] = useState(currentHour);
-  const [minute, setMinute] = useState(currentMinute);
+  const [hour, setHour] = useState(Hour);
+  const [minute, setMinute] = useState(Minute);
   const [selectedTime, setSelectedTime] = useState(TimeOfDay[0]);
 
   useEffect(() => {
