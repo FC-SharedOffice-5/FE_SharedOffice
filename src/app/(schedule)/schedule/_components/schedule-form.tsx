@@ -181,32 +181,30 @@ const ScheduleForm = () => {
               onTimeSelectClick={() => handleOpenStateClick('timeSelect', 'end')}
             />
           </div>
-          <div className="py-4">
-            {openState.calendar && (
-              <>
-                <div className="label-small mb-4 text-[#A0A0A0]">
-                  {openState.calendar === 'start' ? '시작 일' : '종료 일'}
-                </div>
-                <Calendar />
-                <DecisionButton />
-              </>
-            )}
-            {openState.timeSelect && (
-              <>
-                <div className="label-small mb-4 text-[#A0A0A0]">
-                  {openState.timeSelect === 'start' ? '시작 시간' : '종료 시간'}
-                </div>
-                <ScheduleTime
-                  time={
-                    openState.timeSelect === 'start'
-                      ? dateTimeState.currentTime
-                      : dateTimeState.endTime
-                  }
-                />
-                <DecisionButton />
-              </>
-            )}
-          </div>
+          {openState.calendar && (
+            <div className="py-4">
+              <div className="label-small mb-4 text-[#A0A0A0]">
+                {openState.calendar === 'start' ? '시작 일' : '종료 일'}
+              </div>
+              <Calendar />
+              <DecisionButton />
+            </div>
+          )}
+          {openState.timeSelect && (
+            <div className="py-4">
+              <div className="label-small mb-4 text-[#A0A0A0]">
+                {openState.timeSelect === 'start' ? '시작 시간' : '종료 시간'}
+              </div>
+              <ScheduleTime
+                time={
+                  openState.timeSelect === 'start'
+                    ? dateTimeState.currentTime
+                    : dateTimeState.endTime
+                }
+              />
+              <DecisionButton />
+            </div>
+          )}
           <div className="body-small flex items-center justify-end gap-2 py-2 text-[#A0A0A0]">
             <div>매주 반복하기</div>
             <Controller
