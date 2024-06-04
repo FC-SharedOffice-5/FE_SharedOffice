@@ -190,7 +190,7 @@ const ScheduleForm = () => {
               </>
             )}
           </div>
-          <div className="flex justify-end gap-2 py-2">
+          <div className="body-small flex justify-end gap-2 py-2 text-[#A0A0A0]">
             <div>매주 반복하기</div>
             <div>토글</div>
           </div>
@@ -237,7 +237,7 @@ const ScheduleForm = () => {
 
         {/* 위치 */}
         <div className="flex flex-col">
-          <div className="">위치</div>
+          <div className="label-small text-[#A0A0A0]">위치</div>
           <HeadlessInput
             type="text"
             name="location"
@@ -260,12 +260,12 @@ const ScheduleForm = () => {
 
         {/* 메모 */}
         <div className="flex flex-col border-b-[0.75px] border-black">
-          <div className="">메모</div>
+          <div className="label-small text-[#A0A0A0]">메모</div>
           <HeadlessInput
             type="text"
             name="memo"
             placeholder="일정 내용을 입력하세요"
-            className="caption-small w-full py-3 focus:bg-white focus:outline-none"
+            className="body-small w-full py-3 focus:bg-white focus:outline-none"
           />
         </div>
       </form>
