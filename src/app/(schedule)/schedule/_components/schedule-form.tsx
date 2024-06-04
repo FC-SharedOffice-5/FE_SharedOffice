@@ -11,6 +11,7 @@ import { colorItems } from '../constants';
 import DateTimeSelector from './date-time-selector';
 import Calendar from '@/components/calendar';
 import DecisionButton from './decision-button';
+import Toggle from '@/components/toggle';
 
 const ScheduleForm = () => {
   const [currentDate, setCurrentDate] = useState('');
@@ -190,9 +191,19 @@ const ScheduleForm = () => {
               </>
             )}
           </div>
-          <div className="body-small flex justify-end gap-2 py-2 text-[#A0A0A0]">
+          <div className="body-small flex items-center justify-end gap-2 py-2 text-[#A0A0A0]">
             <div>매주 반복하기</div>
-            <div>토글</div>
+            <Controller
+              name="repeat"
+              control={control}
+              defaultValue={false}
+              render={({ field: { onChange, value } }) => (
+                <Toggle
+                  checked={value}
+                  onChange={() => onChange(!value)}
+                />
+              )}
+            />
           </div>
         </div>
 
