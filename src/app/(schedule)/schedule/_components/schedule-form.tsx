@@ -53,6 +53,7 @@ const ScheduleForm = () => {
     watch,
     formState: { isValid },
   } = useForm();
+
   const selectedColorId = watch('color');
   const selectedColor = colorItems.find((color) => color.id === selectedColorId);
 
@@ -62,6 +63,12 @@ const ScheduleForm = () => {
       [type]: prevState[type] === state ? '' : state,
       [type === 'calendar' ? 'timeSelect' : 'calendar']: '',
     }));
+  };
+
+  const [memberList, setMemberList] = useState<string[]>(['김사원', '이대리', '박부장']);
+
+  const removeMember = (indexToRemove: number) => {
+    setMemberList((prevMembers) => prevMembers.filter((_, index) => index !== indexToRemove));
   };
 
   return (
@@ -220,7 +227,7 @@ const ScheduleForm = () => {
         <div className="flex flex-col border-b-[0.75px] border-black">
           <div className="label-small text-[#A0A0A0]">참석 인원</div>
           <div className="flex gap-4">
-            <div className="flex w-[52px] flex-col items-center justify-center gap-2 py-3">
+            <div className="flex w-[52px] flex-col items-center justify-center gap-4 py-3">
               <button type="button">
                 <Image
                   src="/icons/add-member.svg"
@@ -231,27 +238,32 @@ const ScheduleForm = () => {
               </button>
               <div className="body-small text-center">추가하기</div>
             </div>
-            <div className="flex w-[52px] flex-col items-center justify-center gap-2 py-3">
-              <button
-                type="button"
-                className="relative"
+            {memberList.map((member, index) => (
+              <div
+                key={index}
+                className="relative flex w-[52px] flex-col items-center justify-center gap-2 py-3"
               >
                 <Image
                   src="/icons/default-member.svg"
-                  alt="멤버 추가"
+                  alt="멤버"
                   width={48}
                   height={48}
                 ></Image>
-                <Image
-                  src="/icons/delete-bg-gray.svg"
-                  alt="멤버 삭제"
-                  width={20}
-                  height={20}
-                  className="absolute right-0 top-0"
-                />
-              </button>
-              <div className="body-small text-center">김사원</div>
-            </div>
+                <button
+                  type="button"
+                  onClick={() => removeMember(index)}
+                >
+                  <Image
+                    src="/icons/delete-bg-gray.svg"
+                    alt="멤버 삭제"
+                    width={20}
+                    height={20}
+                    className="absolute right-0 top-3"
+                  />
+                </button>
+                <div className="body-small text-center">{member}</div>
+              </div>
+            ))}
           </div>
         </div>
 
