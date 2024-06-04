@@ -48,7 +48,11 @@ const ScheduleForm = () => {
     });
   }, []);
 
-  const { control, watch } = useForm();
+  const {
+    control,
+    watch,
+    formState: { isValid },
+  } = useForm();
   const selectedColorId = watch('color');
   const selectedColor = colorItems.find((color) => color.id === selectedColorId);
 
@@ -74,6 +78,7 @@ const ScheduleForm = () => {
               name="schedule_title"
               control={control}
               defaultValue=""
+              rules={{ required: true }}
               render={({ field }) => (
                 <div className="relative flex flex-1">
                   <HeadlessInput
@@ -107,6 +112,7 @@ const ScheduleForm = () => {
             name={'color'}
             control={control}
             defaultValue={colorItems[0].id}
+            rules={{ required: true }}
             render={({ field: { onChange, value } }) => (
               <RadioGroup
                 className="flex flex-1 flex-wrap items-center justify-around"
@@ -252,38 +258,57 @@ const ScheduleForm = () => {
         {/* 위치 */}
         <div className="flex flex-col">
           <div className="label-small text-[#A0A0A0]">위치</div>
-          <HeadlessInput
-            type="text"
+          <Controller
             name="location"
-            placeholder="위치를 입력해 주세요"
-            className="body-small w-full border-b-[0.75px] border-black py-3 focus:bg-white focus:outline-none"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <>
+                <HeadlessInput
+                  {...field}
+                  type="text"
+                  placeholder="위치를 입력해 주세요"
+                  className="body-small w-full border-b-[0.75px] border-black py-3 focus:bg-white focus:outline-none"
+                />
+                <button
+                  type="button"
+                  className="flex justify-end gap-1 py-3 text-[#A0A0A0]"
+                >
+                  <Image
+                    src="/icons/plus_icon.svg"
+                    alt="plus"
+                    width={16}
+                    height={16}
+                  ></Image>
+                  <div className="body-small">미팅/스튜디오 예약하기</div>
+                </button>
+              </>
+            )}
           />
-          <button
-            type="button"
-            className="flex justify-end gap-1 py-3 text-[#A0A0A0]"
-          >
-            <Image
-              src="/icons/plus_icon.svg"
-              alt="plus"
-              width={16}
-              height={16}
-            ></Image>
-            <div className="body-small">미팅/스튜디오 예약하기</div>
-          </button>
         </div>
 
         {/* 메모 */}
         <div className="flex flex-col border-b-[0.75px] border-black">
           <div className="label-small text-[#A0A0A0]">메모</div>
-          <HeadlessInput
-            type="text"
+          <Controller
             name="memo"
-            placeholder="일정 내용을 입력하세요"
-            className="body-small w-full py-3 focus:bg-white focus:outline-none"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <HeadlessInput
+                {...field}
+                type="text"
+                placeholder="일정 내용을 입력하세요"
+                className="body-small w-full py-3 focus:bg-white focus:outline-none"
+              />
+            )}
           />
         </div>
       </form>
-      <PrimaryButton name="저장" />
+      <PrimaryButton
+        name="저장"
+        disabled={!isValid}
+      />
     </main>
   );
 };

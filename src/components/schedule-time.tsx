@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { cn } from '@/utils/cn';
-import { Field, Input, Radio, RadioGroup } from '@headlessui/react';
+import { Field, Input as HeadlessInput, Radio, RadioGroup } from '@headlessui/react';
 import { formatTimeInputBlur, formatTimeInputChange } from '@/utils/format-time-input';
 
 const ScheduleTime = ({ time }: { time: string }) => {
@@ -41,8 +41,8 @@ const ScheduleTime = ({ time }: { time: string }) => {
     <div className="flex justify-center gap-7">
       <div className="flex text-[60px]">
         <div className="flex flex-col gap-2">
-          <Input
-            className="h-[88px] w-[104px] rounded-lg bg-background text-center"
+          <HeadlessInput
+            className="h-[88px] w-[104px] rounded-lg bg-background text-center focus:bg-primary-200 focus:outline-primary"
             value={hour}
             onChange={(e) => formatTimeInputChange(e, setHour, 2, 24)}
             onBlur={() => formatTimeInputBlur(hour, setHour)}
@@ -51,8 +51,8 @@ const ScheduleTime = ({ time }: { time: string }) => {
         </div>
         <div>:</div>
         <div className="flex flex-col gap-2">
-          <Input
-            className="h-[88px] w-[104px] rounded-lg bg-background text-center"
+          <HeadlessInput
+            className="h-[88px] w-[104px] rounded-lg bg-background text-center focus:bg-primary-200 focus:outline-primary"
             value={minute}
             onChange={(e) => formatTimeInputChange(e, setMinute, 2, 60)}
             onBlur={() => formatTimeInputBlur(minute, setMinute)}
