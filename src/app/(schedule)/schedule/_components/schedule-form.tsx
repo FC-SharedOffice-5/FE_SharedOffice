@@ -1,56 +1,63 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import PrimaryButton from '@/components/primary-button';
 import ScheduleTime from '@/components/schedule-time';
 import { getInitialDates } from '@/utils/format-date';
 import { Field, Input as HeadlessInput, Radio, RadioGroup } from '@headlessui/react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
 import { colorItems } from '../constants';
 import DateTimeSelector from './date-time-selector';
 import Calendar from '@/components/calendar';
 import DecisionButton from './decision-button';
 import Toggle from '@/components/toggle';
 
-const ScheduleForm = () => {
-  const [currentDate, setCurrentDate] = useState('');
-  const [currentTime, setCurrentTime] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [endTime, setEndTime] = useState('');
+type DateTimeState = {
+  currentDate: string;
+  currentTime: string;
+  endDate: string;
+  endTime: string;
+};
 
-  const [openCalendar, setOpenCalendar] = useState('');
-  const [openTimeSelect, setOpenTimeSelect] = useState('');
+type OpenState = {
+  calendar: string;
+  timeSelect: string;
+};
+
+const ScheduleForm = () => {
+  const [dateTimeState, setDateTimeState] = useState<DateTimeState>({
+    currentDate: '',
+    currentTime: '',
+    endDate: '',
+    endTime: '',
+  });
+
+  const [openState, setOpenState] = useState<OpenState>({
+    calendar: '',
+    timeSelect: '',
+  });
 
   useEffect(() => {
-    const { currentDate, currentTime, endFormattedDate, endTime } = getInitialDates();
-    setCurrentDate(currentDate);
-    setCurrentTime(currentTime);
-    setEndDate(endFormattedDate);
-    setEndTime(endTime);
+    const { currentDate, currentTime, endDate, endTime } = getInitialDates();
+    setDateTimeState({
+      currentDate,
+      currentTime,
+      endDate: endDate,
+      endTime,
+    });
   }, []);
 
   const { control, watch } = useForm();
-
   const selectedColorId = watch('color');
   const selectedColor = colorItems.find((color) => color.id === selectedColorId);
 
-  const handleCalendarClick = (state: string) => {
-    if (state === openCalendar) {
-      setOpenCalendar('');
-    } else {
-      setOpenCalendar(state);
-      setOpenTimeSelect('');
-    }
-  };
-
-  const handleTimeSelectClick = (state: string) => {
-    if (state === openTimeSelect) {
-      setOpenTimeSelect('');
-    } else {
-      setOpenTimeSelect(state);
-      setOpenCalendar('');
-    }
+  const handleOpenStateClick = (type: 'calendar' | 'timeSelect', state: string) => {
+    setOpenState((prevState) => ({
+      ...prevState,
+      [type]: prevState[type] === state ? '' : state,
+      [type === 'calendar' ? 'timeSelect' : 'calendar']: '',
+    }));
   };
 
   return (
@@ -143,50 +150,46 @@ const ScheduleForm = () => {
             <DateTimeSelector
               label="시작일 *"
               name="start"
-              date={currentDate}
-              time={currentTime}
-              openCalendar={openCalendar}
-              openTimeSelect={openTimeSelect}
-              onCalendarClick={() => handleCalendarClick('start')}
-              onTimeSelectClick={() => handleTimeSelectClick('start')}
+              date={dateTimeState.currentDate}
+              time={dateTimeState.currentTime}
+              openCalendar={openState.calendar}
+              openTimeSelect={openState.timeSelect}
+              onCalendarClick={() => handleOpenStateClick('calendar', 'start')}
+              onTimeSelectClick={() => handleOpenStateClick('timeSelect', 'start')}
             />
             <DateTimeSelector
               label="종료일 *"
               name="end"
-              date={endDate}
-              time={endTime}
-              openCalendar={openCalendar}
-              openTimeSelect={openTimeSelect}
-              onCalendarClick={() => handleCalendarClick('end')}
-              onTimeSelectClick={() => handleTimeSelectClick('end')}
+              date={dateTimeState.endDate}
+              time={dateTimeState.endTime}
+              openCalendar={openState.calendar}
+              openTimeSelect={openState.timeSelect}
+              onCalendarClick={() => handleOpenStateClick('calendar', 'end')}
+              onTimeSelectClick={() => handleOpenStateClick('timeSelect', 'end')}
             />
           </div>
           <div className="py-4">
-            {openCalendar === 'start' && (
+            {openState.calendar && (
               <>
-                <div className="label-small mb-4 text-[#A0A0A0]">시작 일</div>
+                <div className="label-small mb-4 text-[#A0A0A0]">
+                  {openState.calendar === 'start' ? '시작 일' : '종료 일'}
+                </div>
                 <Calendar />
                 <DecisionButton />
               </>
             )}
-            {openCalendar === 'end' && (
+            {openState.timeSelect && (
               <>
-                <div className="label-small mb-4 text-[#A0A0A0]">종료 일</div>
-                <Calendar />
-                <DecisionButton />
-              </>
-            )}
-            {openTimeSelect === 'start' && (
-              <>
-                <div className="label-small mb-4 text-[#A0A0A0]">시작 시간</div>
-                <ScheduleTime time={currentTime} />
-                <DecisionButton />
-              </>
-            )}
-            {openTimeSelect === 'end' && (
-              <>
-                <div className="label-small mb-4 text-[#A0A0A0]">종료 시간</div>
-                <ScheduleTime time={endTime} />
+                <div className="label-small mb-4 text-[#A0A0A0]">
+                  {openState.timeSelect === 'start' ? '시작 시간' : '종료 시간'}
+                </div>
+                <ScheduleTime
+                  time={
+                    openState.timeSelect === 'start'
+                      ? dateTimeState.currentTime
+                      : dateTimeState.endTime
+                  }
+                />
                 <DecisionButton />
               </>
             )}

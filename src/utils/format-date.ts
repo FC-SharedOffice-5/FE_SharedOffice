@@ -14,14 +14,14 @@ export const getInitialDates = () => {
   const currentDate = formatLocalDate(today);
   const currentTime = formatTime(today);
 
-  const endDate = new Date(today.getTime() + 60 * 60 * 1000);
-  const endFormattedDate = formatLocalDate(endDate);
-  const endTime = formatTime(endDate);
+  const end = new Date(today.getTime() + 60 * 60 * 1000);
+  const endDate = formatLocalDate(end);
+  const endTime = formatTime(end);
 
   return {
     currentDate,
     currentTime,
-    endFormattedDate,
+    endDate,
     endTime,
   };
 };
