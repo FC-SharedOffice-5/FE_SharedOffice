@@ -24,6 +24,7 @@
         "endOfLine": "auto"
       }
     ],
+    "@tanstack/query/exhaustive-deps": "off",
     "unused-imports/no-unused-imports": "error"
   }
 }

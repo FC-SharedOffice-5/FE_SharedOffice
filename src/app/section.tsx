@@ -5,7 +5,7 @@ import NavRightIcon from '@/assets/icons/nav-right-icon';
 import BottomDrawer from '@/components/drawer';
 import InfoLink from '@/components/info-link';
 import Loader from '@/components/loader';
-import useDraggable from '@/hooks/useDraggable';
+import useDraggable from '@/hooks/use-draggable';
 import Image from 'next/image';
 import { QRCodeSVG } from 'qrcode.react';
 import { useRef, useState } from 'react';

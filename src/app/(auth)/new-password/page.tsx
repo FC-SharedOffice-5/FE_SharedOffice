@@ -1,34 +1,67 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import Input from '@/components/input';
 import PrimaryButton from '@/components/primary-button';
+import { useUpdatePassword } from '@/hooks/use-auth';
+import { SignupSchema } from '@/types/schema';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const NewPasswordSchema = SignupSchema.pick({
+  password: true,
+})
+  .extend({
+    confirmPassword: z
+      .string()
+      .regex(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':",.<>/?-]).{8,20}$/, {
+        message: '영문, 숫자, 특수문자를 조합해서 입력해주세요. (8-20자)',
+      }),
+  })
+  .refine((value) => value.password === value.confirmPassword, {
+    message: '비밀번호가 일치하지 않습니다.',
+    path: ['confirmPassword'],
+  });
+
+type TNewPasswordFormValues = z.infer<typeof NewPasswordSchema>;
 
 export default function NewPasswordPage() {
   const router = useRouter();
+  const { mutate } = useUpdatePassword();
 
   const {
     watch,
     control,
     setError,
+    trigger,
+    handleSubmit,
     clearErrors,
     formState: { errors, isValid },
-  } = useForm({ mode: 'onChange' });
+  } = useForm<TNewPasswordFormValues>({
+    resolver: zodResolver(NewPasswordSchema),
+    mode: 'onChange',
+  });
 
   const password = watch('password');
 
-  const changePassword = () => {
+  const onSubmit: SubmitHandler<TNewPasswordFormValues> = (data) => {
+    if (!isValid) {
+      trigger(['confirmPassword', 'password']);
+    }
+    mutate({ password: data.password });
     router.replace('/new-password/complete');
   };
 
   const validatePasswordConfirm = (value: string) => {
     if (value !== password) {
-      setError('passwordConfirm', { type: 'manual', message: '비밀번호가 일치하지 않습니다.' });
+      setError('confirmPassword', { type: 'manual', message: '비밀번호가 일치하지 않습니다.' });
     } else {
-      clearErrors('passwordConfirm');
+      clearErrors('confirmPassword');
     }
   };
+
+  const isFormFilled = watch('confirmPassword') && watch('password');
 
   return (
     <div className="flex h-full w-full flex-col justify-center gap-8 p-4">
@@ -55,7 +88,7 @@ export default function NewPasswordPage() {
         <Input
           type="password"
           label="비밀번호 확인"
-          name="passwordConfirm"
+          name="confirmPassword"
           control={control}
           validation={{
             required: true,
@@ -66,8 +99,8 @@ export default function NewPasswordPage() {
       <div className="bottom-4 left-4 w-full">
         <PrimaryButton
           name="비밀번호 재설정"
-          disabled={!(isValid && !errors.passwordConfirm)}
-          handleClick={changePassword}
+          disabled={!isFormFilled}
+          handleClick={handleSubmit(onSubmit)}
         />
       </div>
     </div>

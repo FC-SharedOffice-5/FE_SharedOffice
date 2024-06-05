@@ -2,25 +2,42 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import Input from '@/components/input';
 import PrimaryButton from '@/components/primary-button';
+import { useSearchEmail } from '@/hooks/use-email';
+import { EmailSearchData } from '@/types/data';
 
 export default function SearchPasswordPage() {
   const router = useRouter();
+  const { mutate } = useSearchEmail();
 
   const [isDisabled, setIsDisabled] = useState(false);
   const [emailError, setEmailError] = useState(false);
 
   const {
-    watch,
     handleSubmit,
     formState: { errors, isValid },
     control,
-  } = useForm({ mode: 'onChange' });
-  const watchAllFields = watch();
+  } = useForm<EmailSearchData>({ mode: 'onChange' });
 
-  const onSubmit = () => {
+  const onSubmit: SubmitHandler<EmailSearchData> = (data) => {
+    mutate(
+      {
+        memberName: data.memberName,
+        memberNickname: data.memberNickname,
+      },
+      {
+        onSuccess: (res) => {
+          if (res.data.email) {
+            router.push('/search-email/complete?email=' + res.data.email);
+          } else {
+            setEmailError(true);
+          }
+        },
+      },
+    );
+
     // GET /searchpw/confirm/{code}
 
     // 404일 때
@@ -41,7 +58,7 @@ export default function SearchPasswordPage() {
           <Input
             control={control}
             label="이름"
-            name="username"
+            name="memberName"
             placeholder="김마일"
             validation={{
               required: true,
@@ -55,7 +72,7 @@ export default function SearchPasswordPage() {
             control={control}
             maxLength={6}
             label="닉네임"
-            name="nickname"
+            name="memberNickname"
             placeholder="김말이"
             validation={{
               required: true,
@@ -66,7 +83,7 @@ export default function SearchPasswordPage() {
       <PrimaryButton
         name="이메일 찾기"
         disabled={!isValid}
-        handleClick={onSubmit}
+        handleClick={handleSubmit(onSubmit)}
       />
     </main>
   );

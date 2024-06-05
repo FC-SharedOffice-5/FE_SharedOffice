@@ -6,11 +6,10 @@ import Input from '@/components/input';
 import PrimaryButton from '@/components/primary-button';
 import { useSignupStore } from '@/app/(provider)/signup-provider';
 import { useShallow } from 'zustand/react/shallow';
-import { useMutation } from '@tanstack/react-query';
-import { SignupData } from '@/types/data';
 import { SignupSchema } from '@/types/schema';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSignup } from '@/hooks/use-auth';
 
 const SignupLastSchema = SignupSchema.pick({
   password: true,
@@ -30,23 +29,9 @@ const SignupLastSchema = SignupSchema.pick({
 
 type TSignupLastFormValues = z.infer<typeof SignupLastSchema>;
 
-const postSignup = async (signupInfo: SignupData) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signup`, {
-    cache: 'no-store',
-    method: 'POST',
-    body: JSON.stringify({
-      ...signupInfo,
-    }),
-  });
-
-  return res.json();
-};
-
 export default function SignupLastPage() {
   const router = useRouter();
-  const mutation = useMutation<SignupData, Error, SignupData>({
-    mutationFn: postSignup,
-  });
+  const mutation = useSignup();
 
   const signupInfo = useSignupStore(
     useShallow((state) => ({

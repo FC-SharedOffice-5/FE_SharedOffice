@@ -1,13 +1,14 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import PrimaryButton from '@/components/primary-button';
 
 export default function SearchEmailCompletePage() {
   const router = useRouter();
-  // TODO: API RESPONSE 찾은 이메일 보여주기
-  const email = 'test@example.com';
+  const params = useSearchParams();
 
+  const email = params.get('email') || 'test@example.com';
+  // TODO: API RESPONSE 찾은 이메일 보여주기
   const routeTo = (path: string) => () => {
     router.replace(path);
   };

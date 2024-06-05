@@ -2,15 +2,24 @@ import { auth } from '@/auth';
 import { match } from 'path-to-regexp';
 import { NextResponse } from 'next/server';
 
-const matchersForAuth = ['/'];
+// 권한을 가진 사용자만 접근 가능한 경로
+const matchersForAuth = ['/profile', '/settings', '/logout', '/'];
+// 권한이 없는 사용자만 접근 가능한 경로
+const matchersForNoAuth = ['/login', '/signup'];
 
 export default auth((req) => {
-  if (req.auth) {
+  const url = req.nextUrl.clone();
+  if (req.auth?.accessToken) {
+    if (isMatch(req.nextUrl.pathname, matchersForNoAuth)) {
+      url.pathname = '/';
+
+      return NextResponse.redirect(url);
+    }
+
     return NextResponse.next();
   }
 
   if (isMatch(req.nextUrl.pathname, matchersForAuth)) {
-    const url = req.nextUrl.clone();
     url.pathname = '/login';
 
     url.searchParams.set('callbackUrl', `${req.url}`);
