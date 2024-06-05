@@ -1,8 +1,9 @@
-type GoIconProps = {
+type NextIconProps = {
   color?: 'black' | 'gray';
+  rotate?: boolean;
 };
 
-const GoIcon = ({ color = 'black' }: GoIconProps) => {
+const NextIcon = ({ color = 'black', rotate = false }: NextIconProps) => {
   const strokeColor = color === 'black' ? '#111' : '#8E918E';
 
   return (
@@ -11,6 +12,7 @@ const GoIcon = ({ color = 'black' }: GoIconProps) => {
       width={24}
       height={24}
       fill="none"
+      style={{ transform: `${rotate ? 'rotate(180deg)' : 'rotate(0)'}` }}
     >
       <path
         stroke={strokeColor}
@@ -22,4 +24,4 @@ const GoIcon = ({ color = 'black' }: GoIconProps) => {
     </svg>
   );
 };
-export default GoIcon;
+export default NextIcon;
