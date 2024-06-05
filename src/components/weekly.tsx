@@ -9,13 +9,14 @@ import {
   getMonth,
 } from 'date-fns';
 import { useState } from 'react';
-import { useScheduleStore } from '@/app/(provider)/schedule-provider';
+import { CalendarProps } from './calendar';
 
-const Weekly = () => {
-  const { selectedDate, setSelectedDate, currentMonth, setCurrentMonth } = useScheduleStore(
-    (state) => state,
-  );
+type WeeklyProps = Pick<
+  CalendarProps,
+  'selectedDate' | 'setSelectedDate' | 'currentMonth' | 'setCurrentMonth'
+>;
 
+const Weekly = ({ selectedDate, setSelectedDate, currentMonth, setCurrentMonth }: WeeklyProps) => {
   const [currentWeekStart, setCurrentWeekStart] = useState(startOfWeek(new Date()));
 
   const days = Array.from({ length: 7 }).map((_, i) => addDays(currentWeekStart, i));
