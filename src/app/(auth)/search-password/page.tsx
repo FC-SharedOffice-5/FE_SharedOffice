@@ -2,36 +2,48 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import Input from '@/components/input';
 import PrimaryButton from '@/components/primary-button';
 import Timer from '@/components/auth-timer';
+import { useEmailVerification } from '@/hooks/use-email';
+import { TVerifyEmail } from '@/apis';
 
 export default function SearchPasswordPage() {
   const router = useRouter();
+  const {
+    watch,
+    formState: { errors },
+    control,
+    setError,
+    handleSubmit,
+  } = useForm<{ code: string; email: string }>({ mode: 'onChange' });
 
+  const [emailData, setEmailData] = useState<TVerifyEmail | null>(null);
+  const [_, setVerificationMessage] = useState<string | null>(null);
   const [isCodeSent, setIsCodeSent] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [emailError, setEmailError] = useState(false);
   const [showTimer, setShowTimer] = useState(false);
   const [resetTrigger, setResetTrigger] = useState(false);
 
-  const {
-    watch,
-    formState: { errors, isValid },
-    control,
-  } = useForm({ mode: 'onChange' });
+  const { mutate, isPending } = useEmailVerification({
+    onMutate: () => {
+      return { email: emailData?.email, code: emailData?.code };
+    },
+    onSuccess: () => {
+      router.replace('/new-password');
+      setVerificationMessage('Email verified successfully!');
+    },
+    onError: (err) => {
+      setError('code', { type: 'manual', message: err.errorMessage ?? '' });
+    },
+  });
+
   const watchAllFields = watch();
   const isEmailValid = watchAllFields.email && !errors.email;
   const isCodeValid = watchAllFields.code && !errors.code;
 
   const sendCode = () => {
-    // POST /searchpw/send
-
-    // 404일 때
-    // setEmailError(true);
-
-    // 200일 때
     if (showTimer) {
       setResetTrigger((prev) => !prev);
     } else {
@@ -41,17 +53,14 @@ export default function SearchPasswordPage() {
     setIsDisabled(true);
   };
 
-  const confirmEmail = () => {
-    // GET /searchpw/confirm/{code}
-
-    // 404일 때
-    // setCodeError(true);
-
-    // 200일 때
-    router.push('/new-password');
+  const onSubmit: SubmitHandler<{ code: string; email: string }> = async (data) => {
+    setEmailData({ code: data.code, email: data.email });
+    setVerificationMessage(null);
+    mutate({
+      code: data.code,
+      email: data.email,
+    });
   };
-
-  const goBack = () => router.back();
 
   return (
     <main
@@ -75,7 +84,6 @@ export default function SearchPasswordPage() {
             }}
             disabled={isDisabled}
           />
-          {emailError && <div className="body-small text-error">존재하지 않는 이메일입니다.</div>}
         </div>
         <div className="relative h-[72px]">
           <Input
@@ -120,7 +128,7 @@ export default function SearchPasswordPage() {
         <PrimaryButton
           name="인증하기"
           disabled={!isCodeValid}
-          handleClick={confirmEmail}
+          handleClick={handleSubmit(onSubmit)}
         />
       )}
     </main>
