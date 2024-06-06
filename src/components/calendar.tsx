@@ -1,49 +1,24 @@
-<<<<<<< HEAD
-import { Dispatch, SetStateAction, useState } from 'react';
-=======
-import { Dispatch, SetStateAction } from 'react';
->>>>>>> 7ba2edc (feat: add a Calendar component)
+import { useState } from 'react';
 import { addMonths, subMonths } from 'date-fns';
 import Monthly from './monthly';
 import Weekly from './weekly';
 import NextIcon from '@/assets/icons/next-icon';
+import { useScheduleStore } from '@/app/(provider)/schedule-provider';
 
 export type CalendarProps = {
   title?: 'header' | 'arrow';
-<<<<<<< HEAD
-=======
-  type?: 'monthly' | 'weekly';
->>>>>>> 7ba2edc (feat: add a Calendar component)
-  selectedDate: Date;
-  setSelectedDate: Dispatch<SetStateAction<Date>>;
-  currentMonth: Date;
-  setCurrentMonth: Dispatch<SetStateAction<Date>>;
 };
 
-const Calendar = ({
-<<<<<<< HEAD
-  title = 'arrow',
-=======
-  title = 'header',
-  type = 'monthly',
->>>>>>> 7ba2edc (feat: add a Calendar component)
-  selectedDate,
-  setSelectedDate,
-  currentMonth,
-  setCurrentMonth,
-}: CalendarProps) => {
-<<<<<<< HEAD
+const Calendar = ({ title = 'header' }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { currentMonth, setCurrentMonth } = useScheduleStore((state) => state);
+
   const days = ['일', '월', '화', '수', '목', '금', '토'];
 
   const toggleAccordion = () => {
     setIsOpen((prev) => !prev);
   };
 
-=======
-  const days = ['일', '월', '화', '수', '목', '금', '토'];
-
->>>>>>> 7ba2edc (feat: add a Calendar component)
   return (
     <div className="flex flex-col gap-4">
       {title === 'header' ? (
@@ -57,11 +32,7 @@ const Calendar = ({
               setCurrentMonth(subMonths(currentMonth, 1));
             }}
           >
-<<<<<<< HEAD
             <NextIcon rotate={180} />
-=======
-            <NextIcon rotate={true} />
->>>>>>> 7ba2edc (feat: add a Calendar component)
           </button>
           {currentMonth.getFullYear()}년 {currentMonth.getMonth() + 1}월
           <button
@@ -84,37 +55,13 @@ const Calendar = ({
             </div>
           ))}
         </div>
-<<<<<<< HEAD
-        {isOpen ? (
-=======
-        {type === 'monthly' ? (
->>>>>>> 7ba2edc (feat: add a Calendar component)
-          <Monthly
-            selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
-            currentMonth={currentMonth}
-<<<<<<< HEAD
-            setCurrentMonth={setCurrentMonth}
-=======
->>>>>>> 7ba2edc (feat: add a Calendar component)
-          />
-        ) : (
-          <Weekly
-            selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
-            currentMonth={currentMonth}
-            setCurrentMonth={setCurrentMonth}
-          />
-        )}
-<<<<<<< HEAD
+        {isOpen ? <Monthly /> : <Weekly />}
         <button
           className="flex w-full justify-center rounded-b-lg pb-2 pt-3 shadow-lg shadow-gray-100"
           onClick={toggleAccordion}
         >
           <NextIcon rotate={isOpen ? 270 : 90} />
         </button>
-=======
->>>>>>> 7ba2edc (feat: add a Calendar component)
       </div>
     </div>
   );
