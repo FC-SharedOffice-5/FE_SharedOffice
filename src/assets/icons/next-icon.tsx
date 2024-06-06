@@ -1,9 +1,9 @@
 type NextIconProps = {
   color?: 'black' | 'gray';
-  rotate?: boolean;
+  rotate?: number;
 };
 
-const NextIcon = ({ color = 'black', rotate = false }: NextIconProps) => {
+const NextIcon = ({ color = 'black', rotate = 0 }: NextIconProps) => {
   const strokeColor = color === 'black' ? '#111' : '#8E918E';
 
   return (
@@ -12,7 +12,7 @@ const NextIcon = ({ color = 'black', rotate = false }: NextIconProps) => {
       width={24}
       height={24}
       fill="none"
-      style={{ transform: `${rotate ? 'rotate(180deg)' : 'rotate(0)'}` }}
+      style={{ transform: `rotate(${rotate}deg)` }}
     >
       <path
         stroke={strokeColor}

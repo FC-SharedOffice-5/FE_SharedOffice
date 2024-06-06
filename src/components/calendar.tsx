@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { addMonths, subMonths } from 'date-fns';
 import Monthly from './monthly';
 import Weekly from './weekly';
@@ -6,7 +6,6 @@ import NextIcon from '@/assets/icons/next-icon';
 
 export type CalendarProps = {
   title?: 'header' | 'arrow';
-  type?: 'monthly' | 'weekly';
   selectedDate: Date;
   setSelectedDate: Dispatch<SetStateAction<Date>>;
   currentMonth: Date;
@@ -14,14 +13,18 @@ export type CalendarProps = {
 };
 
 const Calendar = ({
-  title = 'header',
-  type = 'monthly',
+  title = 'arrow',
   selectedDate,
   setSelectedDate,
   currentMonth,
   setCurrentMonth,
 }: CalendarProps) => {
+  const [isOpen, setIsOpen] = useState(false);
   const days = ['일', '월', '화', '수', '목', '금', '토'];
+
+  const toggleAccordion = () => {
+    setIsOpen((prev) => !prev);
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -36,7 +39,7 @@ const Calendar = ({
               setCurrentMonth(subMonths(currentMonth, 1));
             }}
           >
-            <NextIcon rotate={true} />
+            <NextIcon rotate={180} />
           </button>
           {currentMonth.getFullYear()}년 {currentMonth.getMonth() + 1}월
           <button
@@ -59,11 +62,12 @@ const Calendar = ({
             </div>
           ))}
         </div>
-        {type === 'monthly' ? (
+        {isOpen ? (
           <Monthly
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
             currentMonth={currentMonth}
+            setCurrentMonth={setCurrentMonth}
           />
         ) : (
           <Weekly
@@ -73,6 +77,12 @@ const Calendar = ({
             setCurrentMonth={setCurrentMonth}
           />
         )}
+        <button
+          className="flex w-full justify-center rounded-b-lg pb-2 pt-3 shadow-lg shadow-gray-100"
+          onClick={toggleAccordion}
+        >
+          <NextIcon rotate={isOpen ? 270 : 90} />
+        </button>
       </div>
     </div>
   );
