@@ -10,11 +10,11 @@ import {
   isSameMonth,
   isToday,
 } from 'date-fns';
-import { CalendarProps } from './calendar';
+import { useScheduleStore } from '@/app/(provider)/schedule-provider';
 
-type MonthlyProps = Pick<CalendarProps, 'selectedDate' | 'setSelectedDate' | 'currentMonth'>;
+const Monthly = () => {
+  const { selectedDate, setSelectedDate, currentMonth } = useScheduleStore((state) => state);
 
-const Monthly = ({ selectedDate, setSelectedDate, currentMonth }: MonthlyProps) => {
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
   const startDate = startOfWeek(monthStart);

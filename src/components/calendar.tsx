@@ -1,25 +1,18 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import { addMonths, subMonths } from 'date-fns';
 import Monthly from './monthly';
 import Weekly from './weekly';
 import NextIcon from '@/assets/icons/next-icon';
+import { useScheduleStore } from '@/app/(provider)/schedule-provider';
 
 export type CalendarProps = {
   title?: 'header' | 'arrow';
-  selectedDate: Date;
-  setSelectedDate: Dispatch<SetStateAction<Date>>;
-  currentMonth: Date;
-  setCurrentMonth: Dispatch<SetStateAction<Date>>;
 };
 
-const Calendar = ({
-  title = 'arrow',
-  selectedDate,
-  setSelectedDate,
-  currentMonth,
-  setCurrentMonth,
-}: CalendarProps) => {
+const Calendar = ({ title = 'header' }: CalendarProps) => {
+  const { currentMonth, setCurrentMonth } = useScheduleStore((state) => state);
   const [isOpen, setIsOpen] = useState(false);
+
   const days = ['일', '월', '화', '수', '목', '금', '토'];
 
   const toggleAccordion = () => {
@@ -62,21 +55,7 @@ const Calendar = ({
             </div>
           ))}
         </div>
-        {isOpen ? (
-          <Monthly
-            selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
-            currentMonth={currentMonth}
-            setCurrentMonth={setCurrentMonth}
-          />
-        ) : (
-          <Weekly
-            selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
-            currentMonth={currentMonth}
-            setCurrentMonth={setCurrentMonth}
-          />
-        )}
+        {isOpen ? <Monthly /> : <Weekly />}
         <button
           className="flex w-full justify-center rounded-b-lg pb-2 pt-3 shadow-lg shadow-gray-100"
           onClick={toggleAccordion}
