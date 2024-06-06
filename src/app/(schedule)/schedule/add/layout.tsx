@@ -14,7 +14,7 @@ export default function ScheduleAddLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="pb-4">
+    <div className="wrapper pb-4">
       <Header title={TITLE} />
       {children}
     </div>
