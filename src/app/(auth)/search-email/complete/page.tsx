@@ -1,13 +1,13 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import PrimaryButton from '@/components/primary-button';
+import { Suspense } from 'react';
+import EmailConfirm from './components/email-confirm';
 
 export default function SearchEmailCompletePage() {
   const router = useRouter();
-  const params = useSearchParams();
 
-  const email = params.get('email') || 'test@example.com';
   // TODO: API RESPONSE 찾은 이메일 보여주기
   const routeTo = (path: string) => () => {
     router.replace(path);
@@ -20,12 +20,9 @@ export default function SearchEmailCompletePage() {
         <br />
         <span className="text-primary">성공</span>하였습니다.
       </p>
-      <div className="flex flex-col gap-4">
-        <p className="label-small data-[disabled]:text-[#111]/[.4]">이메일 주소</p>
-        <p className="body-small placeholder:body-small h-6 w-full border-b-[0.75px] border-[#111]/[.4]">
-          {email}
-        </p>
-      </div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <EmailConfirm />
+      </Suspense>
       <div className="bottom-4 left-4 flex w-full gap-2">
         <PrimaryButton
           color="white"

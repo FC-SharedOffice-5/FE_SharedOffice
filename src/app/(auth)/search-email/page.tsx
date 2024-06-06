@@ -31,9 +31,10 @@ export default function SearchPasswordPage() {
         onSuccess: (res) => {
           if (res.data.email) {
             router.push('/search-email/complete?email=' + res.data.email);
-          } else {
-            setEmailError(true);
           }
+        },
+        onError: (res) => {
+          setEmailError(true);
         },
       },
     );
@@ -44,7 +45,6 @@ export default function SearchPasswordPage() {
     // setCodeError(true);
 
     // 200일 때
-    router.push('/search-email/complete');
   };
 
   return (
@@ -65,7 +65,9 @@ export default function SearchPasswordPage() {
             }}
             disabled={isDisabled}
           />
-          {emailError && <div className="body-small text-error">존재하지 않는 이메일입니다.</div>}
+          {emailError && (
+            <div className="body-small pt-2 text-error">존재하지 않는 사용자입니다.</div>
+          )}
         </div>
         <div className="relative h-[72px]">
           <Input
