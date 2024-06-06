@@ -12,7 +12,7 @@ const LoginForm = () => {
   const {
     control,
     setError,
-    formState: { isValid },
+    formState: { isValid, errors },
     handleSubmit,
   } = useForm({ mode: 'onChange' });
 
@@ -27,7 +27,7 @@ const LoginForm = () => {
       const res = await signInWithCredentials(data, isChecked);
 
       if (res.errorType) {
-        setError(res.errorType, { message: res.errorMessage });
+        setError(`root.${res.errorType}`, { type: res.errorType, message: res.errorMessage });
       }
     } catch (error) {
       console.error('로그인 실패:', error);
@@ -45,7 +45,7 @@ const LoginForm = () => {
           validation={emailValidation}
         />
       </div>
-      <div className="h-[72px]">
+      <div className="h-[65px]">
         <Input
           type="password"
           label="비밀번호"
@@ -54,6 +54,9 @@ const LoginForm = () => {
           validation={passwordValidation}
         />
       </div>
+      {errors.root?.user && (
+        <p className="body-small w-full text-end text-error">{errors.root.user.message}</p>
+      )}
       <div>
         <input
           type="checkbox"

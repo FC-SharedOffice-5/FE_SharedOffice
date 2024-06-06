@@ -4,7 +4,9 @@ export interface TVerifyEmail {
 }
 
 export const verifyEmailFn = async ({ code, email }: TVerifyEmail) => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/email/verify/${code}=${email}`);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/email/verify/${code}?email=${email}`,
+  );
 
   if (!response.ok) {
     throw new Error('Network response was not ok');

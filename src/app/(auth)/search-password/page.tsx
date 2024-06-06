@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import Input from '@/components/input';
 import PrimaryButton from '@/components/primary-button';
 import Timer from '@/components/auth-timer';
-import { useEmailVerification } from '@/hooks/use-email';
+import { useEmailVerification, useSendEmail } from '@/hooks/use-email';
 import { TVerifyEmail } from '@/apis';
 
 export default function SearchPasswordPage() {
@@ -25,6 +25,11 @@ export default function SearchPasswordPage() {
   const [isDisabled, setIsDisabled] = useState(false);
   const [showTimer, setShowTimer] = useState(false);
   const [resetTrigger, setResetTrigger] = useState(false);
+  const { mutate: sendCodeMutate } = useSendEmail({
+    onError: (err) => {
+      setError('email', { type: 'manual', message: err.errorMessage ?? '' });
+    },
+  });
 
   const { mutate, isPending } = useEmailVerification({
     onMutate: () => {
@@ -44,6 +49,7 @@ export default function SearchPasswordPage() {
   const isCodeValid = watchAllFields.code && !errors.code;
 
   const sendCode = () => {
+    sendCodeMutate({ email: watchAllFields.email });
     if (showTimer) {
       setResetTrigger((prev) => !prev);
     } else {
@@ -127,7 +133,7 @@ export default function SearchPasswordPage() {
       {isCodeSent && (
         <PrimaryButton
           name="인증하기"
-          disabled={!isCodeValid}
+          disabled={!isCodeValid || isPending}
           handleClick={handleSubmit(onSubmit)}
         />
       )}

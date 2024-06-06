@@ -5,40 +5,42 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
       authorize: async (credentials) => {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
-          cache: 'no-store',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: credentials.email,
-            password: credentials.password,
-          }),
-        });
+        try {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+            cache: 'no-store',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: credentials.email,
+              password: credentials.password,
+            }),
+          });
 
-        if (res.ok) {
           const data = await res.json();
 
-          // accessToken 가져오기 정규식 표현 'accessToken=ju26w; Max-Age=86400; Path=/; HttpOnly'
-          const accessToken = res.headers.get('set-cookie')?.match(/accessToken=(.*?);/)?.[1];
+          if (res.ok) {
+            const accessToken = res.headers.get('set-cookie')?.match(/accessToken=(.*?);/)?.[1];
+            if (accessToken) {
+              data.accessToken = accessToken;
 
-          if (accessToken) {
-            data.accessToken = accessToken;
+              return data;
+            }
           }
-          // 이메일 및 비밀번호 불일치 처리
-          // if (data.status === 400) {
-          //   throw new CredentialsSignin({
-          //     cause: `${data.errorMessage}`,
-          //   });
-          // }
 
-          return data;
+          if (res.status === 404) {
+            throw new CredentialsSignin({
+              cause: 'not_user',
+            });
+          }
+        } catch (error) {
+          if (error instanceof CredentialsSignin) {
+            throw error;
+          }
+
+          throw new Error('로그인에 실패했습니다.');
         }
-
-        throw new CredentialsSignin({
-          cause: '문제가 발생했습니다.',
-        });
       },
     }),
   ],
