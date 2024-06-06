@@ -15,16 +15,22 @@ export const signInWithCredentials = async (data: FieldValues, isChecked: boolea
       keepLoggedIn: isChecked,
       redirect: false,
     });
-    shouldRedirect = true;
+    if (res.ok) {
+      shouldRedirect = true;
+    }
   } catch (err) {
     if (err instanceof AuthError) {
       switch (err.type) {
         case 'CredentialsSignin':
           const errorCause = err.cause as unknown as string;
 
+          if (errorCause === 'not_user') {
+            return { errorType: 'user', errorMessage: '존재하지 않는 회원입니다.' };
+          }
           if (errorCause === 'not_email') {
             return { errorType: 'email', errorMessage: '존재하지 않는 이메일입니다.' };
-          } else if (errorCause === 'not_password') {
+          }
+          if (errorCause === 'not_password') {
             return { errorType: 'password', errorMessage: '비밀번호가 일치하지 않습니다.' };
           }
 

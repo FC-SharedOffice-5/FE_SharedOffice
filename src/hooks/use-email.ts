@@ -1,5 +1,5 @@
 import { TVerifyEmail, verifyEmailFn } from '@/apis';
-import { EmailSearchData } from '@/types/data';
+import { EmailSearchData, EmailVerificationData } from '@/types/data';
 import { ApiResponse } from '@/types/interface';
 import { MutationOptions, useMutation } from '@tanstack/react-query';
 import { useApiMutation } from './use-api-mutation';
@@ -15,6 +15,20 @@ export const useEmailVerification = (
     mutationFn: verifyEmailFn,
     ...options,
   });
+};
+
+export const useSendEmail = (
+  options?: MutationOptions<
+    ApiResponse<null>,
+    Pick<ApiResponse<null>, 'errorMessage'>,
+    EmailVerificationData
+  >,
+) => {
+  return useApiMutation<
+    ApiResponse<null>,
+    Pick<ApiResponse<null>, 'errorMessage'>,
+    EmailVerificationData
+  >('/email/send/code', options);
 };
 
 export const useSearchEmail = (

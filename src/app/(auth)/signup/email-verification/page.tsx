@@ -8,7 +8,7 @@ import PrimaryButton from '@/components/primary-button';
 import Timer from '@/components/auth-timer';
 import { useSignupStore } from '@/app/(provider)/signup-provider';
 import { TVerifyEmail } from '@/apis';
-import { useEmailVerification } from '@/hooks/use-email';
+import { useEmailVerification, useSendEmail } from '@/hooks/use-email';
 
 export default function EmailVerificationPage() {
   const router = useRouter();
@@ -42,11 +42,18 @@ export default function EmailVerificationPage() {
     },
   });
 
+  const { mutate: sendCodeMutate } = useSendEmail({
+    onError: (err) => {
+      setError('email', { type: 'manual', message: err.errorMessage ?? '' });
+    },
+  });
+
   const watchAllFields = watch();
   const isEmailValid = watchAllFields.email && !errors.email;
   const isCodeValid = watchAllFields.code && !errors.code;
 
   const sendCode = () => {
+    sendCodeMutate({ email: watchAllFields.email });
     if (showTimer) {
       setResetTrigger((prev) => !prev);
     } else {
