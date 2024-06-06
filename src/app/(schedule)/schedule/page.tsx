@@ -12,10 +12,9 @@ export default function SchedulePage() {
         <ScheduleList />
       </section>
       <section className="sticky bottom-0">
-        <div className="absolute -top-[74px] right-0 flex cursor-pointer">
+        <div className="absolute -top-[135px] right-0 flex cursor-pointer">
           <ScheduleAddIcon />
         </div>
-        <footer className="h-[80px] bg-black text-white">Footer</footer>
       </section>
     </main>
   );

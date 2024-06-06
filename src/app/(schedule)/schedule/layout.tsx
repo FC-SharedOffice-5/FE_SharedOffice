@@ -1,3 +1,4 @@
+import Footer from '@/components/footer';
 import type { Metadata } from 'next';
 
 const TITLE = '일정';
@@ -12,5 +13,10 @@ export default function ScheduleLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className="wrapper">{children}</div>;
+  return (
+    <div className="wrapper">
+      {children}
+      <Footer />
+    </div>
+  );
 }

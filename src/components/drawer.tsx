@@ -79,8 +79,15 @@ const BottomDrawer = ({ children, setIsClosed }: ModalProps) => {
         onTouchEnd={handleTouchEnd}
         onMouseDown={handleMouseDown}
       >
-        <div className="absolute h-[4px] w-[48px] rounded-[3px] bg-gray-300" />
-        {children}
+        <div className="flex flex-col items-center">
+          <div className="h-[4px] w-[48px] rounded-[3px] bg-gray-300" />
+          <div className="h-[40px]" />
+          <div
+            className={`flex overflow-auto scrollbar-hide ${isAtTop ? 'h-[calc(100dvh-27%)]' : 'h-[calc(100dvh-51%)]'} w-full`}
+          >
+            {children}
+          </div>
+        </div>
       </div>
     </div>
   );

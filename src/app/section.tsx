@@ -85,8 +85,8 @@ const Section = () => {
         </div>
       </div>
       <BottomDrawer setIsClosed={setIsClosed}>
-        <div className="rounded-tl-md rounded-tr-md bg-white px-4">
-          <div className="pt-16">
+        <div className="rounded-tl-md rounded-tr-md bg-white px-2 pb-2">
+          <div>
             <h2 className="headline-medium border-b border-black/40">Mile 성수</h2>
             <div className="grid grid-cols-2 gap-x-4 gap-y-2 py-1">
               {data.mileOptions.map((option, index) => (
