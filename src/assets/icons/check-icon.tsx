@@ -1,4 +1,4 @@
-type TProps = { outline: boolean };
+type TProps = { outline?: boolean };
 
 const CheckIcon = ({ outline = false }: TProps) => {
   return (

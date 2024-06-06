@@ -9,7 +9,7 @@ import { formatBirthDate } from '@/utils/format-birth';
 import { cn } from '@/utils/cn';
 
 type InputProps<T extends FieldValues> = InputHTMLAttributes<HTMLInputElement> & {
-  label: string;
+  label?: string;
   name: Path<T>;
   control: Control<T>;
   validation?: object;
@@ -34,7 +34,8 @@ const Input = <T extends FieldValues>({
   };
 
   const isVisibleDeleteValueButton = useMemo(
-    () => !disabled && field.value && field.name !== 'code' && type !== 'password',
+    () =>
+      !disabled && field.value && field.name !== 'code' && type !== 'password' && type !== 'search',
     [disabled, field.name, field.value, type],
   );
 
@@ -54,7 +55,10 @@ const Input = <T extends FieldValues>({
         </Label>
         <HeadlessInput
           {...props}
-          onChange={field.onChange}
+          onChange={(e) => {
+            props.onChange && props.onChange(e);
+            field.onChange(e);
+          }}
           onBlur={field.onBlur}
           ref={field.ref}
           value={field.value ?? ''}

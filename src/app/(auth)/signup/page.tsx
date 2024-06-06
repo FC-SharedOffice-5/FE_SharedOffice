@@ -10,6 +10,8 @@ import { requiredItems, optionalItems, TAgreeItems, titleItems } from './constan
 import { useRouter } from 'next/navigation';
 import Accordion from '@/components/accordion';
 import { useSignupStore } from '@/app/(provider)/signup-provider';
+import PlusIcon from '@/assets/icons/plus-icon';
+import MinusIcon from '@/assets/icons/minus-icon';
 
 export type TFormValues = {
   all: boolean;
@@ -135,6 +137,8 @@ export default function SignupPage() {
           )}
         />
         <Accordion
+          openIcon={() => <PlusIcon />}
+          closeIcon={() => <MinusIcon />}
           header={({ open }) => (
             <Controller
               name={titleItems[1].name}
@@ -143,7 +147,6 @@ export default function SignupPage() {
                 <CheckBox
                   outline={false}
                   subTitle="[선택] 광고성 정보 수신에 동의"
-                  suffix={open ? 'minusIcon' : 'plusIcon'}
                   onChange={(checked: boolean) => {
                     onChange(checked);
                     setValue('emailAgree', checked);
@@ -157,6 +160,7 @@ export default function SignupPage() {
           )}
           panel={() => (
             <List
+              className="pl-6"
               items={optionalItems}
               renderItem={(item: TAgreeItems) => (
                 <Controller
