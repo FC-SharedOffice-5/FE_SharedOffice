@@ -1,6 +1,14 @@
-const apiFn = async <TData, TResponse>(url: string, data: TData): Promise<TResponse> => {
+const apiFn = async <TData, TResponse>({
+  method = 'POST',
+  url,
+  data,
+}: {
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  url: string;
+  data: TData;
+}): Promise<TResponse> => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
-    method: 'POST',
+    method,
     headers: {
       'Content-Type': 'application/json',
     },

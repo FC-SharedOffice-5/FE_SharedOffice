@@ -31,7 +31,17 @@ type TSignupLastFormValues = z.infer<typeof SignupLastSchema>;
 
 export default function SignupLastPage() {
   const router = useRouter();
-  const mutation = useSignup();
+  const mutation = useSignup({
+    onSuccess: () => {
+      router.replace('/signup-complete');
+    },
+    onError: (error) => {
+      setError('root.existedUser', {
+        type: 'existed_user',
+        message: error.errorMessage || '이미 가입된 회원입니다.',
+      });
+    },
+  });
 
   const signupInfo = useSignupStore(
     useShallow((state) => ({
@@ -52,6 +62,7 @@ export default function SignupLastPage() {
     trigger,
     handleSubmit,
     watch,
+    setError,
     formState: { errors, isValid },
   } = useForm<TSignupLastFormValues>({
     resolver: zodResolver(SignupLastSchema),
@@ -69,8 +80,6 @@ export default function SignupLastPage() {
       password: data.confirmPassword,
       memberNickname: data.memberNickname,
     });
-
-    router.replace('/signup-complete');
   };
 
   const isFormFilled = watch('confirmPassword') && watch('memberNickname') && watch('password');
@@ -108,6 +117,11 @@ export default function SignupLastPage() {
             required: true,
           }}
         />
+        {errors.root?.existedUser && (
+          <p className="body-small w-full pt-3 text-center text-error">
+            {errors.root.existedUser.message}
+          </p>
+        )}
       </div>
       <div className="bottom-4 left-4 w-full">
         <PrimaryButton

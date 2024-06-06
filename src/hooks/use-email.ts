@@ -28,7 +28,10 @@ export const useSendEmail = (
     ApiResponse<null>,
     Pick<ApiResponse<null>, 'errorMessage'>,
     EmailVerificationData
-  >('/email/send/code', options);
+  >({
+    url: '/email/send/code',
+    ...options,
+  });
 };
 
 export const useSearchEmail = (
@@ -42,5 +45,8 @@ export const useSearchEmail = (
     ApiResponse<{ email: string }>,
     Pick<ApiResponse<{ email: string }>, 'errorMessage'>,
     EmailSearchData
-  >('/email/search', options);
+  >({
+    url: '/email/search',
+    ...options,
+  });
 };

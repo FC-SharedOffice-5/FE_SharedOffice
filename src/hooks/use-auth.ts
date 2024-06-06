@@ -14,7 +14,10 @@ export const useSignup = (
     ApiResponse<SignupData>,
     Pick<ApiResponse<SignupData>, 'errorMessage'>,
     SignupData
-  >('/auth/signup', options);
+  >({
+    url: '/members/signup',
+    ...options,
+  });
 };
 
 export const useUpdatePassword = (
@@ -28,5 +31,9 @@ export const useUpdatePassword = (
     ApiResponse<PasswordUpdateData>,
     Pick<ApiResponse<PasswordUpdateData>, 'errorMessage'>,
     PasswordUpdateData
-  >('/auth/update-password', options);
+  >({
+    method: 'PUT',
+    url: '/members/update/pw',
+    ...options,
+  });
 };

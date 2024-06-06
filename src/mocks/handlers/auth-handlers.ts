@@ -11,7 +11,7 @@ const isMockingEnabled = process.env.NEXT_PUBLIC_API_MOCKING === 'enabled' ? tru
 export const authHandlers = [
   // signup
   http.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
+    `${process.env.NEXT_PUBLIC_API_URL}/members/signup`,
     async ({ request }: { request: StrictRequest<SignupData> }) => {
       if (!isMockingEnabled) {
         // 개발 모드가 아닌 경우 실제 API 요청을 통과시킴
@@ -126,7 +126,7 @@ export const authHandlers = [
 
   // 비밀번호 업데이트 (Update Password) 핸들러
   http.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/update-password`,
+    `${process.env.NEXT_PUBLIC_API_URL}/members/update/pw`,
     async ({ request }: { request: StrictRequest<PasswordUpdateData> }) => {
       if (!isMockingEnabled) {
         // 개발 모드가 아닌 경우 실제 API 요청을 통과시킴
