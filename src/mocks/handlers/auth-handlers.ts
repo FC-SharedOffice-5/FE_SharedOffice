@@ -5,21 +5,17 @@ import {
   SignupData,
 } from '@/types/data';
 import { HttpResponse, StrictRequest, http, passthrough } from 'msw';
-
 const isMockingEnabled = process.env.NEXT_PUBLIC_API_MOCKING === 'enabled' ? true : false;
-
 export const authHandlers = [
   // signup
   http.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
+    `${process.env.NEXT_PUBLIC_API_URL}/members/signup`,
     async ({ request }: { request: StrictRequest<SignupData> }) => {
       if (!isMockingEnabled) {
         // 개발 모드가 아닌 경우 실제 API 요청을 통과시킴
         return passthrough();
       }
-
       const signupData: SignupData = await request.json();
-
       const responseData = {
         code: 200,
         errorMessage: null,
@@ -41,7 +37,6 @@ export const authHandlers = [
       // 개발 모드가 아닌 경우 실제 API 요청을 통과시킴
       return passthrough();
     }
-
     const loginData = (await request.json()) as { email: string; password: string };
     if (!loginData.email || !loginData.password) {
       return HttpResponse.json(
@@ -50,7 +45,6 @@ export const authHandlers = [
       );
     }
     const accessToken = Math.random().toString(36).substring(7);
-
     const responseData = {
       code: 200,
       errorMessage: null,
@@ -64,7 +58,6 @@ export const authHandlers = [
       },
     });
   }),
-
   // logout
   http.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, async () => {
     if (!isMockingEnabled) {
@@ -82,20 +75,16 @@ export const authHandlers = [
       },
     );
   }),
-
   // 이메일 인증 (Verify Email) 핸들러
   http.get(`${process.env.NEXT_PUBLIC_API_URL}/email/verify/*`, async ({ request }) => {
     if (!isMockingEnabled) {
       // 개발 모드가 아닌 경우 실제 API 요청을 통과시킴
       return passthrough();
     }
-
     const url = new URL(request.url);
     const params = url.searchParams;
     const email = params.get('email');
-
     await new Promise((resolve) => setTimeout(resolve, 1000));
-
     if (!email) {
       return HttpResponse.json(
         { code: 400, errorMessage: '이메일을 입력해주세요.' },
@@ -105,15 +94,12 @@ export const authHandlers = [
 
     return HttpResponse.json({ code: 200, errorMessage: null }, { status: 200 });
   }),
-
   http.post(`${process.env.NEXT_PUBLIC_API_URL}/email/send/code`, async ({ request }) => {
     if (!isMockingEnabled) {
       // 개발 모드가 아닌 경우 실제 API 요청을 통과시킴
       return passthrough();
     }
-
     const emailVerificationData = (await request.json()) as EmailVerificationData;
-
     if (!emailVerificationData.email) {
       return HttpResponse.json(
         { code: 400, errorMessage: '이메일을 입력해주세요.' },
@@ -126,15 +112,13 @@ export const authHandlers = [
 
   // 비밀번호 업데이트 (Update Password) 핸들러
   http.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/update-password`,
+    `${process.env.NEXT_PUBLIC_API_URL}/members/update/pw`,
     async ({ request }: { request: StrictRequest<PasswordUpdateData> }) => {
       if (!isMockingEnabled) {
         // 개발 모드가 아닌 경우 실제 API 요청을 통과시킴
         return passthrough();
       }
-
       const passwordUpdateData: PasswordUpdateData = await request.json();
-
       // 응답 데이터 모킹
       const responseData = {
         code: 200,
@@ -155,9 +139,7 @@ export const authHandlers = [
         // 개발 모드가 아닌 경우 실제 API 요청을 통과시킴
         return passthrough();
       }
-
       const emailSearchData: EmailSearchData = await request.json();
-
       // 응답 데이터 모킹
       const responseData = {
         code: 200,
