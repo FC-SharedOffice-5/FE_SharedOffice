@@ -15,7 +15,7 @@ const Footer = () => {
   const isOffice = value === '/office';
   const isCommunity = value === '/community';
   const isSchedule = value === '/schedule';
-  const isMy = value === '/my';
+  const isMy = value === '/mypage';
 
   return (
     <div className="fixed bottom-0 w-full max-w-[500px] border-t border-[#EFEFEF] bg-white pt-1">
@@ -52,7 +52,7 @@ const Footer = () => {
         </Link>
         <Link
           className="flex flex-col items-center"
-          href="/my"
+          href="/mypage"
         >
           <MyPageIcon color={isMy ? '#1DCC9A' : '#A0A0A0'} />
           <div className={`caption-small ${isMy ? 'text-black' : 'text-black/40'}`}>MY</div>

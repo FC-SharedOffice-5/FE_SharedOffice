@@ -5,9 +5,10 @@ import { useRouter } from 'next/navigation';
 
 type HeaderProps = {
   title: string;
+  suffix?: React.ElementType;
 };
 
-const Header = ({ title }: HeaderProps) => {
+const Header = ({ title, suffix: SuffixComponent }: HeaderProps) => {
   const router = useRouter();
 
   return (
@@ -19,7 +20,7 @@ const Header = ({ title }: HeaderProps) => {
         <BackIcon />
       </div>
       <h1 className="label-large pr-4">{title}</h1>
-      <div />
+      {SuffixComponent ? <SuffixComponent /> : <div />}
     </nav>
   );
 };
