@@ -7,6 +7,7 @@ import InfoLink from '@/components/info-link';
 import Loader from '@/components/loader';
 import useDraggable from '@/hooks/use-draggable';
 import Image from 'next/image';
+import Link from 'next/link';
 import { QRCodeSVG } from 'qrcode.react';
 import { useRef, useState } from 'react';
 
@@ -55,7 +56,12 @@ const Section = () => {
           {data.userName}
           <span className="font-normal">님</span>
         </h1>
-        <AlarmActiveIcon />
+        <Link
+          href="/alarm"
+          className="z-10"
+        >
+          <AlarmActiveIcon />
+        </Link>
       </div>
       <div className="flex w-full place-content-center pb-4">
         <div
