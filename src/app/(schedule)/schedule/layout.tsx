@@ -1,5 +1,6 @@
 import Footer from '@/components/footer';
 import type { Metadata } from 'next';
+import { ScheduleStoreProvider } from '@/app/(provider)/schedule-provider';
 
 const TITLE = '일정';
 
@@ -15,7 +16,7 @@ export default function ScheduleLayout({
 }>) {
   return (
     <div className="wrapper">
-      {children}
+      <ScheduleStoreProvider>{children}</ScheduleStoreProvider>
       <Footer />
     </div>
   );

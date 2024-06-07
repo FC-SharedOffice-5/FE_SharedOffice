@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import DefaultImage from '@/assets/icons/default-image';
-import GoIcon from '@/assets/icons/go-icon';
+import NextIcon from '@/assets/icons/next-icon';
 import PrimaryButton from '@/components/primary-button';
 import Title from '../_components/title';
 import { buttons, content } from './constants';
@@ -31,7 +31,7 @@ export default function Mypage() {
               <span className="title-small">{info.nickname}</span>
               <span className="body-medium">{info.email}</span>
             </div>
-            <GoIcon />
+            <NextIcon />
           </div>
         </Link>
         <div className="flex gap-2 border-t-[0.75px] border-black py-2">
@@ -54,7 +54,7 @@ export default function Mypage() {
                     )}
                     <span className="label-medium">{button.name}</span>
                   </div>
-                  <GoIcon />
+                  <NextIcon />
                 </Link>
               </div>
             );
@@ -79,7 +79,7 @@ export default function Mypage() {
                       className="flex justify-between"
                     >
                       <span className="body-small">{item.name}</span>
-                      <GoIcon color="gray" />
+                      <NextIcon color="gray" />
                     </Link>
                   );
                 })}
