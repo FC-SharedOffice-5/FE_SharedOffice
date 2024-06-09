@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { addMonths, subMonths } from 'date-fns';
 import Monthly from './monthly';
@@ -11,7 +13,8 @@ export type CalendarProps = {
 
 const Calendar = ({ title = 'header' }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { currentMonth, setCurrentMonth } = useScheduleStore((state) => state);
+  const benchMarkDate = useScheduleStore((state) => state.benchMarkDate);
+  const setBenchMarkDate = useScheduleStore((state) => state.setBenchMarkDate);
 
   const days = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -23,21 +26,21 @@ const Calendar = ({ title = 'header' }) => {
     <div className="flex flex-col gap-4">
       {title === 'header' ? (
         <div className="headline-medium text-black">
-          {currentMonth.getFullYear()}년 {currentMonth.getMonth() + 1}월
+          {benchMarkDate.getFullYear()}년 {benchMarkDate.getMonth() + 1}월
         </div>
       ) : (
         <div className="title-medium flex justify-center gap-1 text-black">
           <button
             onClick={() => {
-              setCurrentMonth(subMonths(currentMonth, 1));
+              setBenchMarkDate(subMonths(benchMarkDate, 1));
             }}
           >
             <NextIcon rotate={180} />
           </button>
-          {currentMonth.getFullYear()}년 {currentMonth.getMonth() + 1}월
+          {benchMarkDate.getFullYear()}년 {benchMarkDate.getFullYear() + 1}월
           <button
             onClick={() => {
-              setCurrentMonth(addMonths(currentMonth, 1));
+              setBenchMarkDate(addMonths(benchMarkDate, 1));
             }}
           >
             <NextIcon />

@@ -4,6 +4,7 @@ import Header from '@/components/header';
 import Calendar from '@/components/calendar';
 import Timeline from './_components/timeline';
 import ScheduleAddIcon from '@/assets/icons/schedule-add-icon';
+import Link from 'next/link';
 
 export default function SchedulePage() {
   const data = [
@@ -43,9 +44,12 @@ export default function SchedulePage() {
         <Timeline data={data} />
       </section>
       <section className="sticky bottom-0">
-        <div className="absolute -top-[135px] right-0 flex cursor-pointer">
+        <Link
+          href="/schedule/add"
+          className="absolute -top-[135px] right-0 flex cursor-pointer"
+        >
           <ScheduleAddIcon />
-        </div>
+        </Link>
       </section>
     </main>
   );

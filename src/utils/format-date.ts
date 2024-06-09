@@ -7,21 +7,3 @@ export const formatLocalDate = (date: Date) => {
 };
 
 export const formatTime = (date: Date) => date.toTimeString().split(' ')[0].slice(0, 5);
-
-export const getInitialDates = () => {
-  const today = new Date();
-
-  const currentDate = formatLocalDate(today);
-  const currentTime = formatTime(today);
-
-  const end = new Date(today.getTime() + 60 * 60 * 1000);
-  const endDate = formatLocalDate(end);
-  const endTime = formatTime(end);
-
-  return {
-    currentDate,
-    currentTime,
-    endDate,
-    endTime,
-  };
-};

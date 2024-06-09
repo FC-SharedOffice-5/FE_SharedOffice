@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import PrimaryButton from '@/components/primary-button';
 import ScheduleTime from '@/components/schedule-time';
-import { getInitialDates } from '@/utils/format-date';
 import { Field, Input as HeadlessInput, Radio, RadioGroup } from '@headlessui/react';
 import Image from 'next/image';
 import { colorItems } from '../constants';
@@ -12,13 +11,7 @@ import DateTimeSelector from './date-time-selector';
 import Calendar from '@/components/calendar';
 import DecisionButton from './decision-button';
 import Toggle from '@/components/toggle';
-
-type DateTimeState = {
-  currentDate: string;
-  currentTime: string;
-  endDate: string;
-  endTime: string;
-};
+import { useScheduleStore } from '@/app/(provider)/schedule-provider';
 
 type OpenState = {
   calendar: string;
@@ -26,27 +19,18 @@ type OpenState = {
 };
 
 const ScheduleForm = () => {
-  const [dateTimeState, setDateTimeState] = useState<DateTimeState>({
-    currentDate: '',
-    currentTime: '',
-    endDate: '',
-    endTime: '',
-  });
+  const { formattedCurrentDate, formattedCurrentTime, formattedEndDate, formattedEndTime } =
+    useScheduleStore((state) => ({
+      formattedCurrentDate: state.formattedCurrentDate,
+      formattedCurrentTime: state.formattedCurrentTime,
+      formattedEndDate: state.formattedEndDate,
+      formattedEndTime: state.formattedEndTime,
+    }));
 
   const [openState, setOpenState] = useState<OpenState>({
     calendar: '',
     timeSelect: '',
   });
-
-  useEffect(() => {
-    const { currentDate, currentTime, endDate, endTime } = getInitialDates();
-    setDateTimeState({
-      currentDate,
-      currentTime,
-      endDate: endDate,
-      endTime,
-    });
-  }, []);
 
   const {
     control,
@@ -72,8 +56,13 @@ const ScheduleForm = () => {
   };
 
   return (
-    <main className="flex w-full flex-1 flex-col items-center justify-between gap-10 px-4">
-      <form className="flex w-full flex-1 flex-col gap-4 pt-4">
+    <main className="flex w-full flex-1 flex-col items-center justify-between gap-10 px-4 pb-16">
+      <form
+        className="flex w-full flex-1 flex-col gap-4 pt-4"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         {/* 제목 및 색상 */}
         <div className="flex h-[129px] flex-col border-b-[0.75px] border-black">
           <div className="flex flex-1 flex-wrap items-center">
@@ -116,7 +105,7 @@ const ScheduleForm = () => {
             />
           </div>
           <Controller
-            name={'color'}
+            name="color"
             control={control}
             defaultValue={colorItems[0].id}
             rules={{ required: true }}
@@ -163,8 +152,8 @@ const ScheduleForm = () => {
             <DateTimeSelector
               label="시작일 *"
               name="start"
-              date={dateTimeState.currentDate}
-              time={dateTimeState.currentTime}
+              date={formattedCurrentDate()}
+              time={formattedCurrentTime()}
               openCalendar={openState.calendar}
               openTimeSelect={openState.timeSelect}
               onCalendarClick={() => handleOpenStateClick('calendar', 'start')}
@@ -173,8 +162,8 @@ const ScheduleForm = () => {
             <DateTimeSelector
               label="종료일 *"
               name="end"
-              date={dateTimeState.endDate}
-              time={dateTimeState.endTime}
+              date={formattedEndDate()}
+              time={formattedEndTime()}
               openCalendar={openState.calendar}
               openTimeSelect={openState.timeSelect}
               onCalendarClick={() => handleOpenStateClick('calendar', 'end')}
@@ -197,9 +186,7 @@ const ScheduleForm = () => {
               </div>
               <ScheduleTime
                 time={
-                  openState.timeSelect === 'start'
-                    ? dateTimeState.currentTime
-                    : dateTimeState.endTime
+                  openState.timeSelect === 'start' ? formattedCurrentTime() : formattedEndTime()
                 }
               />
               <DecisionButton />
