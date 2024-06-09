@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@/utils/cn';
 
 export type DateTimeSelectorProps = {
@@ -20,41 +22,43 @@ const DateTimeSelector = ({
   openTimeSelect,
   onCalendarClick,
   onTimeSelectClick,
-}: DateTimeSelectorProps) => (
-  <div className="flex flex-1 flex-col border-b-[0.75px] border-black">
-    <div className="label-small pb-2">{label}</div>
-    <div className="body-medium flex py-2">
-      <button
-        type="button"
-        onClick={onCalendarClick}
-      >
-        <div
-          className={cn(
-            'data-[disabled]:text-[#111]/[.4]',
-            openCalendar === name && 'text-primary',
-          )}
+}: DateTimeSelectorProps) => {
+  return (
+    <div className="flex flex-1 flex-col border-b-[0.75px] border-black">
+      <div className="label-small pb-2">{label}</div>
+      <div className="body-medium flex py-2">
+        <button
+          type="button"
+          onClick={onCalendarClick}
         >
-          {date}
-        </div>
-      </button>
-      <button
-        className="flex-1"
-        type="button"
-        onClick={onTimeSelectClick}
-      >
-        <div className="text-center">
           <div
             className={cn(
               'data-[disabled]:text-[#111]/[.4]',
-              openTimeSelect === name && 'text-primary',
+              openCalendar === name && 'text-primary',
             )}
           >
-            {time}
+            {date}
           </div>
-        </div>
-      </button>
+        </button>
+        <button
+          className="flex-1"
+          type="button"
+          onClick={onTimeSelectClick}
+        >
+          <div className="text-center">
+            <div
+              className={cn(
+                'data-[disabled]:text-[#111]/[.4]',
+                openTimeSelect === name && 'text-primary',
+              )}
+            >
+              {time}
+            </div>
+          </div>
+        </button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default DateTimeSelector;
