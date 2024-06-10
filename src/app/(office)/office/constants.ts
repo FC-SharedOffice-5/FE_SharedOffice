@@ -80,3 +80,8 @@ export const data = [
     updatedAt: '2024-06-01T14:42:29.144299',
   },
 ];
+
+export const locations = data.map(({ officeId, officeLatitude, officeLongitude }) => ({
+  id: officeId,
+  location: { lat: Number(officeLatitude), lng: Number(officeLongitude) },
+}));

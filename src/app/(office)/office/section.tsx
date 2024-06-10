@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import OfficeItem from './_components/office-item';
 import SelectModal from '@/components/select-modal';
 import SearchIcon from '@/assets/icons/search-icon';
@@ -51,10 +52,13 @@ const Section = () => {
             <span>{selectedOption}</span>
             <ChevronDownIcon color="black" />
           </div>
-          <div className="label-small flex items-center text-black">
+          <Link
+            href="/office/map"
+            className="label-small flex items-center text-black"
+          >
             지도보기
             <MapIcon />
-          </div>
+          </Link>
         </div>
         <div className="flex flex-col gap-4 py-4">
           {data
