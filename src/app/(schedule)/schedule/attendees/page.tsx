@@ -1,7 +1,7 @@
 'use client';
 
 import { ChangeEvent, useState } from 'react';
-import Participant from '../../_components/participant';
+import Participant from '../_components/participant';
 import Input from '@/components/input';
 import { Controller, useForm } from 'react-hook-form';
 import SearchIcon from '@/assets/icons/search-icon';
@@ -31,9 +31,11 @@ export default function ParticipantSelection() {
   };
 
   return (
-    <main className="flex w-full flex-col p-4">
+    <main className="flex w-full flex-col p-4 pb-20">
       <section className="mt-4">
-        <h2 className="text-gray-500 text-sm">참석 인원 선택 2</h2>
+        <h2 className="text-gray-500 text-sm">
+          참석 인원 선택 {selectedParticipants.length ? selectedParticipants.length : ''}
+        </h2>
         <div className="mt-2 flex space-x-2">
           {selectedParticipants.map((participant) => {
             return (
@@ -88,6 +90,7 @@ export default function ParticipantSelection() {
         {data.categories.map((item) => {
           return (
             <Accordion
+              defaultOpen={true}
               key={item.category}
               header={() => {
                 return (

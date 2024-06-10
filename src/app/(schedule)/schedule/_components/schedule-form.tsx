@@ -12,23 +12,24 @@ import Calendar from '@/components/calendar';
 import DecisionButton from './decision-button';
 import Toggle from '@/components/toggle';
 import { useScheduleStore } from '@/app/(provider)/schedule-provider';
+import Link from 'next/link';
 
 type OpenState = {
-  calendar: string;
-  timeSelect: string;
+  calendar: 'start' | 'end';
+  timeSelect: 'start' | 'end' | '';
 };
 
 const ScheduleForm = () => {
-  const { formattedCurrentDate, formattedCurrentTime, formattedEndDate, formattedEndTime } =
+  const { formattedStartDate, formattedStartTime, formattedEndDate, formattedEndTime } =
     useScheduleStore((state) => ({
-      formattedCurrentDate: state.formattedCurrentDate,
-      formattedCurrentTime: state.formattedCurrentTime,
+      formattedStartDate: state.formattedStartDate,
+      formattedStartTime: state.formattedStartTime,
       formattedEndDate: state.formattedEndDate,
       formattedEndTime: state.formattedEndTime,
     }));
 
   const [openState, setOpenState] = useState<OpenState>({
-    calendar: '',
+    calendar: 'start',
     timeSelect: '',
   });
 
@@ -152,8 +153,8 @@ const ScheduleForm = () => {
             <DateTimeSelector
               label="시작일 *"
               name="start"
-              date={formattedCurrentDate()}
-              time={formattedCurrentTime()}
+              date={formattedStartDate()}
+              time={formattedStartTime()}
               openCalendar={openState.calendar}
               openTimeSelect={openState.timeSelect}
               onCalendarClick={() => handleOpenStateClick('calendar', 'start')}
@@ -175,7 +176,10 @@ const ScheduleForm = () => {
               <div className="label-small mb-4 text-[#A0A0A0]">
                 {openState.calendar === 'start' ? '시작 일' : '종료 일'}
               </div>
-              <Calendar />
+              <Calendar
+                type="period"
+                status={openState.calendar}
+              />
               <DecisionButton />
             </div>
           )}
@@ -185,9 +189,8 @@ const ScheduleForm = () => {
                 {openState.timeSelect === 'start' ? '시작 시간' : '종료 시간'}
               </div>
               <ScheduleTime
-                time={
-                  openState.timeSelect === 'start' ? formattedCurrentTime() : formattedEndTime()
-                }
+                time={openState.timeSelect === 'start' ? formattedStartTime() : formattedEndTime()}
+                status={openState.timeSelect}
               />
               <DecisionButton />
             </div>
@@ -213,14 +216,14 @@ const ScheduleForm = () => {
           <div className="label-small text-[#A0A0A0]">참석 인원</div>
           <div className="flex gap-4">
             <div className="flex w-[52px] flex-col items-center justify-center gap-4 py-3">
-              <button type="button">
+              <Link href="/schedule/attendees">
                 <Image
                   src="/icons/add-member.svg"
                   alt="멤버 추가"
                   width={48}
                   height={48}
                 ></Image>
-              </button>
+              </Link>
               <div className="body-small text-center">추가하기</div>
             </div>
             {memberList.map((member, index) => (
