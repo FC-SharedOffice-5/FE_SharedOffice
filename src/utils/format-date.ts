@@ -25,3 +25,38 @@ export const getInitialDates = () => {
     endTime,
   };
 };
+
+export const formatUpdatedAt = (date: string) => {
+  const updatedAt = new Date(date);
+  const now = new Date();
+  const diff = now.getTime() - updatedAt.getTime();
+  const diffMinutes = Math.floor(diff / 1000 / 60);
+
+  // 10분 이내에 올린 경우
+  if (diffMinutes < 60 && diffMinutes > 0) {
+    return `${diffMinutes}분 전`;
+  }
+  // 오늘 올린 경우
+  else if (
+    updatedAt.getDate() === now.getDate() &&
+    updatedAt.getMonth() === now.getMonth() &&
+    updatedAt.getFullYear() === now.getFullYear()
+  ) {
+    const hour = updatedAt.getHours();
+    const minute = updatedAt.getMinutes();
+
+    // 시간과 분이 한 자리일 경우 앞에 0 추가
+    const formattedHour = hour < 10 ? '0' + hour : hour;
+    const formattedMinute = minute < 10 ? '0' + minute : minute;
+
+    return `${formattedHour}:${formattedMinute}`;
+  }
+  // 그 외의 경우
+  else {
+    const month =
+      updatedAt.getMonth() + 1 < 10 ? '0' + (updatedAt.getMonth() + 1) : updatedAt.getMonth() + 1;
+    const day = updatedAt.getDate() < 10 ? '0' + updatedAt.getDate() : updatedAt.getDate();
+
+    return `${month}/${day}`;
+  }
+};
