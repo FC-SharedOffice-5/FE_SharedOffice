@@ -1,25 +1,11 @@
+import { DataType } from '../constants';
 import StarIcon from '@/assets/icons/star-icon';
 import PedestrianIcon from '@/assets/icons/pedestrian-icon';
 import CapacityIcon from '@/assets/icons/capacity-icon';
 import FacilityIcon from '@/assets/icons/facility-icon';
 
 type OfficeItemProps = {
-  data: {
-    officeId: number;
-    officeName: string;
-    officeAddr: string;
-    officeFloor: number;
-    officeTime: string;
-    officeCapacity: number;
-    officeStudio: number;
-    officeMeeting: number;
-    officeLatitude: string;
-    officeLongitude: string;
-    officeFacilities: string;
-    memberLike: boolean;
-    createdAt: string;
-    updatedAt: string;
-  };
+  data: DataType;
 };
 
 const OfficeItem = ({ data }: OfficeItemProps) => {

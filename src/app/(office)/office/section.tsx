@@ -28,9 +28,9 @@ const Section = () => {
     <main className="pt-4">
       <div className="mb-4 flex justify-between px-4">
         <span className="headline-large">오피스</span>
-        <button>
+        <Link href="/office/search">
           <SearchIcon />
-        </button>
+        </Link>
       </div>
       <div className="flex flex-col gap-4 pb-8 pl-4 pr-4 pt-4">
         {data
