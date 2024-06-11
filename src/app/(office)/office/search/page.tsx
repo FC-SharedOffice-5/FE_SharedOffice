@@ -42,7 +42,10 @@ export default function Search() {
     <>
       <form className="flex h-[56px] items-center justify-between gap-6 border-b-[0.75px] border-primary">
         <div className="flex grow items-center gap-6">
-          <button onClick={() => router.back()}>
+          <button
+            type="button"
+            onClick={() => router.back()}
+          >
             <ArrowIcon />
           </button>
           <input
