@@ -70,10 +70,6 @@ export default function FreeBoardsDetail() {
     updatedAt: data.updatedAt,
   };
 
-  const commentData = {
-    comments: data.comments,
-  };
-
   return (
     <main className="flex h-full flex-col gap-2 bg-background">
       <FreeBoardsPost postData={postData} />
