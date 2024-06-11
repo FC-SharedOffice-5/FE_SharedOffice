@@ -10,7 +10,7 @@ import { CommentsData } from '@/types/data';
 import InputComment from './input-comment';
 
 const Comments = ({ initialComments }: { initialComments: CommentsData[] }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [openModalId, setOpenModalId] = useState<number | null>(null);
 
   const [comments, setComments] = useState(initialComments);
 
@@ -39,8 +39,8 @@ const Comments = ({ initialComments }: { initialComments: CommentsData[] }) => {
     );
   };
 
-  const handleMenuClick = useCallback(() => {
-    setIsModalOpen(true);
+  const handleMenuClick = useCallback((commentId: number) => {
+    setOpenModalId(commentId);
   }, []);
 
   return (
@@ -90,7 +90,7 @@ const Comments = ({ initialComments }: { initialComments: CommentsData[] }) => {
                   </button>
                   <button
                     type="button"
-                    onClick={handleMenuClick}
+                    onClick={() => handleMenuClick(comment.commentId)}
                   >
                     <KebabIcon
                       color="#A5A7A5"
@@ -119,8 +119,8 @@ const Comments = ({ initialComments }: { initialComments: CommentsData[] }) => {
               </div>
             </div>
             <KebabSelectModal
-              isOpen={isModalOpen}
-              onClose={() => setIsModalOpen(false)}
+              isOpen={openModalId === comment.commentId}
+              onClose={() => setOpenModalId(null)}
             />
           </div>
         ))}
