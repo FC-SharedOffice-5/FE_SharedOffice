@@ -75,7 +75,7 @@ export default function FreeBoardsDetail() {
   };
 
   return (
-    <main className="flex flex-col gap-2 bg-background">
+    <main className="flex h-full flex-col gap-2 bg-background">
       <FreeBoardsPost postData={postData} />
       <Comments initialComments={data.comments} />
     </main>

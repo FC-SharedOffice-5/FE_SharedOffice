@@ -44,7 +44,7 @@ const Comments = ({ initialComments }: { initialComments: CommentsData[] }) => {
   }, []);
 
   return (
-    <main className="bg-white">
+    <main className="flex flex-1 flex-col justify-between bg-white">
       <section className="px-4 pb-8 pt-4">
         {comments.map((comment) => (
           <div

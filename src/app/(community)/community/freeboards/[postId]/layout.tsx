@@ -12,5 +12,5 @@ export default function DetailFreeBoardsLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div>{children}</div>;
+  return <div className="h-full">{children}</div>;
 }

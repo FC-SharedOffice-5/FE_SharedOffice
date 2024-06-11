@@ -16,7 +16,7 @@ export default function AddFreeBoardsLayout({
   return (
     <div className="wrapper">
       <Header title="게시글" />
-      <div>{children}</div>
+      <div className="flex-1">{children}</div>
     </div>
   );
 }
