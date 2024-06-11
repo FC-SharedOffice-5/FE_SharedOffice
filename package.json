@@ -30,6 +30,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@mswjs/data": "^0.16.1",
     "@svgr/webpack": "^8.1.0",
     "@tanstack/eslint-plugin-query": "^5.35.6",
     "@tanstack/react-query-devtools": "^5.40.0",
