@@ -5,7 +5,7 @@ export default function FreeBoardsDetail() {
   const data = {
     boardId: 1,
     memberImage: '/member1.webp',
-    memberNickname: '나나톤 좋아',
+    memberNickname: '나나콘 좋아',
     officeName: 'Mile 전체지점',
     boardTitle: '마일 일주일 사용하면서 느낀 주관적인 후기',
     boardContents: '안녕하세요. \n 마일에서 근무한지 막 일주일 지난 마내기 입니다!',
