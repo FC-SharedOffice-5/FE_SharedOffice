@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useState, useCallback } from 'react';
 import KebabSelectModal from './kebab-select-modal';
 import { CommentsData } from '@/types/data';
+import InputComment from './input-comment';
 
 const Comments = ({ initialComments }: { initialComments: CommentsData[] }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,83 +44,88 @@ const Comments = ({ initialComments }: { initialComments: CommentsData[] }) => {
   }, []);
 
   return (
-    <main className="bg-white px-4 pb-8">
-      {comments.map((comment) => (
-        <div
-          key={comment.commentId}
-          className="flex gap-2 py-4"
-        >
-          <div>
-            <Image
-              src={comment.memberImage}
-              alt="member"
-              width={40}
-              height={40}
-              className="rounded-full"
-            />
-          </div>
-          <div className="flex flex-1 flex-col gap-2">
-            <div className="flex justify-between">
-              <div className="flex flex-col">
-                <div className="label-small">{comment.memberNickname}</div>
-                <div className="caption-small text-[#A0A0A0]">{formatDate(comment.createdAt)}</div>
-              </div>
-              <div className="flex items-center gap-2">
-                <button type="button">
-                  <CommentIcon
-                    color="#A5A7A5"
-                    size={18}
-                  />
-                </button>
-                <button onClick={() => handleLikeButtonClick(comment.commentId)}>
-                  {comment.memberLike === 1 ? (
-                    <LikeIcon
-                      color="#1DCC9A"
-                      size={18}
-                    />
-                  ) : (
-                    <LikeIcon
+    <main className="bg-white">
+      <section className="px-4 pb-8 pt-4">
+        {comments.map((comment) => (
+          <div
+            key={comment.commentId}
+            className="flex gap-2 py-4"
+          >
+            <div>
+              <Image
+                src={comment.memberImage}
+                alt="member"
+                width={40}
+                height={40}
+                className="rounded-full"
+              />
+            </div>
+            <div className="flex flex-1 flex-col gap-2">
+              <div className="flex justify-between">
+                <div className="flex flex-col">
+                  <div className="label-small">{comment.memberNickname}</div>
+                  <div className="caption-small text-[#A0A0A0]">
+                    {formatDate(comment.createdAt)}
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button type="button">
+                    <CommentIcon
                       color="#A5A7A5"
                       size={18}
                     />
-                  )}
-                </button>
-                <button
-                  type="button"
-                  onClick={handleMenuClick}
-                >
-                  <KebabIcon
-                    color="#A5A7A5"
-                    size={18}
-                  />
-                </button>
+                  </button>
+                  <button onClick={() => handleLikeButtonClick(comment.commentId)}>
+                    {comment.memberLike === 1 ? (
+                      <LikeIcon
+                        color="#1DCC9A"
+                        size={18}
+                      />
+                    ) : (
+                      <LikeIcon
+                        color="#A5A7A5"
+                        size={18}
+                      />
+                    )}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleMenuClick}
+                  >
+                    <KebabIcon
+                      color="#A5A7A5"
+                      size={18}
+                    />
+                  </button>
+                </div>
+              </div>
+              <div className="body-small">{comment.commentWrite}</div>
+              <div className="flex gap-3">
+                {comment.likeCount > 0 && (
+                  <div className="flex items-center gap-1 text-primary">
+                    <LikeIcon
+                      color="#1DCC9A"
+                      size={16}
+                    />
+                    <div className="body-small">{comment.likeCount}</div>
+                  </div>
+                )}
+                {comment.commentsCounts > 0 && (
+                  <div className="flex items-center gap-1 text-error">
+                    <CommentIcon color="#FF5449" />
+                    <div className="body-small">{comment.commentsCounts}</div>
+                  </div>
+                )}
               </div>
             </div>
-            <div className="body-small">{comment.commentWrite}</div>
-            <div className="flex gap-3">
-              {comment.likeCount > 0 && (
-                <div className="flex items-center gap-1 text-primary">
-                  <LikeIcon
-                    color="#1DCC9A"
-                    size={16}
-                  />
-                  <div className="body-small">{comment.likeCount}</div>
-                </div>
-              )}
-              {comment.commentsCounts > 0 && (
-                <div className="flex items-center gap-1 text-error">
-                  <CommentIcon color="#FF5449" />
-                  <div className="body-small">{comment.commentsCounts}</div>
-                </div>
-              )}
-            </div>
+            <KebabSelectModal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+            />
           </div>
-          <KebabSelectModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-          />
-        </div>
-      ))}
+        ))}
+      </section>
+      <InputComment />
     </main>
   );
 };
