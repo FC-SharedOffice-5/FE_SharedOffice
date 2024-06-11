@@ -8,6 +8,8 @@ import {
   AccountRestoreSchema,
   MemberInfoUpdateSchema,
   InquirySchema,
+  AttendeeSchema,
+  ScheduleSchema,
 } from './schema';
 
 // 회원가입 (Signup) 타입
@@ -33,3 +35,9 @@ export type MemberInfoUpdateData = z.infer<typeof MemberInfoUpdateSchema>;
 
 // 문의 등록 (Inquiry) 타입
 export type InquiryData = z.infer<typeof InquirySchema>;
+
+// 스케줄 등록 (Schedule) 타입
+export type ScheduleData = z.infer<typeof ScheduleSchema>;
+
+// 참석 인원 (Attendee) 타입
+export type AttendeeData = z.infer<typeof AttendeeSchema>;

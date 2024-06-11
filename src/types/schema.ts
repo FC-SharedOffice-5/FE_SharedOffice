@@ -73,3 +73,34 @@ export const InquirySchema = z.object({
   inqContents: z.string(),
   inqResp: z.union([z.literal(0), z.literal(1)]), // 0: 답변 대기, 1: 답변 완료
 });
+
+// 스케줄 생성 (Create Schedule) 요청 스키마
+export const ScheduleSchema = z.object({
+  memberId: z.number().positive(),
+  resId: z.number().positive(),
+  eventColor: z.number().int(),
+  eventTitle: z.string(),
+  eventStartDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: 'Invalid date format',
+  }), // ISO 8601 format date string
+  eventEndDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: 'Invalid date format',
+  }), // ISO 8601 format date string
+  eventLocation: z.string(),
+  eventMemo: z.string(),
+  attendeesList: z.array(
+    z.object({
+      memberId: z.number().positive(),
+      attendeesCategory: z.number().int(),
+    }),
+  ),
+});
+
+// 참석자 (Attendee) 스키마
+export const AttendeeSchema = z.object({
+  attendeeId: z.number().positive(),
+  memberName: z.string(),
+  attendeeCode: z.number().positive(),
+  memberId: z.number().positive(),
+  attendeeCategory: z.number().int(),
+});

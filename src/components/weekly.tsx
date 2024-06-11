@@ -67,11 +67,11 @@ const Weekly = ({ type, status }: TWeeklyProps) => {
   };
 
   return (
-    <div className="flex items-center justify-center p-5">
+    <div className="flex items-center justify-center py-5">
       <button onClick={() => updateWeek(-1)}>
         <NextIcon rotate={180} />
       </button>
-      <div className="flex space-x-8">
+      <div className="flex w-full justify-between">
         {days.map((day) => (
           <button
             key={day.toString()}

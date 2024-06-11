@@ -1,3 +1,4 @@
+import { AttendeeData } from '@/types/data';
 import { formatLocalDate, formatTime } from '@/utils/format-date';
 import { createStore } from 'zustand/vanilla';
 
@@ -9,6 +10,7 @@ export type ScheduleStateType = {
   // with period function in calendar
   startDate: Date;
   endDate: Date;
+  attendees: AttendeeData[];
 };
 
 export type ScheduleActions = {
@@ -25,6 +27,8 @@ export type ScheduleActions = {
   formattedStartTime: () => string;
   formattedEndDate: () => string;
   formattedEndTime: () => string;
+
+  setAttendees: (attendees: AttendeeData[]) => void;
 };
 
 export type ScheduleStore = ScheduleStateType & ScheduleActions;
@@ -35,6 +39,7 @@ export const defaultInitState: ScheduleStateType = {
   selectedDate: new Date(),
   startDate: new Date(),
   endDate: new Date(),
+  attendees: [],
 };
 
 export const initScheduleStore = (): ScheduleStateType => {
@@ -81,5 +86,7 @@ export const createScheduleStore = (initState: ScheduleStateType = defaultInitSt
     formattedStartTime: () => formatTime(get().startDate),
     formattedEndDate: () => formatLocalDate(get().endDate),
     formattedEndTime: () => formatTime(get().endDate),
+
+    setAttendees: (attendees: AttendeeData[]) => set({ attendees }),
   }));
 };

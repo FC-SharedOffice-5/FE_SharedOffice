@@ -8,13 +8,13 @@ import NextIcon from '@/assets/icons/next-icon';
 import { useScheduleStore } from '@/app/(provider)/schedule-provider';
 
 type TDefaultCalendar = {
-  type: 'default';
+  type?: 'default';
   title?: 'header' | 'arrow';
-  status: never;
+  status?: never;
 };
 
 type TPeriodCalendar = {
-  type: 'period';
+  type?: 'period';
   title?: 'header' | 'arrow';
   status: 'start' | 'end';
 };
@@ -35,7 +35,7 @@ const Calendar = ({ type = 'default', status, title = 'header' }: CalendarProps)
   return (
     <div className="flex flex-col gap-4">
       {title === 'header' ? (
-        <div className="headline-medium text-black">
+        <div className="headline-medium px-1 text-black">
           {benchMarkDate.getFullYear()}년 {benchMarkDate.getMonth() + 1}월
         </div>
       ) : (
