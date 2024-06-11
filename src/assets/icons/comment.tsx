@@ -1,9 +1,10 @@
-const CommentIcon = ({ color = '#555755' }: { color?: string }) => (
+const CommentIcon = ({ color = '#555755', size = 16 }: { color?: string; size?: number }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={16}
-    height={16}
+    width={size}
+    height={size}
     fill="none"
+    viewBox="0 0 16 16"
   >
     <path
       stroke={color}

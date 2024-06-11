@@ -12,5 +12,5 @@ export default function DetailFreeBoardsLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className="wrapper">{children}</div>;
+  return <div>{children}</div>;
 }

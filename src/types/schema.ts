@@ -88,3 +88,18 @@ export const FreeBoardsPostSchema = z.object({
   commentCount: z.number().positive(),
   updatedAt: z.string(),
 });
+
+// 자유게시판 게시글 댓글 (Comments) 타입
+export const CommentsSchema = z.object({
+  commentId: z.number().positive(),
+  memberImage: z.string(),
+  memberNickname: z.string(),
+  linkId: z.number().positive(),
+  linkCategory: z.number().positive(),
+  commentWrite: z.string(),
+  likeCount: z.number().positive(),
+  memberLike: z.number().positive(),
+  commentsCounts: z.number().positive(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});

@@ -1,3 +1,4 @@
+import Comments from './_components/comments';
 import FreeBoardsPost from './_components/free-boards-post';
 
 export default function FreeBoardsDetail() {
@@ -15,24 +16,42 @@ export default function FreeBoardsDetail() {
     comments: [
       {
         commentId: 1,
-        memberId: 1,
+        memberImage: '/memberDefault.png',
+        memberNickname: '오토장인',
         linkId: 1,
         linkCategory: 0,
-        commentWrite: 'ddddddddddddd',
+        commentWrite: '안녕하세요 나나콘 좋아요님!',
         likeCount: 1,
+        memberLike: 1,
+        commentsCounts: 0,
         createdAt: '2024-06-08T06:47:30.035126',
         updatedAt: '2024-06-08T06:47:30.035126',
       },
       {
         commentId: 2,
-        memberId: 2,
+        memberImage: '/memberDefault.png',
+        memberNickname: '일정의 늪',
         linkId: 1,
         linkCategory: 0,
-        commentWrite: 'dddddddddaaaaaaaaaaaadddddddd',
+        commentWrite: '반가워요~',
         likeCount: 0,
         memberLike: 0,
-        createdAt: '2024-06-08T08:13:02.359627',
-        updatedAt: '2024-06-08T08:13:02.359627',
+        commentsCounts: 0,
+        createdAt: '2024-06-09T08:13:02.359627',
+        updatedAt: '2024-06-09T08:13:02.359627',
+      },
+      {
+        commentId: 3,
+        memberImage: '/memberDefault.png',
+        memberNickname: '메디힐러는지쳐',
+        linkId: 1,
+        linkCategory: 0,
+        commentWrite: '뿡빵삥뿡',
+        likeCount: 0,
+        memberLike: 0,
+        commentsCounts: 0,
+        createdAt: '2024-06-10T08:18:02.359627',
+        updatedAt: '2024-06-10T08:18:02.359627',
       },
     ],
   };
@@ -58,6 +77,7 @@ export default function FreeBoardsDetail() {
   return (
     <main className="flex flex-col gap-2 bg-background">
       <FreeBoardsPost postData={postData} />
+      <Comments initialComments={data.comments} />
     </main>
   );
 }

@@ -1,12 +1,13 @@
-const KebabIcon = () => (
+const KebabIcon = ({ color = '#A0A0A0', size = 24 }: { color?: string; size?: number }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={24}
-    height={24}
+    width={size}
+    height={size}
     fill="none"
+    viewBox="0 0 24 24"
   >
     <path
-      fill="#A0A0A0"
+      fill={color}
       d="M11 12a1 1 0 1 0 2 0 1 1 0 0 0-2 0"
     />
     <path
@@ -15,7 +16,7 @@ const KebabIcon = () => (
       d="M11 12a1 1 0 1 0 2 0 1 1 0 0 0-2 0"
     />
     <path
-      fill="#A0A0A0"
+      fill={color}
       d="M11 19a1 1 0 1 0 2 0 1 1 0 0 0-2 0"
     />
     <path
@@ -24,7 +25,7 @@ const KebabIcon = () => (
       d="M11 19a1 1 0 1 0 2 0 1 1 0 0 0-2 0"
     />
     <path
-      fill="#A0A0A0"
+      fill={color}
       d="M11 5a1 1 0 1 0 2 0 1 1 0 0 0-2 0"
     />
     <path
@@ -33,7 +34,7 @@ const KebabIcon = () => (
       d="M11 5a1 1 0 1 0 2 0 1 1 0 0 0-2 0"
     />
     <path
-      stroke="#A0A0A0"
+      stroke={color}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
@@ -48,7 +49,7 @@ const KebabIcon = () => (
       d="M11 12a1 1 0 1 0 2 0 1 1 0 0 0-2 0"
     />
     <path
-      stroke="#A0A0A0"
+      stroke={color}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
@@ -63,7 +64,7 @@ const KebabIcon = () => (
       d="M11 19a1 1 0 1 0 2 0 1 1 0 0 0-2 0"
     />
     <path
-      stroke="#A0A0A0"
+      stroke={color}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
