@@ -12,7 +12,7 @@ type OfficeItemProps = {
 const OfficeItem = ({ data }: OfficeItemProps) => {
   return (
     <Link
-      href={`/office?id=${data.officeId}`}
+      href={`/office/detail/${data.officeId}`}
       className="flex flex-col gap-4"
     >
       <div className="flex justify-between border-b-[0.75px] border-black">
