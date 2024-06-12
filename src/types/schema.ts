@@ -101,7 +101,6 @@ export const CommentsSchema = z.object({
   memberLike: z.number().positive(),
   commentsCounts: z.number().positive(),
   createdAt: z.string(),
-  updatedAt: z.string(),
 });
 
 // 스케줄 생성 (Create Schedule) 요청 스키마

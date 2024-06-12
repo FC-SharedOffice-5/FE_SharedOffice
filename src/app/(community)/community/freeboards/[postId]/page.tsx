@@ -25,7 +25,6 @@ export default function FreeBoardsDetail() {
         memberLike: 1,
         commentsCounts: 0,
         createdAt: '2024-06-08T06:47:30.035126',
-        updatedAt: '2024-06-08T06:47:30.035126',
       },
       {
         commentId: 2,
@@ -38,7 +37,6 @@ export default function FreeBoardsDetail() {
         memberLike: 0,
         commentsCounts: 0,
         createdAt: '2024-06-09T08:13:02.359627',
-        updatedAt: '2024-06-09T08:13:02.359627',
       },
       {
         commentId: 3,
@@ -51,7 +49,6 @@ export default function FreeBoardsDetail() {
         memberLike: 0,
         commentsCounts: 0,
         createdAt: '2024-06-10T08:18:02.359627',
-        updatedAt: '2024-06-10T08:18:02.359627',
       },
     ],
   };
