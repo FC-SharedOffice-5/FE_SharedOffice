@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Seat from '../_components/seat';
+import Place from '../_components/place';
 import Footer from '@/components/footer';
 import BackIcon from '@/assets/icons/back-icon';
 
@@ -15,7 +16,7 @@ export default function Office() {
     },
     {
       name: '공간',
-      content: <Seat />,
+      content: <Place />,
     },
     {
       name: '사물함',
