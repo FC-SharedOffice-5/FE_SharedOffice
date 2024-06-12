@@ -13,6 +13,7 @@ export type DataType = {
   memberLike: boolean;
   createdAt: string;
   updatedAt: string;
+  officeImage: string;
 };
 
 export const data: DataType[] = [
@@ -31,6 +32,7 @@ export const data: DataType[] = [
     memberLike: true,
     createdAt: '2024-06-01T14:42:29.144299',
     updatedAt: '2024-06-01T14:42:29.144299',
+    officeImage: '/office1.svg',
   },
   {
     officeId: 2,
@@ -47,6 +49,7 @@ export const data: DataType[] = [
     memberLike: true,
     createdAt: '2024-06-01T14:42:29.144299',
     updatedAt: '2024-06-01T14:42:29.144299',
+    officeImage: '/office2.svg',
   },
   {
     officeId: 3,
@@ -63,6 +66,7 @@ export const data: DataType[] = [
     memberLike: true,
     createdAt: '2024-06-01T14:42:29.144299',
     updatedAt: '2024-06-01T14:42:29.144299',
+    officeImage: '/office3.svg',
   },
   {
     officeId: 4,
@@ -79,6 +83,7 @@ export const data: DataType[] = [
     memberLike: false,
     createdAt: '2024-06-01T14:42:29.144299',
     updatedAt: '2024-06-01T14:42:29.144299',
+    officeImage: '/office4.svg',
   },
   {
     officeId: 5,
@@ -95,6 +100,7 @@ export const data: DataType[] = [
     memberLike: false,
     createdAt: '2024-06-01T14:42:29.144299',
     updatedAt: '2024-06-01T14:42:29.144299',
+    officeImage: '/office5.svg',
   },
 ];
 
