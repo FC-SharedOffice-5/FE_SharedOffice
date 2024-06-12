@@ -1,23 +1,20 @@
 'use server';
 
-import { redirect } from 'next/navigation';
 import { auth, signIn } from '@/auth';
 import { AuthError } from 'next-auth';
-import { FieldValues } from 'react-hook-form';
+import { redirect } from 'next/navigation';
+import type { FieldValues } from 'react-hook-form';
 
 export const signInWithCredentials = async (data: FieldValues, isChecked: boolean) => {
-  let shouldRedirect = false;
-
   try {
-    const res = await signIn('credentials', {
+    await signIn('credentials', {
       email: data.email,
       password: data.password,
       keepLoggedIn: isChecked,
       redirect: false,
     });
-    if (res.ok) {
-      shouldRedirect = true;
-    }
+
+    redirect('/');
   } catch (err) {
     if (err instanceof AuthError) {
       switch (err.type) {
@@ -38,11 +35,6 @@ export const signInWithCredentials = async (data: FieldValues, isChecked: boolea
           return { message: '문제가 발생했습니다.' };
       }
     }
-  }
-
-  // 로그인 성공 시 홈으로 이동
-  if (shouldRedirect) {
-    redirect('/');
   }
 
   return { message: '' };

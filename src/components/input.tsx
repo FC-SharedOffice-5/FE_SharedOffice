@@ -86,7 +86,7 @@ const Input = <T extends FieldValues>({
             className="absolute bottom-[10px] right-0"
           >
             <Image
-              src="/icons/delete.svg"
+              src="/icons/delete-icon.svg"
               alt="전체 삭제"
               width={20}
               height={20}

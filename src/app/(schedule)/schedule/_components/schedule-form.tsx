@@ -152,7 +152,7 @@ const ScheduleForm = () => {
                       className="absolute right-0 top-1/2 -translate-y-1/2 transform"
                     >
                       <Image
-                        src="/icons/delete.svg"
+                        src="/icons/delete-icon.svg"
                         alt="전체 삭제"
                         width={20}
                         height={20}
