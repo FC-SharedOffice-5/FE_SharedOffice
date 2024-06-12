@@ -5,7 +5,7 @@ const apiFn = async <TData, TResponse>({
 }: {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
   url: string;
-  data: TData;
+  data?: TData;
 }): Promise<TResponse> => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
     method,
@@ -13,12 +13,14 @@ const apiFn = async <TData, TResponse>({
       'Content-Type': 'application/json',
     },
     cache: 'no-store',
-    body: JSON.stringify(data),
+    ...(data && { body: JSON.stringify(data) }),
   });
+
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
 
   return response.json();
 };
+
 export default apiFn;

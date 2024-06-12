@@ -2,6 +2,7 @@
 const nextConfig = {
   experimental: {
     instrumentationHook: true,
+    esmExternals: 'loose',
   },
   webpack: (config, { isServer }) => {
     const fileLoaderRule = config.module.rules.find((rule) => rule.test?.test?.('.svg'));
