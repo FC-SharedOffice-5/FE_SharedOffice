@@ -2,6 +2,7 @@ import { cn } from '@/utils/cn';
 import { Button } from '@headlessui/react';
 
 type PrimaryButtonProps = {
+  type?: 'button' | 'submit' | 'reset';
   color?: 'green' | 'white';
   size?: 'big' | 'small' | 'modal' | 'x-small';
   name: string;
@@ -10,6 +11,7 @@ type PrimaryButtonProps = {
 };
 
 const PrimaryButton = ({
+  type,
   color = 'green',
   size = 'big',
   name,
@@ -18,6 +20,7 @@ const PrimaryButton = ({
 }: PrimaryButtonProps) => {
   return (
     <Button
+      type={type}
       disabled={disabled}
       onClick={handleClick}
       className={cn(
