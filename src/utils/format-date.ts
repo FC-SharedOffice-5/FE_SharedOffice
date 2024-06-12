@@ -60,4 +60,3 @@ export const formatUpdatedAt = (date: string) => {
     return `${month}/${day}`;
   }
 };
-
