@@ -28,10 +28,10 @@ const LoginForm = () => {
 
       if (res.errorType) {
         setError(`root.${res.errorType}`, { type: res.errorType, message: res.errorMessage });
-      } else {
-        if (isValid) {
-          location.reload();
-        }
+      }
+
+      if (!res.errorType && isValid) {
+        location.reload();
       }
     } catch (error) {
       console.error('로그인 실패:', error);

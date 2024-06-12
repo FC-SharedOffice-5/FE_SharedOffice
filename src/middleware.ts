@@ -3,7 +3,16 @@ import { match } from 'path-to-regexp';
 import { NextResponse } from 'next/server';
 
 // 권한을 가진 사용자만 접근 가능한 경로
-const matchersForAuth = ['/profile', '/settings', '/logout', '/'];
+const matchersForAuth = [
+  '/profile',
+  '/settings',
+  '/logout',
+  '/',
+  '/mypage',
+  '/schedules',
+  '/schedule',
+  '/office',
+];
 // 권한이 없는 사용자만 접근 가능한 경로
 const matchersForNoAuth = ['/login', '/signup'];
 

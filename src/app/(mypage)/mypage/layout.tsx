@@ -1,3 +1,4 @@
+import Footer from '@/components/footer';
 import type { Metadata } from 'next';
 
 const TITLE = '마이페이지';
@@ -12,5 +13,10 @@ export default function LoginLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className="wrapper pb-4">{children}</div>;
+  return (
+    <div className="wrapper pb-20">
+      {children}
+      <Footer />
+    </div>
+  );
 }
