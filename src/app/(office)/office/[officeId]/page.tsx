@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Seat from '../_components/seat';
 import Place from '../_components/place';
+import Locker from '../_components/locker';
 import Footer from '@/components/footer';
 import BackIcon from '@/assets/icons/back-icon';
 
@@ -20,11 +21,11 @@ export default function Office() {
     },
     {
       name: '사물함',
-      content: <Seat />,
+      content: <Locker />,
     },
     {
       name: '물품',
-      content: <Seat />,
+      content: <></>,
     },
   ];
 
