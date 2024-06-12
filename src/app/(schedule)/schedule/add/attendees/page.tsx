@@ -1,7 +1,7 @@
 'use client';
 
 import { ChangeEvent, useRef, useState } from 'react';
-import Participant from '../_components/participant';
+import Participant from '../../_components/participant';
 import Input from '@/components/input';
 import { Controller, useForm } from 'react-hook-form';
 import SearchIcon from '@/assets/icons/search-icon';

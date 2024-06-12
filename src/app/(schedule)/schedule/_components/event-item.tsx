@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { DataType } from './timeline';
 import PersonIcon from '@/assets/icons/person-icon';
+import { colorItems } from '../constants';
 
 type EventItemProps = {
   data: DataType;
@@ -26,11 +27,11 @@ const EventItem = ({ data }: EventItemProps) => {
   return (
     <Link
       key={data.eventId}
-      href="/"
+      href={`/schedule/${data.eventId}`}
       className="absolute my-1 w-full rounded bg-primary-300"
       style={{
-        top: `${calculateTop(data.eventStartDate)}px`,
-        backgroundColor: data.eventColor,
+        top: `${calculateTop(data.eventStartDate.toString())}px`,
+        backgroundColor: colorItems[data.eventColor].code,
       }}
     >
       {totalMinutes < 60 ? (

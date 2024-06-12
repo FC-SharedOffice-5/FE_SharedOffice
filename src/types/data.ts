@@ -10,6 +10,7 @@ import {
   InquirySchema,
   AttendeeSchema,
   ScheduleSchema,
+  ScheduleItemSchema,
 } from './schema';
 
 // 회원가입 (Signup) 타입
@@ -38,6 +39,9 @@ export type InquiryData = z.infer<typeof InquirySchema>;
 
 // 스케줄 등록 (Schedule) 타입
 export type ScheduleData = z.infer<typeof ScheduleSchema>;
+
+// 스케줄 아이템 (Schedule Item) 타입
+export type ScheduleItemData = z.infer<typeof ScheduleItemSchema>;
 
 // 참석 인원 (Attendee) 타입
 export type AttendeeData = z.infer<typeof AttendeeSchema>;

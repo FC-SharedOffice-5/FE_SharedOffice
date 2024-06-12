@@ -80,12 +80,8 @@ export const ScheduleSchema = z.object({
   resId: z.number().positive(),
   eventColor: z.number().int(),
   eventTitle: z.string(),
-  eventStartDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: 'Invalid date format',
-  }), // ISO 8601 format date string
-  eventEndDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: 'Invalid date format',
-  }), // ISO 8601 format date string
+  eventStartDate: z.date(),
+  eventEndDate: z.date(),
   eventLocation: z.string(),
   eventMemo: z.string(),
   attendeesList: z.array(
@@ -95,6 +91,10 @@ export const ScheduleSchema = z.object({
     }),
   ),
 });
+
+export const EventIdSchema = z.object({ eventId: z.number().positive() });
+
+export const ScheduleItemSchema = ScheduleSchema.merge(EventIdSchema);
 
 // 참석자 (Attendee) 스키마
 export const AttendeeSchema = z.object({

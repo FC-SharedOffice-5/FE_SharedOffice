@@ -14,6 +14,7 @@ import Toggle from '@/components/toggle';
 import { useScheduleStore } from '@/app/(provider)/schedule-provider';
 import Link from 'next/link';
 import { useCreateSchedule } from '@/hooks/use-schedule';
+import { useRouter } from 'next/navigation';
 
 type OpenState = {
   calendar: 'start' | 'end';
@@ -21,7 +22,12 @@ type OpenState = {
 };
 
 const ScheduleForm = () => {
+  const router = useRouter();
   const {
+    startDate,
+    endDate,
+    scheduleTitle,
+    setScheduleTitle,
     formattedStartDate,
     formattedStartTime,
     formattedEndDate,
@@ -29,6 +35,10 @@ const ScheduleForm = () => {
     attendees,
     setAttendees,
   } = useScheduleStore((state) => ({
+    startDate: state.startDate,
+    endDate: state.endDate,
+    scheduleTitle: state.scheduleTitle,
+    setScheduleTitle: state.setScheduleTitle,
     formattedStartDate: state.formattedStartDate,
     formattedStartTime: state.formattedStartTime,
     formattedEndDate: state.formattedEndDate,
@@ -60,7 +70,8 @@ const ScheduleForm = () => {
 
   const { mutate } = useCreateSchedule({
     onSuccess: () => {
-      alert('일정이 등록되었습니다.');
+      alert('일정이 추가되었습니다.');
+      router.back();
     },
     onError: (error) => {
       alert(error.errorMessage);
@@ -77,8 +88,8 @@ const ScheduleForm = () => {
       resId: 1,
       eventColor: selectedColorId,
       eventTitle: data.schedule_title,
-      eventStartDate: formattedStartDate(),
-      eventEndDate: formattedEndDate(),
+      eventStartDate: startDate,
+      eventEndDate: endDate,
       eventLocation: data.location,
       eventMemo: data.memo,
       attendeesList: attendees.map((member) => ({
@@ -102,7 +113,12 @@ const ScheduleForm = () => {
 
   return (
     <main className="flex w-full flex-1 flex-col items-center justify-between gap-10 px-4 pb-16">
-      <form className="flex w-full flex-1 flex-col gap-4 pt-4">
+      <form
+        className="flex w-full flex-1 flex-col gap-4 pt-4"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         {/* 제목 및 색상 */}
         <div className="flex h-[129px] flex-col border-b-[0.75px] border-black">
           <div className="flex flex-1 flex-wrap items-center">
@@ -113,13 +129,17 @@ const ScheduleForm = () => {
             <Controller
               name="schedule_title"
               control={control}
-              defaultValue=""
               rules={{ required: true }}
+              defaultValue={scheduleTitle}
               render={({ field }) => (
                 <div className="relative flex flex-1">
                   <HeadlessInput
                     {...field}
                     type="text"
+                    onChange={(e) => {
+                      field.onChange(e.target.value);
+                      setScheduleTitle(e.target.value);
+                    }}
                     placeholder="제목을 입력하세요"
                     className="body-medium flex-1 px-6 focus:bg-white focus:outline-none"
                   />
@@ -255,7 +275,7 @@ const ScheduleForm = () => {
           <div className="label-small text-[#A0A0A0]">참석 인원</div>
           <div className="flex gap-4">
             <div className="flex w-[52px] flex-col items-center justify-center gap-4 py-3">
-              <Link href="/schedule/attendees">
+              <Link href="/schedule/add/attendees">
                 <Image
                   src="/icons/add-member.svg"
                   alt="멤버 추가"

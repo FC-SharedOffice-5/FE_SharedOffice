@@ -3,6 +3,7 @@ import { formatLocalDate, formatTime } from '@/utils/format-date';
 import { createStore } from 'zustand/vanilla';
 
 export type ScheduleStateType = {
+  scheduleTitle: string;
   // default function for calendar date
   benchMarkDate: Date;
   currentDate: Date;
@@ -14,6 +15,7 @@ export type ScheduleStateType = {
 };
 
 export type ScheduleActions = {
+  setScheduleTitle: (title: string) => void;
   setBenchMarkDate: (day: Date) => void;
   setCurrentDate: (day: Date) => void;
   setSelectedDate: (day: Date) => void;
@@ -34,6 +36,7 @@ export type ScheduleActions = {
 export type ScheduleStore = ScheduleStateType & ScheduleActions;
 
 export const defaultInitState: ScheduleStateType = {
+  scheduleTitle: '',
   benchMarkDate: new Date(),
   currentDate: new Date(),
   selectedDate: new Date(),
@@ -49,6 +52,7 @@ export const initScheduleStore = (): ScheduleStateType => {
 export const createScheduleStore = (initState: ScheduleStateType = defaultInitState) => {
   return createStore<ScheduleStore>()((set, get) => ({
     ...initState,
+    setScheduleTitle: (title: string) => set({ scheduleTitle: title }),
     setBenchMarkDate: (day: Date) => set({ benchMarkDate: day }),
     setCurrentDate: (day: Date) => set({ currentDate: day }),
     setSelectedDate: (day: Date) => set({ selectedDate: day }),
