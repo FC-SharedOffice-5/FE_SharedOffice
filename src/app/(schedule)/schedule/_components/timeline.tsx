@@ -1,26 +1,10 @@
+import { ScheduleItemData } from '@/types/data';
 import EventItem from './event-item';
 
-export type DataType = {
-  eventId: number;
-  memberId: number;
-  resId: number;
-  eventColor: string;
-  eventTitle: string;
-  eventStartDate: string;
-  eventEndDate: string;
-  eventLocation: string;
-  attendees: {
-    attendeesId: number;
-    attendeesCode: number;
-    memberId: number;
-    attendeesCategory: number;
-  }[];
-  createdAt: string;
-  updatedAt: string;
-};
+export type DataType = ScheduleItemData;
 
 type TimelineProps = {
-  data: DataType[];
+  data?: DataType[];
 };
 
 const Timeline = ({ data }: TimelineProps) => {
@@ -44,7 +28,7 @@ const Timeline = ({ data }: TimelineProps) => {
               className="h-16 border-t-[1px] border-gray-200"
             />
           ))}
-          {data.map((event) => (
+          {data?.map((event) => (
             <EventItem
               key={event.eventId}
               data={event}

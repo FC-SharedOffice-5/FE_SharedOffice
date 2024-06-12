@@ -6,29 +6,28 @@ import BottomDrawer from '@/components/drawer';
 import InfoLink from '@/components/info-link';
 import Loader from '@/components/loader';
 import useDraggable from '@/hooks/use-draggable';
+import { cn } from '@/utils/cn';
 import Image from 'next/image';
 import Link from 'next/link';
 import { QRCodeSVG } from 'qrcode.react';
 import { useRef, useState } from 'react';
 
-const data = {
+export const data = {
   userName: '오주하',
   qrCode: 'M 032 064',
   mileOptions: [
-    { content: '퇴근하기', title: '출퇴근', link: '/clockout' },
-    { content: '좌석', title: '좌석', link: '/seat' },
-    { content: '초대하기', title: '게스트', link: '/invite' },
-    { content: '예약하기', title: '회의실', link: '/reserve' },
-    { content: '대여하기', title: '물품', link: '/rent' },
-    { content: '9F0A03', title: '사물함', link: '/locker' },
+    { content: '예약하기', title: '좌석', link: '/office' },
+    { content: '예약하기', title: '공간', link: '/office' },
+    { content: '대여하기', title: '물품', link: '/mypage/supplies' },
+    { content: '대여하기', title: '사물함', link: '/mypage/locker' },
   ],
   teamMembers: [
-    { name: '김피치', image: '/member1.webp' },
-    { name: '이창희', image: '/member1.webp' },
-    { name: '김정현', image: '/member1.webp' },
-    { name: '석지원', image: '/member1.webp' },
-    { name: '천지현', image: '/member1.webp' },
-    { name: '천지현', image: '/member1.webp' },
+    { name: '이창희', image: '/member3.png', active: true },
+    { name: '김피치', image: '/member5.png', active: false },
+    { name: '김정현', image: '/member6.png', active: true },
+    { name: '석지원', image: '/member7.png', active: true },
+    { name: '천지현', image: '/member8.png', active: false },
+    { name: '천지현', image: '/member3.png', active: true },
   ],
   schedule: {
     meetings: [
@@ -52,10 +51,7 @@ const Section = () => {
   return (
     <main className="h-80 w-full  bg-black-secondary">
       <div className="flex items-center justify-between p-4">
-        <h1 className="headline-large flex font-bold text-white">
-          {data.userName}
-          <span className="font-normal">님</span>
-        </h1>
+        <h1 className="headline-large flex font-bold text-white">홈</h1>
         <Link
           href="/alarm"
           className="z-10"
@@ -91,7 +87,7 @@ const Section = () => {
         </div>
       </div>
       <BottomDrawer setIsClosed={setIsClosed}>
-        <div className="rounded-tl-md rounded-tr-md bg-white px-2 pb-2">
+        <div className="rounded-tl-md rounded-tr-md bg-white px-2 pb-20">
           <div>
             <h2 className="headline-medium border-b border-black/40">Mile 성수</h2>
             <div className="grid grid-cols-2 gap-x-4 gap-y-2 py-1">
@@ -118,14 +114,25 @@ const Section = () => {
                   key={index}
                   className=" flex-shrink-0 flex-col gap-2"
                 >
-                  <Image
-                    draggable="false"
-                    className="rounded-full"
-                    src={member.image}
-                    alt={member.name}
-                    width={70}
-                    height={70}
-                  />
+                  <div
+                    className={cn('relative rounded-full border-2 border-primary p-1', {
+                      'border-error': !member.active,
+                    })}
+                  >
+                    <Image
+                      draggable="false"
+                      className="rounded-full"
+                      src={member.image}
+                      alt={member.name}
+                      width={60}
+                      height={60}
+                    />
+                    {member.active ? (
+                      <div className="absolute bottom-1 right-0 h-3 w-3 rounded-full bg-primary" />
+                    ) : (
+                      <div className="absolute bottom-1 right-0 h-3 w-3 rounded-full bg-error" />
+                    )}
+                  </div>
                   <p className="body-medium w-full text-center">{member.name}</p>
                 </div>
               ))}
@@ -137,14 +144,17 @@ const Section = () => {
             <div className="w-full">
               <div className="flex w-full justify-between border-b border-black py-4">
                 <h3 className="label-small text-black/40">미팅</h3>
-                <div className="flex items-center">
+                <Link
+                  href="/schedule"
+                  className="flex items-center"
+                >
                   <p className="caption-small text-gray-300">더보기</p>
                   <NavRightIcon
                     size={18}
                     color="#BBBDBB"
                     viewSize={24}
                   />
-                </div>
+                </Link>
               </div>
               <div className="flex w-full divide-x divide-black pt-4">
                 {data.schedule.meetings.map((meeting, index) => (

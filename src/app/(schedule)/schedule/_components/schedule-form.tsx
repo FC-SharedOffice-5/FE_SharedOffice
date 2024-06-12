@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import PrimaryButton from '@/components/primary-button';
 import ScheduleTime from '@/components/schedule-time';
-import { getInitialDates } from '@/utils/format-date';
 import { Field, Input as HeadlessInput, Radio, RadioGroup } from '@headlessui/react';
 import Image from 'next/image';
 import { colorItems } from '../constants';
@@ -12,50 +11,93 @@ import DateTimeSelector from './date-time-selector';
 import Calendar from '@/components/calendar';
 import DecisionButton from './decision-button';
 import Toggle from '@/components/toggle';
-
-type DateTimeState = {
-  currentDate: string;
-  currentTime: string;
-  endDate: string;
-  endTime: string;
-};
+import { useScheduleStore } from '@/app/(provider)/schedule-provider';
+import Link from 'next/link';
+import { useCreateSchedule } from '@/hooks/use-schedule';
+import { useRouter } from 'next/navigation';
 
 type OpenState = {
-  calendar: string;
-  timeSelect: string;
+  calendar: 'start' | 'end';
+  timeSelect: 'start' | 'end' | '';
 };
 
 const ScheduleForm = () => {
-  const [dateTimeState, setDateTimeState] = useState<DateTimeState>({
-    currentDate: '',
-    currentTime: '',
-    endDate: '',
-    endTime: '',
-  });
+  const router = useRouter();
+  const {
+    startDate,
+    endDate,
+    scheduleTitle,
+    setScheduleTitle,
+    formattedStartDate,
+    formattedStartTime,
+    formattedEndDate,
+    formattedEndTime,
+    attendees,
+    setAttendees,
+  } = useScheduleStore((state) => ({
+    startDate: state.startDate,
+    endDate: state.endDate,
+    scheduleTitle: state.scheduleTitle,
+    setScheduleTitle: state.setScheduleTitle,
+    formattedStartDate: state.formattedStartDate,
+    formattedStartTime: state.formattedStartTime,
+    formattedEndDate: state.formattedEndDate,
+    formattedEndTime: state.formattedEndTime,
+    attendees: state.attendees,
+    setAttendees: state.setAttendees,
+  }));
 
   const [openState, setOpenState] = useState<OpenState>({
-    calendar: '',
+    calendar: 'start',
     timeSelect: '',
   });
 
-  useEffect(() => {
-    const { currentDate, currentTime, endDate, endTime } = getInitialDates();
-    setDateTimeState({
-      currentDate,
-      currentTime,
-      endDate: endDate,
-      endTime,
-    });
-  }, []);
-
   const {
+    handleSubmit,
     control,
     watch,
     formState: { isValid },
-  } = useForm();
+  } = useForm<{
+    color: number;
+    repeat: boolean;
+    schedule_title: string;
+    location: string;
+    memo: string;
+  }>();
 
   const selectedColorId = watch('color');
   const selectedColor = colorItems.find((color) => color.id === selectedColorId);
+
+  const { mutate } = useCreateSchedule({
+    onSuccess: () => {
+      alert('일정이 추가되었습니다.');
+      router.back();
+    },
+    onError: (error) => {
+      alert(error.errorMessage);
+    },
+  });
+
+  const onSubmit: SubmitHandler<{
+    schedule_title: string;
+    location: string;
+    memo: string;
+  }> = (data) => {
+    mutate({
+      memberId: 1,
+      resId: 1,
+      eventColor: selectedColorId,
+      eventTitle: data.schedule_title,
+      eventStartDate: startDate,
+      eventEndDate: endDate,
+      eventLocation: data.location,
+      eventMemo: data.memo,
+      attendeesList: attendees.map((member) => ({
+        memberId: member.memberId,
+        attendeesCategory: member.attendeeCategory,
+      })),
+    });
+  };
 
   const handleOpenStateClick = (type: 'calendar' | 'timeSelect', state: string) => {
     setOpenState((prevState) => ({
@@ -65,15 +107,18 @@ const ScheduleForm = () => {
     }));
   };
 
-  const [memberList, setMemberList] = useState<string[]>(['김사원', '이대리', '박부장']);
-
-  const removeMember = (indexToRemove: number) => {
-    setMemberList((prevMembers) => prevMembers.filter((_, index) => index !== indexToRemove));
+  const removeMember = (memberId: number) => {
+    setAttendees(attendees.filter((member) => member.memberId !== memberId));
   };
 
   return (
-    <main className="flex w-full flex-1 flex-col items-center justify-between gap-10 px-4">
-      <form className="flex w-full flex-1 flex-col gap-4 pt-4">
+    <main className="flex w-full flex-1 flex-col items-center justify-between gap-10 px-4 pb-16">
+      <form
+        className="flex w-full flex-1 flex-col gap-4 pt-4"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         {/* 제목 및 색상 */}
         <div className="flex h-[129px] flex-col border-b-[0.75px] border-black">
           <div className="flex flex-1 flex-wrap items-center">
@@ -84,13 +129,17 @@ const ScheduleForm = () => {
             <Controller
               name="schedule_title"
               control={control}
-              defaultValue=""
               rules={{ required: true }}
+              defaultValue={scheduleTitle}
               render={({ field }) => (
                 <div className="relative flex flex-1">
                   <HeadlessInput
                     {...field}
                     type="text"
+                    onChange={(e) => {
+                      field.onChange(e.target.value);
+                      setScheduleTitle(e.target.value);
+                    }}
                     placeholder="제목을 입력하세요"
                     className="body-medium flex-1 px-6 focus:bg-white focus:outline-none"
                   />
@@ -116,7 +165,7 @@ const ScheduleForm = () => {
             />
           </div>
           <Controller
-            name={'color'}
+            name="color"
             control={control}
             defaultValue={colorItems[0].id}
             rules={{ required: true }}
@@ -163,8 +212,8 @@ const ScheduleForm = () => {
             <DateTimeSelector
               label="시작일 *"
               name="start"
-              date={dateTimeState.currentDate}
-              time={dateTimeState.currentTime}
+              date={formattedStartDate()}
+              time={formattedStartTime()}
               openCalendar={openState.calendar}
               openTimeSelect={openState.timeSelect}
               onCalendarClick={() => handleOpenStateClick('calendar', 'start')}
@@ -173,8 +222,8 @@ const ScheduleForm = () => {
             <DateTimeSelector
               label="종료일 *"
               name="end"
-              date={dateTimeState.endDate}
-              time={dateTimeState.endTime}
+              date={formattedEndDate()}
+              time={formattedEndTime()}
               openCalendar={openState.calendar}
               openTimeSelect={openState.timeSelect}
               onCalendarClick={() => handleOpenStateClick('calendar', 'end')}
@@ -186,7 +235,10 @@ const ScheduleForm = () => {
               <div className="label-small mb-4 text-[#A0A0A0]">
                 {openState.calendar === 'start' ? '시작 일' : '종료 일'}
               </div>
-              <Calendar />
+              <Calendar
+                type="period"
+                status={openState.calendar}
+              />
               <DecisionButton />
             </div>
           )}
@@ -196,11 +248,8 @@ const ScheduleForm = () => {
                 {openState.timeSelect === 'start' ? '시작 시간' : '종료 시간'}
               </div>
               <ScheduleTime
-                time={
-                  openState.timeSelect === 'start'
-                    ? dateTimeState.currentTime
-                    : dateTimeState.endTime
-                }
+                time={openState.timeSelect === 'start' ? formattedStartTime() : formattedEndTime()}
+                status={openState.timeSelect}
               />
               <DecisionButton />
             </div>
@@ -226,19 +275,19 @@ const ScheduleForm = () => {
           <div className="label-small text-[#A0A0A0]">참석 인원</div>
           <div className="flex gap-4">
             <div className="flex w-[52px] flex-col items-center justify-center gap-4 py-3">
-              <button type="button">
+              <Link href="/schedule/add/attendees">
                 <Image
                   src="/icons/add-member.svg"
                   alt="멤버 추가"
                   width={48}
                   height={48}
                 ></Image>
-              </button>
+              </Link>
               <div className="body-small text-center">추가하기</div>
             </div>
-            {memberList.map((member, index) => (
+            {attendees.map((member) => (
               <div
-                key={index}
+                key={member.memberId}
                 className="relative flex w-[52px] flex-col items-center justify-center gap-2 py-3"
               >
                 <Image
@@ -249,7 +298,7 @@ const ScheduleForm = () => {
                 ></Image>
                 <button
                   type="button"
-                  onClick={() => removeMember(index)}
+                  onClick={() => removeMember(member.memberId)}
                 >
                   <Image
                     src="/icons/delete-bg-gray.svg"
@@ -259,7 +308,7 @@ const ScheduleForm = () => {
                     className="absolute right-0 top-3"
                   />
                 </button>
-                <div className="body-small text-center">{member}</div>
+                <div className="body-small text-center">{member.memberName}</div>
               </div>
             ))}
           </div>
@@ -316,6 +365,7 @@ const ScheduleForm = () => {
         </div>
       </form>
       <PrimaryButton
+        handleClick={handleSubmit(onSubmit)}
         name="저장"
         disabled={!isValid}
       />
