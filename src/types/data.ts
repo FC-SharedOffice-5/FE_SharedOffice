@@ -8,6 +8,8 @@ import {
   AccountRestoreSchema,
   MemberInfoUpdateSchema,
   InquirySchema,
+  FreeBoardsPostSchema,
+  CommentsSchema,
   AttendeeSchema,
   ScheduleSchema,
   ScheduleItemSchema,
@@ -36,6 +38,12 @@ export type MemberInfoUpdateData = z.infer<typeof MemberInfoUpdateSchema>;
 
 // 문의 등록 (Inquiry) 타입
 export type InquiryData = z.infer<typeof InquirySchema>;
+
+// 자유게시판 상세 게시글 (Free Boards Post) 타입
+export type FreeBoardsPostData = z.infer<typeof FreeBoardsPostSchema>;
+
+// 자유게시판 상세 게시글 (Free Boards Post) 타입
+export type CommentsData = z.infer<typeof CommentsSchema>;
 
 // 스케줄 등록 (Schedule) 타입
 export type ScheduleData = z.infer<typeof ScheduleSchema>;

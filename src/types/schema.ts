@@ -74,6 +74,36 @@ export const InquirySchema = z.object({
   inqResp: z.union([z.literal(0), z.literal(1)]), // 0: 답변 대기, 1: 답변 완료
 });
 
+// 자유게시판 상세 게시글 (Free Boards Post) 타입
+export const FreeBoardsPostSchema = z.object({
+  postId: z.number().positive(),
+  memberImage: z.string(),
+  memberNickname: z.string(),
+  officeName: z.string(),
+  postTitle: z.string(),
+  postContents: z.string(),
+  postImages: z.string().array(),
+  likesCount: z.number().positive(),
+  memberLike: z.union([z.literal(0), z.literal(1)]), // 0: 좋아요 안 누름, 1: 좋아요 누름
+  commentCount: z.number().positive(),
+  updatedAt: z.string(),
+});
+
+// 자유게시판 게시글 댓글 (Comments) 타입
+export const CommentsSchema = z.object({
+  commentId: z.number().positive(),
+  memberImage: z.string(),
+  memberNickname: z.string(),
+  linkId: z.number().positive(),
+  linkCategory: z.number().positive(),
+  commentWrite: z.string(),
+  likeCount: z.number().positive(),
+  memberLike: z.number().positive(),
+  commentsCounts: z.number().positive(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
 // 스케줄 생성 (Create Schedule) 요청 스키마
 export const ScheduleSchema = z.object({
   memberId: z.number().positive(),
