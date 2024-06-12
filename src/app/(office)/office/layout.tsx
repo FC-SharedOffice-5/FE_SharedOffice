@@ -12,5 +12,10 @@ export default function ScheduleLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className="wrapper">{children}</div>;
+  return (
+    <div className="wrapper relative">
+      <div id="modal-root" />
+      {children}
+    </div>
+  );
 }

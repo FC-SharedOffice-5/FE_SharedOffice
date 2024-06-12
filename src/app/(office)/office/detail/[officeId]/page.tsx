@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Image from 'next/image';
 import Header from '@/components/header';
 import PrimaryButton from '@/components/primary-button';
@@ -114,18 +115,24 @@ export default function Detail() {
           </div>
         </div>
         <div className="flex gap-2">
-          <div className="grow">
+          <Link
+            href="/office/1"
+            className="grow"
+          >
             <PrimaryButton
               color="white"
               name="공간 예약"
             />
-          </div>
-          <div className="grow">
+          </Link>
+          <Link
+            href="/office/1"
+            className="grow"
+          >
             <PrimaryButton
               color="white"
               name="좌석 예약"
             />
-          </div>
+          </Link>
         </div>
       </div>
     </>
