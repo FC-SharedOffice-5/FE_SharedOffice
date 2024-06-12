@@ -24,6 +24,7 @@ const config: Config = {
       black: {
         DEFAULT: '#111111',
         secondary: '#1A1F27',
+        40: '#858585',
       },
       tertiary: '#ffffff',
       error: '#ff5449',
