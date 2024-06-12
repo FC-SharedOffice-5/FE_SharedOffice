@@ -1,12 +1,23 @@
 import CommentIcon from '@/assets/icons/comment';
 import { Button, Input } from '@headlessui/react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
-const InputComment = () => {
+type InputCommentProps = {
+  onAddComment: (comment: string) => void;
+};
+
+const InputComment = ({ onAddComment }: InputCommentProps) => {
   const {
     control,
     formState: { isValid },
+    reset,
+    handleSubmit,
   } = useForm();
+
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    onAddComment(data.comment);
+    reset();
+  };
 
   return (
     <div className="flex justify-between border-t-[0.75px] border-gray-300 p-4 px-4">
@@ -34,6 +45,7 @@ const InputComment = () => {
       <Button
         disabled={!isValid}
         className="lable-small rounded-lg bg-primary px-[27.5px] py-[12px] text-white data-[disabled]:bg-gray-200"
+        onClick={handleSubmit(onSubmit)}
       >
         확인
       </Button>

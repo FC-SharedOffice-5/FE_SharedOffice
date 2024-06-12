@@ -43,6 +43,23 @@ const Comments = ({ initialComments }: { initialComments: CommentsData[] }) => {
     setOpenModalId(commentId);
   }, []);
 
+  const handleAddComment = (newComment: string) => {
+    const newCommentData: CommentsData = {
+      commentId: comments.length + 1, // 새로운 ID 할당 (임시로 길이+1 사용)
+      memberImage: '/memberDefault.png', // 기본 이미지 경로
+      memberNickname: '오주하',
+      linkId: 1,
+      linkCategory: 0,
+      commentWrite: newComment,
+      likeCount: 0,
+      memberLike: 0,
+      commentsCounts: 0,
+      createdAt: new Date().toISOString(),
+    };
+
+    setComments([...comments, newCommentData]);
+  };
+
   return (
     <main className="flex flex-1 flex-col justify-between bg-white">
       <section className="px-4 pb-8 pt-4">
@@ -125,7 +142,7 @@ const Comments = ({ initialComments }: { initialComments: CommentsData[] }) => {
           </div>
         ))}
       </section>
-      <InputComment />
+      <InputComment onAddComment={handleAddComment} />
     </main>
   );
 };

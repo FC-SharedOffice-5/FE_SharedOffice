@@ -101,5 +101,4 @@ export const CommentsSchema = z.object({
   memberLike: z.number().positive(),
   commentsCounts: z.number().positive(),
   createdAt: z.string(),
-  updatedAt: z.string(),
 });
