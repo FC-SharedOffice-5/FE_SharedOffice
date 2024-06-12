@@ -7,11 +7,21 @@ import Weekly from './weekly';
 import NextIcon from '@/assets/icons/next-icon';
 import { useScheduleStore } from '@/app/(provider)/schedule-provider';
 
-export type CalendarProps = {
+type TDefaultCalendar = {
+  type?: 'default';
   title?: 'header' | 'arrow';
+  status?: never;
 };
 
-const Calendar = ({ title = 'header' }) => {
+type TPeriodCalendar = {
+  type?: 'period';
+  title?: 'header' | 'arrow';
+  status: 'start' | 'end';
+};
+
+export type CalendarProps = TDefaultCalendar | TPeriodCalendar;
+
+const Calendar = ({ type = 'default', status, title = 'header' }: CalendarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const benchMarkDate = useScheduleStore((state) => state.benchMarkDate);
   const setBenchMarkDate = useScheduleStore((state) => state.setBenchMarkDate);
@@ -25,7 +35,7 @@ const Calendar = ({ title = 'header' }) => {
   return (
     <div className="flex flex-col gap-4">
       {title === 'header' ? (
-        <div className="headline-medium text-black">
+        <div className="headline-medium px-1 text-black">
           {benchMarkDate.getFullYear()}년 {benchMarkDate.getMonth() + 1}월
         </div>
       ) : (
@@ -58,7 +68,17 @@ const Calendar = ({ title = 'header' }) => {
             </div>
           ))}
         </div>
-        {isOpen ? <Monthly /> : <Weekly />}
+        {isOpen ? (
+          <Monthly
+            type={type}
+            status={status}
+          />
+        ) : (
+          <Weekly
+            type={type}
+            status={status}
+          />
+        )}
         <button
           className="flex w-full justify-center rounded-b-lg pb-2 pt-3 shadow-lg shadow-gray-100"
           onClick={toggleAccordion}

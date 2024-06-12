@@ -36,6 +36,7 @@ const DateTimeSelector = ({
               'data-[disabled]:text-[#111]/[.4]',
               openCalendar === name && 'text-primary',
             )}
+            suppressHydrationWarning
           >
             {date}
           </div>
@@ -51,6 +52,7 @@ const DateTimeSelector = ({
                 'data-[disabled]:text-[#111]/[.4]',
                 openTimeSelect === name && 'text-primary',
               )}
+              suppressHydrationWarning
             >
               {time}
             </div>

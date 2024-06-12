@@ -10,6 +10,9 @@ import {
   InquirySchema,
   FreeBoardsPostSchema,
   CommentsSchema,
+  AttendeeSchema,
+  ScheduleSchema,
+  ScheduleItemSchema,
 } from './schema';
 
 // 회원가입 (Signup) 타입
@@ -41,3 +44,12 @@ export type FreeBoardsPostData = z.infer<typeof FreeBoardsPostSchema>;
 
 // 자유게시판 상세 게시글 (Free Boards Post) 타입
 export type CommentsData = z.infer<typeof CommentsSchema>;
+
+// 스케줄 등록 (Schedule) 타입
+export type ScheduleData = z.infer<typeof ScheduleSchema>;
+
+// 스케줄 아이템 (Schedule Item) 타입
+export type ScheduleItemData = z.infer<typeof ScheduleItemSchema>;
+
+// 참석 인원 (Attendee) 타입
+export type AttendeeData = z.infer<typeof AttendeeSchema>;

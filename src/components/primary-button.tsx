@@ -3,7 +3,7 @@ import { Button } from '@headlessui/react';
 
 type PrimaryButtonProps = {
   color?: 'green' | 'white';
-  size?: 'big' | 'small' | 'modal';
+  size?: 'big' | 'small' | 'modal' | 'x-small';
   name: string;
   disabled?: boolean;
   handleClick?: () => void;
@@ -23,6 +23,7 @@ const PrimaryButton = ({
       className={cn(
         'label-medium h-12 w-full rounded-lg bg-primary text-white data-[disabled]:bg-primary/[.4]',
         {
+          'h-10 w-20': size === 'x-small',
           'w-40': size === 'small',
           'w-[248px]': size === 'modal',
           'border-[1px] border-primary bg-white text-primary': color === 'white',

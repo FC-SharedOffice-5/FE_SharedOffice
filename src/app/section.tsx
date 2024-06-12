@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { QRCodeSVG } from 'qrcode.react';
 import { useRef, useState } from 'react';
 
-const data = {
+export const data = {
   userName: '오주하',
   qrCode: 'M 032 064',
   mileOptions: [
@@ -22,12 +22,12 @@ const data = {
     { content: '대여하기', title: '사물함', link: '/mypage/locker' },
   ],
   teamMembers: [
-    { name: '이창희', image: '/member1.webp', active: true },
-    { name: '김피치', image: '/member1.webp', active: false },
-    { name: '김정현', image: '/member1.webp', active: true },
-    { name: '석지원', image: '/member1.webp', active: true },
-    { name: '천지현', image: '/member1.webp', active: false },
-    { name: '천지현', image: '/member1.webp', active: true },
+    { name: '이창희', image: '/member3.png', active: true },
+    { name: '김피치', image: '/member5.png', active: false },
+    { name: '김정현', image: '/member6.png', active: true },
+    { name: '석지원', image: '/member7.png', active: true },
+    { name: '천지현', image: '/member8.png', active: false },
+    { name: '천지현', image: '/member3.png', active: true },
   ],
   schedule: {
     meetings: [

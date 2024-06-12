@@ -1,4 +1,8 @@
-const ChevronDownIcon = () => (
+type ChevronDownIconProps = {
+  color?: 'gray' | 'black';
+};
+
+const ChevronDownIcon = ({ color = 'gray' }: ChevronDownIconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={24}
@@ -9,7 +13,7 @@ const ChevronDownIcon = () => (
       stroke="#111"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeOpacity={0.4}
+      strokeOpacity={color === 'gray' ? 0.4 : 1}
       strokeWidth={1.5}
       d="m6.25 9.125 5.75 5.75 5.75-5.75"
     />

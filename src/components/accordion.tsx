@@ -8,6 +8,7 @@ import { ElementType } from 'react';
 
 type AccordionProps = {
   header: ElementType;
+  defaultOpen?: boolean;
   openIcon?: ElementType;
   closeIcon?: ElementType;
   panel: ElementType;
@@ -16,13 +17,14 @@ type AccordionProps = {
 
 const Accordion = ({
   header: Header,
+  defaultOpen = false,
   openIcon: OpenIcon,
   closeIcon: CloseIcon,
   panel: Panel,
   buttonClassName,
 }: AccordionProps) => {
   return (
-    <Disclosure>
+    <Disclosure defaultOpen={defaultOpen}>
       {({ open }) => (
         <>
           <DisclosureButton
