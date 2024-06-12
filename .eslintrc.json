@@ -1,8 +1,10 @@
 {
   "extends": [
     "next/core-web-vitals",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:@tanstack/eslint-plugin-query/recommended"
   ],
+  "plugins": ["unused-imports"],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
@@ -15,6 +17,14 @@
         "prev": "*",
         "next": "return"
       }
-    ]
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "@tanstack/query/exhaustive-deps": "off",
+    "unused-imports/no-unused-imports": "error"
   }
 }
